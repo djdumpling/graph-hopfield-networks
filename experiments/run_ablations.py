@@ -147,9 +147,15 @@ def print_ablation_results(results: Dict[str, Any]) -> None:
             print(f"  {value}: ERROR - {res['error']}")
         else:
             acc = res["test_acc_mean"] * 100
-            acc_std = res["test_acc_std"] * 100
+            acc_std = res.get("test_acc_std", 0.0) * 100
             aurc = res["aurc_mean"] * 100
-            print(f"  {value:8s}: Acc={acc:5.2f}±{acc_std:4.2f}%, AURC={aurc:5.2f}%")
+            aurc_std = res.get("aurc_std", 0.0) * 100
+            
+            # Handle NaN or single seed case
+            if acc_std > 0:
+                print(f"  {value:8s}: Acc={acc:5.2f}±{acc_std:4.2f}%, AURC={aurc:5.2f}±{aurc_std:4.2f}%")
+            else:
+                print(f"  {value:8s}: Acc={acc:5.2f}%, AURC={aurc:5.2f}%")
 
 
 def main():

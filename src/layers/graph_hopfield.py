@@ -45,6 +45,8 @@ class GraphHopfieldLayer(nn.Module):
         use_residual: bool = True,
         dropout: float = 0.0,
         normalize_laplacian: bool = True,
+        normalize_memory_keys: bool = False,
+        normalize_memory_queries: bool = False,
     ):
         """
         Initialize the Graph Hopfield Layer.
@@ -61,6 +63,8 @@ class GraphHopfieldLayer(nn.Module):
             use_residual: Use residual connection in updates
             dropout: Dropout rate
             normalize_laplacian: Use symmetric normalized Laplacian
+            normalize_memory_keys: Normalize memory keys for numerical stability
+            normalize_memory_queries: Normalize queries for numerical stability
         """
         super().__init__()
         
@@ -86,6 +90,8 @@ class GraphHopfieldLayer(nn.Module):
             num_patterns=num_patterns,
             pattern_dim=out_dim,
             tie_keys_values=True,
+            normalize_keys=normalize_memory_keys,
+            normalize_queries=normalize_memory_queries,
         )
         
         # Optional layer normalization
@@ -200,20 +206,22 @@ class GraphHopfieldLayer(nn.Module):
             laplacian_term = self._compute_laplacian_term(x, edge_index, num_nodes)
             
             # 3. Combined update with damping
-            # X^{t+1} = (1-α)X^t + α[R(X^t) - λ·L·X^t]
+            # X^{t+1} = (1-α)X^t + α[R(X^t) - 2λ·L·X^t]
+            # Note: Factor of 2 comes from gradient: ∇E = ... + 2λ(LX)_v
+            # IMPORTANT: With this fix, lambda_graph now corresponds to λ in the math.
+            # Previously (without factor of 2), lambda_graph=1.0 meant λ=0.5 effectively.
+            # To match previous behavior, use lambda_graph=0.5 instead of 1.0.
+            laplacian_coeff = 2.0 * self.lambda_graph
             if self.use_residual:
                 x_new = (1 - self.alpha) * x + self.alpha * (
-                    retrieved - self.lambda_graph * laplacian_term
+                    retrieved - laplacian_coeff * laplacian_term
                 )
             else:
-                x_new = retrieved - self.lambda_graph * laplacian_term
+                x_new = retrieved - laplacian_coeff * laplacian_term
             
             # 4. Apply layer norm (for stability)
             if self.use_layer_norm:
                 x_new = self.layer_norm(x_new)
-            
-            # 5. Apply dropout
-            x_new = self.dropout(x_new)
             
             x = x_new
             
@@ -221,6 +229,9 @@ class GraphHopfieldLayer(nn.Module):
             if return_energy:
                 energy = self._compute_total_energy(x, edge_index, num_nodes)
                 energies.append(energy.item())
+        
+        # Apply dropout after all iterations (not during, to preserve energy descent)
+        x = self.dropout(x)
         
         # Collect info
         if return_energy:
@@ -287,6 +298,9 @@ class GraphHopfieldBlock(nn.Module):
         dropout: float = 0.0,
         use_input_mlp: bool = True,
         use_output_mlp: bool = False,
+        use_layer_norm: bool = True,
+        normalize_memory_keys: bool = False,
+        normalize_memory_queries: bool = False,
     ):
         """
         Initialize the Graph Hopfield Block.
@@ -303,6 +317,9 @@ class GraphHopfieldBlock(nn.Module):
             dropout: Dropout rate
             use_input_mlp: Use MLP before Hopfield layer
             use_output_mlp: Use MLP after Hopfield layer
+            use_layer_norm: Apply LayerNorm after iterations
+            normalize_memory_keys: Normalize memory keys for stability
+            normalize_memory_queries: Normalize queries for stability
         """
         super().__init__()
         
@@ -331,6 +348,9 @@ class GraphHopfieldBlock(nn.Module):
             num_iterations=num_iterations,
             alpha=alpha,
             dropout=dropout,
+            use_layer_norm=use_layer_norm,
+            normalize_memory_keys=normalize_memory_keys,
+            normalize_memory_queries=normalize_memory_queries,
         )
         
         # Output MLP

@@ -55,6 +55,9 @@ def create_model(
             alpha=config["model"]["alpha"],
             num_layers=num_layers,
             dropout=dropout,
+            use_layer_norm=config["model"].get("use_layer_norm", True),
+            normalize_memory_keys=config["model"].get("normalize_memory_keys", False),
+            normalize_memory_queries=config["model"].get("normalize_memory_queries", False),
         )
     elif model_name == "ghn_minimal":
         return GraphHopfieldNetworkMinimal(
@@ -67,6 +70,9 @@ def create_model(
             num_iterations=config["model"]["num_iterations"],
             alpha=config["model"]["alpha"],
             dropout=dropout,
+            use_layer_norm=config["model"].get("use_layer_norm", True),
+            normalize_memory_keys=config["model"].get("normalize_memory_keys", False),
+            normalize_memory_queries=config["model"].get("normalize_memory_queries", False),
         )
     else:
         return create_baseline(
@@ -339,13 +345,21 @@ def run_full_experiment(config: Dict[str, Any], verbose: bool = True) -> Dict[st
     test_accs = [r["training_history"]["final_test_acc"] for r in all_results]
     aurc_values = [r["corruption_results"]["robustness"]["normalized_aurc"] for r in all_results]
     
+    # Calculate std, handling case when num_seeds = 1
+    if num_seeds > 1:
+        test_acc_std = float(torch.tensor(test_accs).std())
+        aurc_std = float(torch.tensor(aurc_values).std())
+    else:
+        test_acc_std = 0.0
+        aurc_std = 0.0
+    
     aggregated = {
         "config": config,
         "num_seeds": num_seeds,
         "test_acc_mean": float(torch.tensor(test_accs).mean()),
-        "test_acc_std": float(torch.tensor(test_accs).std()),
+        "test_acc_std": test_acc_std,
         "aurc_mean": float(torch.tensor(aurc_values).mean()),
-        "aurc_std": float(torch.tensor(aurc_values).std()),
+        "aurc_std": aurc_std,
         "all_results": all_results,
     }
     
@@ -353,22 +367,44 @@ def run_full_experiment(config: Dict[str, Any], verbose: bool = True) -> Dict[st
         print(f"\n{'='*50}")
         print("AGGREGATED RESULTS")
         print(f"{'='*50}")
-        print(f"Test Accuracy: {aggregated['test_acc_mean']*100:.2f} ± {aggregated['test_acc_std']*100:.2f}%")
-        print(f"AURC: {aggregated['aurc_mean']*100:.2f} ± {aggregated['aurc_std']*100:.2f}%")
+        if num_seeds > 1:
+            print(f"Test Accuracy: {aggregated['test_acc_mean']*100:.2f} ± {aggregated['test_acc_std']*100:.2f}%")
+            print(f"AURC: {aggregated['aurc_mean']*100:.2f} ± {aggregated['aurc_std']*100:.2f}%")
+        else:
+            print(f"Test Accuracy: {aggregated['test_acc_mean']*100:.2f}% (single seed)")
+            print(f"AURC: {aggregated['aurc_mean']*100:.2f}% (single seed)")
     
     return aggregated
 
 
 def save_results(results: Dict[str, Any], config: Dict[str, Any]) -> str:
-    """Save results to file."""
+    """Save results to file with descriptive filename."""
     results_dir = Path(config["experiment"]["results_dir"])
     results_dir.mkdir(parents=True, exist_ok=True)
     
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     model_name = config["model"]["name"]
     dataset_name = config["dataset"]["name"]
     
-    filename = f"{model_name}_{dataset_name}_{timestamp}.json"
+    # Build descriptive filename with key hyperparameters
+    parts = [model_name, dataset_name]
+    
+    if model_name.lower() == "ghn":
+        # Add GHN-specific hyperparameters
+        parts.append(f"b{config['model']['beta']:.2f}")
+        parts.append(f"l{config['model']['lambda_graph']:.2f}")
+        parts.append(f"iter{config['model']['num_iterations']}")
+        parts.append(f"pat{config['model']['num_patterns']}")
+        parts.append(f"a{config['model']['alpha']:.1f}")
+        parts.append(f"lay{config['model']['num_layers']}")
+        parts.append(f"dr{config['model']['dropout']:.1f}")
+        parts.append(f"lr{config['training']['lr']:.3f}")
+        parts.append(f"wd{config['training']['weight_decay']:.4f}")
+    
+    parts.append(f"s{config['experiment']['num_seeds']}")
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    parts.append(timestamp)
+    
+    filename = "_".join(parts) + ".json"
     filepath = results_dir / filename
     
     # Convert non-serializable items
@@ -421,6 +457,65 @@ def main():
         action="store_true",
         help="Reduce output verbosity",
     )
+    parser.add_argument(
+        "--beta",
+        type=float,
+        default=None,
+        help="Override beta (inverse temperature) for GHN",
+    )
+    parser.add_argument(
+        "--lambda",
+        type=float,
+        default=None,
+        dest="lambda_graph",
+        help="Override lambda_graph (graph coupling weight) for GHN",
+    )
+    parser.add_argument(
+        "--num-iterations",
+        type=int,
+        default=None,
+        dest="num_iterations",
+        help="Override num_iterations (Hopfield iterations per layer) for GHN",
+    )
+    parser.add_argument(
+        "--num-patterns",
+        type=int,
+        default=None,
+        dest="num_patterns",
+        help="Override num_patterns (memory bank size) for GHN",
+    )
+    parser.add_argument(
+        "--alpha",
+        type=float,
+        default=None,
+        help="Override alpha (damping coefficient) for GHN",
+    )
+    parser.add_argument(
+        "--num-layers",
+        type=int,
+        default=None,
+        dest="num_layers",
+        help="Override num_layers (number of GHN layers)",
+    )
+    parser.add_argument(
+        "--dropout",
+        type=float,
+        default=None,
+        help="Override dropout rate",
+    )
+    parser.add_argument(
+        "--lr",
+        type=float,
+        default=None,
+        help="Override learning rate",
+    )
+    parser.add_argument(
+        "--weight-decay",
+        type=float,
+        default=None,
+        dest="weight_decay",
+        help="Override weight decay (L2 regularization)",
+    )
     
     args = parser.parse_args()
     
@@ -435,6 +530,24 @@ def main():
         config["dataset"]["name"] = args.dataset
     if args.seeds:
         config["experiment"]["num_seeds"] = args.seeds
+    if args.beta is not None:
+        config["model"]["beta"] = args.beta
+    if args.lambda_graph is not None:
+        config["model"]["lambda_graph"] = args.lambda_graph
+    if args.num_iterations is not None:
+        config["model"]["num_iterations"] = args.num_iterations
+    if args.num_patterns is not None:
+        config["model"]["num_patterns"] = args.num_patterns
+    if args.alpha is not None:
+        config["model"]["alpha"] = args.alpha
+    if args.num_layers is not None:
+        config["model"]["num_layers"] = args.num_layers
+    if args.dropout is not None:
+        config["model"]["dropout"] = args.dropout
+    if args.lr is not None:
+        config["training"]["lr"] = args.lr
+    if args.weight_decay is not None:
+        config["training"]["weight_decay"] = args.weight_decay
     
     # Run experiment
     results = run_full_experiment(config, verbose=not args.quiet)

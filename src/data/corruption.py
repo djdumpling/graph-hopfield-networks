@@ -32,14 +32,16 @@ def add_feature_noise(
     x: Tensor,
     noise_std: float,
     seed: Optional[int] = None,
+    relative_to_feature_std: bool = True,
 ) -> Tensor:
     """
     Add Gaussian noise to node features.
     
     Args:
         x: Node features [N, d]
-        noise_std: Standard deviation of Gaussian noise
+        noise_std: Standard deviation of Gaussian noise (absolute or relative)
         seed: Random seed
+        relative_to_feature_std: If True, noise_std is multiplied by feature std
         
     Returns:
         Noisy features [N, d]
@@ -49,6 +51,12 @@ def add_feature_noise(
     
     if seed is not None:
         torch.manual_seed(seed)
+    
+    # Scale noise relative to feature standard deviation if requested
+    if relative_to_feature_std:
+        feature_std = x.std()
+        if feature_std > 0:
+            noise_std = noise_std * feature_std
     
     noise = torch.randn_like(x) * noise_std
     return x + noise
@@ -208,7 +216,7 @@ def apply_corruption(
     # Apply feature corruption
     if config.feature_noise_std > 0:
         corrupted.x = add_feature_noise(
-            corrupted.x, config.feature_noise_std, config.seed
+            corrupted.x, config.feature_noise_std, config.seed, relative_to_feature_std=True
         )
     
     if config.feature_mask_ratio > 0:

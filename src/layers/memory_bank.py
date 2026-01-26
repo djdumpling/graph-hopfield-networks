@@ -27,6 +27,8 @@ class MemoryBank(nn.Module):
         pattern_dim: int,
         tie_keys_values: bool = True,
         init_std: float = 0.02,
+        normalize_keys: bool = False,
+        normalize_queries: bool = False,
     ):
         """
         Initialize the memory bank.
@@ -36,11 +38,15 @@ class MemoryBank(nn.Module):
             pattern_dim: Dimension of each pattern (d)
             tie_keys_values: If True, use same matrix for keys and values
             init_std: Standard deviation for weight initialization
+            normalize_keys: Normalize memory keys to unit norm (for numerical stability)
+            normalize_queries: Normalize queries to unit norm (for numerical stability)
         """
         super().__init__()
         self.num_patterns = num_patterns
         self.pattern_dim = pattern_dim
         self.tie_keys_values = tie_keys_values
+        self.normalize_keys = normalize_keys
+        self.normalize_queries = normalize_queries
         
         # Initialize memory patterns
         self.keys = nn.Parameter(torch.randn(num_patterns, pattern_dim) * init_std)
@@ -78,6 +84,12 @@ class MemoryBank(nn.Module):
         """
         keys = self.keys
         values = self.get_values()
+        
+        # Normalize for numerical stability (prevents overflow in exp(β * scores))
+        if self.normalize_keys:
+            keys = F.normalize(keys, p=2, dim=-1)
+        if self.normalize_queries:
+            queries = F.normalize(queries, p=2, dim=-1)
         
         # Compute attention scores: [N, K] or [B, N, K]
         scores = beta * torch.matmul(queries, keys.T)

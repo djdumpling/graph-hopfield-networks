@@ -33,6 +33,9 @@ class GraphHopfieldNetwork(nn.Module):
         alpha: float = 0.5,
         dropout: float = 0.5,
         use_encoder: bool = True,
+        use_layer_norm: bool = True,
+        normalize_memory_keys: bool = False,
+        normalize_memory_queries: bool = False,
     ):
         """
         Initialize the Graph Hopfield Network.
@@ -49,6 +52,9 @@ class GraphHopfieldNetwork(nn.Module):
             alpha: Update damping coefficient
             dropout: Dropout rate
             use_encoder: Use input encoder MLP
+            use_layer_norm: Apply LayerNorm after iterations
+            normalize_memory_keys: Normalize memory keys for stability
+            normalize_memory_queries: Normalize queries for stability
         """
         super().__init__()
         
@@ -83,6 +89,9 @@ class GraphHopfieldNetwork(nn.Module):
                     num_iterations=num_iterations,
                     alpha=alpha,
                     dropout=dropout,
+                    use_layer_norm=use_layer_norm,
+                    normalize_memory_keys=normalize_memory_keys,
+                    normalize_memory_queries=normalize_memory_queries,
                 )
             )
         
@@ -167,6 +176,9 @@ class GraphHopfieldNetworkMinimal(nn.Module):
         num_iterations: int = 2,
         alpha: float = 0.5,
         dropout: float = 0.5,
+        use_layer_norm: bool = True,
+        normalize_memory_keys: bool = False,
+        normalize_memory_queries: bool = False,
     ):
         super().__init__()
         
@@ -187,6 +199,9 @@ class GraphHopfieldNetworkMinimal(nn.Module):
             num_iterations=num_iterations,
             alpha=alpha,
             dropout=dropout,
+            use_layer_norm=use_layer_norm,
+            normalize_memory_keys=normalize_memory_keys,
+            normalize_memory_queries=normalize_memory_queries,
         )
         
         # Classifier

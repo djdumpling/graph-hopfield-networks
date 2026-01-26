@@ -149,10 +149,15 @@ def print_summary_table(results: Dict[str, Any]) -> None:
                     print(f"  {model}: ERROR - {model_results['error']}")
                 else:
                     acc_mean = model_results["test_acc_mean"] * 100
-                    acc_std = model_results["test_acc_std"] * 100
+                    acc_std = model_results.get("test_acc_std", 0.0) * 100
                     aurc_mean = model_results["aurc_mean"] * 100
-                    aurc_std = model_results["aurc_std"] * 100
-                    print(f"  {model:12s}: Acc={acc_mean:5.2f}±{acc_std:4.2f}%, AURC={aurc_mean:5.2f}±{aurc_std:4.2f}%")
+                    aurc_std = model_results.get("aurc_std", 0.0) * 100
+                    
+                    # Handle NaN or single seed case
+                    if acc_std > 0:
+                        print(f"  {model:12s}: Acc={acc_mean:5.2f}±{acc_std:4.2f}%, AURC={aurc_mean:5.2f}±{aurc_std:4.2f}%")
+                    else:
+                        print(f"  {model:12s}: Acc={acc_mean:5.2f}%, AURC={aurc_mean:5.2f}%")
 
 
 def main():
