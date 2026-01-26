@@ -1,20 +1,17 @@
-\documentclass[11pt]{article}
+\documentclass[11pt]{exam}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage[retro,cabin,sleek]{dylanadi}
 \usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 
+\DeclareMathOperator{\diag}{diag}
+
 \title{Graph Hopfield Networks: Mathematical Foundation}
 \author{Phase 1: Complete Mathematical Derivation}
 \date{}
-
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
-\newtheorem{definition}{Definition}
-\newtheorem{corollary}{Corollary}
 
 \DeclareMathOperator{\lse}{lse}
 \DeclareMathOperator{\tr}{tr}
@@ -79,12 +76,20 @@ Consider a graph $G = (V, E)$ with:
     \item Graph Laplacian $L = D - A$ (unnormalized) or $L = I - D^{-1/2} A D^{-1/2}$ (normalized)
 \end{itemize}
 
+\textbf{Graph convention:} Throughout this document, we assume:
+\begin{enumerate}
+    \item The graph is \textbf{undirected}, i.e., the adjacency matrix $A$ is symmetric: $A_{uv} = A_{vu}$ for all $u,v$.
+    \item Each undirected edge is \textbf{counted exactly once} in the edge set $E$. Formally, if $(u,v) \in E$ with $u \neq v$, then $(v,u) \notin E$ (we do not double-count).
+    \item The Laplacian $L = D - A$ is therefore symmetric and positive semi-definite.
+\end{enumerate}
+These conventions are essential for the Laplacian identity $\sum_{(u,v) \in E} \|x_u - x_v\|^2 = \tr(X^T L X)$ and the gradient computations to hold with the stated constants.
+
 \subsection{Graph Hopfield Energy Function}
 
 The Graph Hopfield energy function combines associative memory retrieval with graph structure regularization:
 
 \begin{equation}
-E_{\text{GH}}(X) = \sum_{v \in V} \left[ -\beta^{-1} \lse(\beta, M^T x_v) + \frac{1}{2}\|x_v\|^2 \right] + \lambda \sum_{(u,v) \in E} \|x_u - x_v\|^2
+E_{\text{GH}}(X) = \sum_{v \in V} \left[ -\lse(\beta, M x_v) + \frac{1}{2}\|x_v\|^2 \right] + \lambda \sum_{(u,v) \in E} \|x_u - x_v\|^2
 \label{eq:gh_energy_node}
 \end{equation}
 
@@ -101,20 +106,23 @@ where:
 The energy can be written in compact matrix form:
 
 \begin{equation}
-E_{\text{GH}}(X) = -\beta^{-1} \sum_{v=1}^{n} \lse(\beta, M^T x_v) + \frac{1}{2}\|X\|_F^2 + \lambda \cdot \tr(X^T L X)
+E_{\text{GH}}(X) = -\sum_{v=1}^{n} \lse(\beta, M x_v) + \frac{1}{2}\|X\|_F^2 + \lambda \cdot \tr(X^T L X)
 \label{eq:gh_energy_matrix}
 \end{equation}
 
 where $\|X\|_F^2 = \sum_{v=1}^{n} \|x_v\|^2$ is the Frobenius norm squared, and $L$ is the graph Laplacian.
 
-\textbf{Derivation of Laplacian term:}
+\textbf{Derivation of Laplacian term (using the count-once convention):}
+
+Under our undirected graph convention (each edge counted exactly once in $E$), we have:
 \begin{align}
 \sum_{(u,v) \in E} \|x_u - x_v\|^2 &= \sum_{(u,v) \in E} (x_u - x_v)^T (x_u - x_v) \\
-&= \sum_{(u,v) \in E} (x_u^T x_u - 2 x_u^T x_v + x_v^T x_v) \\
+&= \sum_{(u,v) \in E} (x_u^T x_u + x_v^T x_v - 2 x_u^T x_v) \\
 &= \sum_{v} d_v x_v^T x_v - 2 \sum_{(u,v) \in E} x_u^T x_v \\
 &= \tr(X^T D X) - \tr(X^T A X) \\
 &= \tr(X^T (D - A) X) = \tr(X^T L X)
 \end{align}
+where line 3 uses: (i) each node $v$ appears in exactly $d_v$ edges, contributing $d_v x_v^T x_v$, and (ii) since $A$ is symmetric, $\tr(X^T A X) = \sum_{u,v} A_{uv} x_u^T x_v = 2\sum_{(u,v) \in E} x_u^T x_v$.
 
 \section{Update Dynamics}
 
@@ -125,17 +133,19 @@ To derive the update dynamics, we compute the gradient of the energy with respec
 \textbf{For node $v$:}
 
 \begin{align}
-\nabla_{x_v} E_{\text{GH}}(X) &= \nabla_{x_v} \left[ -\beta^{-1} \lse(\beta, M^T x_v) + \frac{1}{2}\|x_v\|^2 + \lambda \sum_{u \in \mathcal{N}(v)} \|x_v - x_u\|^2 \right] \\
-&= -\beta^{-1} \nabla_{x_v} \lse(\beta, M^T x_v) + x_v + \lambda \nabla_{x_v} \sum_{u \in \mathcal{N}(v)} \|x_v - x_u\|^2
+\nabla_{x_v} E_{\text{GH}}(X) &= \nabla_{x_v} \left[ -\lse(\beta, M x_v) + \frac{1}{2}\|x_v\|^2 + \lambda \sum_{u \in \mathcal{N}(v)} \|x_v - x_u\|^2 \right] \\
+&= -\nabla_{x_v} \lse(\beta, M x_v) + x_v + \lambda \nabla_{x_v} \sum_{u \in \mathcal{N}(v)} \|x_v - x_u\|^2
 \end{align}
 
 \textbf{First term (Hopfield retrieval):}
+
+Let $\mathbf{z} = M x_v \in \mathbb{R}^N$ where $z_i = m_i^T x_v$. By the chain rule:
 \begin{align}
-\nabla_{x_v} \lse(\beta, M^T x_v) &= \nabla_{x_v} \left[ \beta^{-1} \log \sum_{i=1}^{N} \exp(\beta \cdot m_i^T x_v) \right] \\
-&= \frac{\sum_{i=1}^{N} \exp(\beta \cdot m_i^T x_v) \cdot \beta m_i}{\sum_{j=1}^{N} \exp(\beta \cdot m_j^T x_v)} \\
-&= \sum_{i=1}^{N} \frac{\exp(\beta \cdot m_i^T x_v)}{\sum_{j=1}^{N} \exp(\beta \cdot m_j^T x_v)} m_i \\
-&= M^T \softmax(\beta \cdot M x_v)
+\nabla_{x_v} \lse(\beta, M x_v) &= M^T \nabla_{\mathbf{z}} \lse(\beta, \mathbf{z}) \\
+&= M^T \softmax(\beta \mathbf{z}) \\
+&= M^T \softmax(\beta M x_v)
 \end{align}
+where we used $\nabla_{\mathbf{z}} \lse(\beta, \mathbf{z}) = \softmax(\beta \mathbf{z})$ from Section 2.3.
 
 \textbf{Third term (Graph regularization):}
 \begin{align}
@@ -199,13 +209,13 @@ where $\alpha \in (0,1]$ is the damping coefficient.
 \subsection{Convexity Properties}
 
 \begin{lemma}[Convexity of Log-Sum-Exp]
-The function $f(x) = \lse(\beta, M^T x)$ is convex in $x$.
+The function $f(x) = \lse(\beta, M x)$ is convex in $x$.
 \end{lemma}
 
 \begin{proof}
 The log-sum-exp function is the composition of:
 \begin{itemize}
-    \item Linear function: $g(x) = M^T x$ (convex)
+    \item Linear function: $g(x) = M x$ (affine)
     \item Log-sum-exp: $h(z) = \beta^{-1} \log \sum_i \exp(\beta z_i)$ (convex)
 \end{itemize}
 Since the composition of a convex function with an affine function is convex, $f(x)$ is convex.
@@ -224,86 +234,251 @@ The function $f(X) = \tr(X^T L X)$ is convex (but not strictly convex if $L$ is 
 \end{lemma}
 
 \begin{proof}
-The graph Laplacian $L$ is positive semi-definite (all eigenvalues $\geq 0$). Therefore, for any $X, Y$ and $\theta \in [0,1]$:
+The graph Laplacian $L$ is positive semi-definite (all eigenvalues $\geq 0$). 
+By PSD, for any $X, Y$:
+\[
+0 \le \tr((X-Y)^T L (X-Y)) = f(X) + f(Y) - 2\tr(X^T L Y),
+\]
+which implies
+\[
+\tr(X^T L Y) \le \tfrac{1}{2}\bigl(f(X) + f(Y)\bigr).
+\]
+Now expand $f(\theta X + (1-\theta)Y)$ for $\theta \in [0,1]$:
 \begin{align}
-\tr((\theta X + (1-\theta)Y)^T L (\theta X + (1-\theta)Y)) &= \theta^2 \tr(X^T L X) + (1-\theta)^2 \tr(Y^T L Y) + 2\theta(1-\theta)\tr(X^T L Y) \\
-&\leq \theta \tr(X^T L X) + (1-\theta) \tr(Y^T L Y)
+f(\theta X + (1-\theta)Y) &= \theta^2 f(X) + (1-\theta)^2 f(Y) + 2\theta(1-\theta)\tr(X^T L Y) \\
+&\le \theta^2 f(X) + (1-\theta)^2 f(Y) + \theta(1-\theta)\bigl(f(X) + f(Y)\bigr) \\
+&= \theta f(X) + (1-\theta) f(Y).
 \end{align}
-where the inequality follows from the positive semi-definiteness of $L$. Therefore, $f$ is convex.
+Therefore, $f$ is convex.
 \end{proof}
 
-\begin{proposition}[Convexity of Graph Hopfield Energy]
-The Graph Hopfield energy function $E_{\text{GH}}(X)$ is convex in $X$.
-\end{proposition}
+\begin{prop}[Convexity, strong convexity, and DC structure]
+\label{prop:convex_dc}
+Let $E_{\text{GH}}(X)$ be the Graph Hopfield energy
+\[
+E_{\text{GH}}(X) \;=\; \sum_{v \in V} \left[ -\lse(\beta, M x_v) + \frac{1}{2}\|x_v\|^2 \right]
+\;+\;\lambda \sum_{(u,v) \in E} \|x_u - x_v\|^2,
+\]
+and let $L_{\text{lip}}$ denote any global Lipschitz constant of $\nabla E_{\text{GH}}$ (e.g. Proposition 5.6).
 
-\begin{proof}
-$E_{\text{GH}}(X)$ is the sum of:
 \begin{enumerate}
-    \item $-\beta^{-1} \sum_v \lse(\beta, M^T x_v)$: negative of convex function (concave), but...
-    \item $\frac{1}{2}\|X\|_F^2$: strictly convex
-    \item $\lambda \tr(X^T L X)$: convex
+\item \textbf{(Generally nonconvex)} In general $E_{\text{GH}}$ need not be convex because the term
+$-\lse(\beta, M x_v)$ is concave in $x_v$ (as the negation of a convex function).
+
+\item \textbf{(Sufficient condition for convexity / strong convexity)}  
+Define $p_v(X):=\softmax(\beta M x_v)\in\mathbb{R}^N$ and $\Sigma(p):=\diag(p)-pp^\top$.
+Then the (block) Hessian of the node-wise Hopfield retrieval map satisfies
+\[
+0 \preceq \Sigma(p_v(X)) \preceq I
+\quad\Longrightarrow\quad
+0 \preceq M^\top \Sigma(p_v(X)) M \preceq \|M\|^2 I.
+\]
+Consequently the (block) Hessian of $E_{\text{GH}}$ admits the uniform lower bound
+\[
+\nabla^2 E_{\text{GH}}(X) \;\succeq\; \bigl(1-\beta\|M\|^2\bigr)\,I \;+\; 2\lambda\,(L\otimes I_d),
+\]
+hence:
+\begin{itemize}
+\item if $\beta\|M\|^2 \le 1$, then $E_{\text{GH}}$ is convex;
+\item if $\beta\|M\|^2 < 1$, then $E_{\text{GH}}$ is $\mu$-strongly convex with $\mu := 1-\beta\|M\|^2$
+(and in particular has a unique global minimizer).
+\end{itemize}
+
+\textbf{Note on the Laplacian term:} The Laplacian $L$ is positive semi-definite but has a nontrivial nullspace (constant signals across all nodes). However, the global strong convexity of $E_{\text{GH}}$ comes from the $+I$ term (the $\frac{1}{2}\|X\|_F^2$ quadratic regularizer), which dominates the negative curvature from the Hopfield term when $\beta\|M\|^2 < 1$. The Laplacian term $2\lambda(L \otimes I_d)$ adds additional positive curvature in directions orthogonal to the nullspace.
+
+\item \textbf{(Difference-of-convex decomposition always exists)}  
+Because $\nabla E_{\text{GH}}$ is $L_{\text{lip}}$-Lipschitz, the function
+\[
+H(X) := \frac{L_{\text{lip}}}{2}\|X\|_F^2 - E_{\text{GH}}(X)
+\]
+is convex (standard fact: $L$-smooth $\iff$ $X\mapsto \tfrac{L}{2}\|X\|^2 - f(X)$ convex).
+Therefore,
+\[
+E_{\text{GH}}(X) \;=\; \underbrace{\frac{L_{\text{lip}}}{2}\|X\|_F^2}_{\text{convex}}
+\;-\;
+\underbrace{H(X)}_{\text{convex}}
+\]
+is a valid DC decomposition for any choice of global $L_{\text{lip}}$.
 \end{enumerate}
+\end{prop}
 
-\textbf{Note:} The first term is actually concave (negative log-sum-exp), so the overall energy is NOT necessarily convex. However, if the quadratic regularization term dominates (which it does for large enough $\|X\|$), the energy function may still have good convergence properties.
+\begin{remark}[What this means algorithmically]
+If $\beta\|M\|^2<1$, then $E_{\text{GH}}$ is strongly convex and gradient descent converges globally and linearly.
+Without this condition, the objective can be nonconvex; gradient descent still converges to stationary points
+(Theorem 5.7), and DC algorithms such as CCCP/MM can be used to obtain monotone descent to critical points
+under standard regularity assumptions.
+\end{remark}
 
-\textbf{Alternative approach:} We need to analyze the energy more carefully. The negative log-sum-exp term is concave, so the energy is a difference of convex (DC) function. This suggests using the Concave-Convex Procedure (CCCP) or analyzing convergence under specific conditions.
-\end{proof}
 
 \subsection{Lipschitz Smoothness}
 
-\begin{proposition}[Lipschitz Gradient]
-The gradient $\nabla_X E_{\text{GH}}(X)$ is Lipschitz continuous with Lipschitz constant:
-\begin{equation}
-L_{\text{lip}} = \beta \|M\|^2 + 1 + 2\lambda \|L\|
-\end{equation}
-where $\|M\|$ is the spectral norm of $M$ and $\|L\|$ is the spectral norm of $L$.
-\end{proposition}
+\begin{prop}[Lipschitz gradient / $L$-smoothness]
+\label{prop:lipschitz}
+Let
+\[
+E_{\mathrm{GH}}(X)= -\sum_{v=1}^n \lse(\beta, M x_v)\;+\;\frac12\|X\|_F^2\;+\;\lambda\,\tr(X^\top L X),
+\]
+with $X\in\mathbb{R}^{n\times d}$, rows $x_v\in\mathbb{R}^d$, memory $M\in\mathbb{R}^{N\times d}$, and Laplacian $L\in\mathbb{R}^{n\times n}$.
+Then $\nabla E_{\mathrm{GH}}$ is Lipschitz (in Frobenius norm) with constant
+\[
+L_{\mathrm{lip}}\;=\;\beta\|M\|^2\;+\;1\;+\;2\lambda\|L\|,
+\]
+i.e.
+\[
+\|\nabla E_{\mathrm{GH}}(X)-\nabla E_{\mathrm{GH}}(Y)\|_F
+\;\le\;
+L_{\mathrm{lip}}\;\|X-Y\|_F
+\qquad \forall X,Y.
+\]
+\end{prop}
 
 \begin{proof}
-\textbf{To be completed:} Need to bound the Hessian of $E_{\text{GH}}(X)$.
+Write the gradient in matrix form. Define the row-wise retrieval map
+\[
+s(x)\;:=\;M^\top \softmax(\beta Mx)\in\mathbb{R}^d,
+\qquad
+S(X)\in\mathbb{R}^{n\times d}\ \text{by}\ [S(X)]_v:=s(x_v).
+\]
+From the derivation in the document,
+\[
+\nabla_X E_{\mathrm{GH}}(X)\;=\;X\;-\;S(X)\;+\;2\lambda L X.
+\]
+Hence
+\begin{align}
+\|\nabla E_{\mathrm{GH}}(X)-\nabla E_{\mathrm{GH}}(Y)\|_F
+&\le \|X-Y\|_F + \|S(X)-S(Y)\|_F + 2\lambda\|L(X-Y)\|_F \\
+&\le \bigl(1+2\lambda\|L\|\bigr)\|X-Y\|_F \;+\;\|S(X)-S(Y)\|_F,
+\label{eq:lip_reduce_to_S}
+\end{align}
+using $\|LZ\|_F\le \|L\|\|Z\|_F$ for any $Z$.
 
-The Hessian has three components:
-\begin{enumerate}
-    \item Hessian of $-\beta^{-1} \lse(\beta, M^T x_v)$: Need to compute second derivative
-    \item Hessian of $\frac{1}{2}\|x_v\|^2$: Identity matrix
-    \item Hessian of $\lambda \tr(X^T L X)$: $2\lambda L$
-\end{enumerate}
-
-For the first term, the Hessian with respect to $x_v$ is:
-\begin{equation}
-\nabla_{x_v}^2 \lse(\beta, M^T x_v) = \beta M^T \left[ \text{diag}(\softmax(\beta M x_v)) - \softmax(\beta M x_v) \softmax(\beta M x_v)^T \right] M
-\end{equation}
-
-This is bounded by $\beta \|M\|^2$ (since the matrix in brackets has eigenvalues in $[0,1]$).
-
-Therefore, the overall Lipschitz constant is:
-\begin{equation}
-L_{\text{lip}} \leq \beta \|M\|^2 + 1 + 2\lambda \|L\|
-\end{equation}
+It remains to bound $\|S(X)-S(Y)\|_F$.
+Fix a single row $x\in\mathbb{R}^d$ and define $p(x):=\softmax(\beta Mx)\in\mathbb{R}^N$.
+The Jacobian of $s(x)=M^\top p(x)$ is
+\[
+\nabla s(x)
+\;=\;
+M^\top \nabla p(x)
+\;=\;
+\beta\,M^\top\Bigl(\diag(p(x)) - p(x)p(x)^\top\Bigr)M.
+\]
+Let $\Sigma(p):=\diag(p)-pp^\top$. It is positive semidefinite (it is the covariance matrix of a categorical distribution),
+and satisfies the Loewner bound $\Sigma(p)\preceq \diag(p)\preceq I$.
+Therefore, for every $x$,
+\[
+\|\nabla s(x)\|
+=
+\bigl\|\beta\,M^\top \Sigma(p(x)) M\bigr\|
+\le
+\beta\,\|M^\top\|\,\|\Sigma(p(x))\|\,\|M\|
+\le
+\beta\,\|M\|^2.
+\]
+By the mean value theorem for vector-valued maps (or integrating the Jacobian along the segment),
+this implies $s$ is $\beta\|M\|^2$-Lipschitz:
+\[
+\|s(x)-s(y)\|\le \beta\|M\|^2\|x-y\|\qquad\forall x,y\in\mathbb{R}^d.
+\]
+Applying this row-wise and summing,
+\[
+\|S(X)-S(Y)\|_F^2
+=
+\sum_{v=1}^n \|s(x_v)-s(y_v)\|^2
+\le
+\sum_{v=1}^n (\beta\|M\|^2)^2 \|x_v-y_v\|^2
+=
+(\beta\|M\|^2)^2\|X-Y\|_F^2,
+\]
+so
+\[
+\|S(X)-S(Y)\|_F\le \beta\|M\|^2\|X-Y\|_F.
+\]
+Plugging this into \eqref{eq:lip_reduce_to_S} gives
+\[
+\|\nabla E_{\mathrm{GH}}(X)-\nabla E_{\mathrm{GH}}(Y)\|_F
+\le
+\bigl(\beta\|M\|^2+1+2\lambda\|L\|\bigr)\|X-Y\|_F,
+\]
+as claimed.
 \end{proof}
 
 \subsection{Convergence Theorem}
 
-\begin{theorem}[Convergence of Gradient Descent]
-For the Graph Hopfield energy $E_{\text{GH}}(X)$, gradient descent with step size $\eta < \frac{2}{L_{\text{lip}}}$ converges to a stationary point, where $L_{\text{lip}} = \beta \|M\|^2 + 1 + 2\lambda \|L\|$.
+\begin{theorem}[Monotone descent and convergence to stationary points]
+\label{thm:gd_convergence}
+Assume $E_{\mathrm{GH}}$ is bounded below on $\mathbb{R}^{n\times d}$, and let $L_{\mathrm{lip}}$ be as in
+Proposition~\ref{prop:lipschitz}.
+Consider gradient descent
+\[
+X^{(t+1)} \;=\; X^{(t)} - \eta \nabla E_{\mathrm{GH}}(X^{(t)}),
+\]
+with a fixed step size $\eta\in(0,2/L_{\mathrm{lip}})$.
+Then:
+\begin{enumerate}
+\item (\textbf{Energy descent}) The energy is non-increasing, and decreases by at least the stated amount when $\nabla E_{\mathrm{GH}}(X^{(t)})\neq 0$:
+\[
+E_{\mathrm{GH}}(X^{(t+1)})
+\le
+E_{\mathrm{GH}}(X^{(t)})
+-\eta\Bigl(1-\frac{\eta L_{\mathrm{lip}}}{2}\Bigr)\|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F^2.
+\]
+\item (\textbf{Gradient norms vanish}) We have
+\[
+\sum_{t=0}^{\infty}\|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F^2 < \infty,
+\qquad\text{hence}\qquad
+\|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F \to 0.
+\]
+\item (\textbf{Limit points are stationary}) Every accumulation point $X^\star$ of $\{X^{(t)}\}$ satisfies
+$\nabla E_{\mathrm{GH}}(X^\star)=0$.
+\end{enumerate}
 \end{theorem}
 
 \begin{proof}
-\textbf{To be completed:} This requires:
-\begin{enumerate}
-    \item Showing the energy decreases monotonically: $E(X^{(t+1)}) \leq E(X^{(t)})$
-    \item Bounding the energy decrease per iteration
-    \item Showing that gradient norms converge to zero
-    \item Establishing convergence rate (linear/sublinear)
-\end{enumerate}
+Because $\nabla E_{\mathrm{GH}}$ is $L_{\mathrm{lip}}$-Lipschitz (Proposition~\ref{prop:lipschitz}),
+$E_{\mathrm{GH}}$ is $L_{\mathrm{lip}}$-smooth, so the standard descent lemma holds:
+for all $X,Y\in\mathbb{R}^{n\times d}$,
+\begin{equation}
+\label{eq:descent_lemma}
+E_{\mathrm{GH}}(Y)
+\le
+E_{\mathrm{GH}}(X) + \langle \nabla E_{\mathrm{GH}}(X),\,Y-X\rangle
++\frac{L_{\mathrm{lip}}}{2}\|Y-X\|_F^2.
+\end{equation}
+Apply \eqref{eq:descent_lemma} with $Y=X-\eta\nabla E_{\mathrm{GH}}(X)$:
+\begin{align*}
+E_{\mathrm{GH}}(X-\eta\nabla E_{\mathrm{GH}}(X))
+&\le
+E_{\mathrm{GH}}(X)
++\left\langle \nabla E_{\mathrm{GH}}(X),\, -\eta\nabla E_{\mathrm{GH}}(X)\right\rangle
++\frac{L_{\mathrm{lip}}}{2}\eta^2\|\nabla E_{\mathrm{GH}}(X)\|_F^2\\
+&=
+E_{\mathrm{GH}}(X)
+-\eta\Bigl(1-\frac{\eta L_{\mathrm{lip}}}{2}\Bigr)\|\nabla E_{\mathrm{GH}}(X)\|_F^2.
+\end{align*}
+Setting $X=X^{(t)}$ yields item (1). Since $\eta\in(0,2/L_{\mathrm{lip}})$,
+the coefficient $c:=\eta\left(1-\frac{\eta L_{\mathrm{lip}}}{2}\right)$ is strictly positive, hence
+$E_{\mathrm{GH}}(X^{(t)})$ is decreasing and bounded below, so it converges.
 
-\textbf{Key steps:}
-\begin{enumerate}
-    \item Use Lipschitz smoothness: For $L$-smooth function, gradient descent with $\eta < 2/L$ decreases energy
-    \item Energy decrease: $E(X^{(t+1)}) \leq E(X^{(t)}) - \eta(1 - \frac{\eta L}{2}) \|\nabla E(X^{(t)})\|^2$
-    \item Sum over iterations to show gradient converges to zero
-    \item Use convexity (or weaker conditions) to show convergence to global/local minimum
-\end{enumerate}
+Summing the inequality from $t=0$ to $T-1$ telescopes:
+\[
+E_{\mathrm{GH}}(X^{(0)}) - E_{\mathrm{GH}}(X^{(T)})
+\ge
+c\sum_{t=0}^{T-1}\|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F^2.
+\]
+Letting $T\to\infty$ and using bounded-below implies the left-hand side is finite, proving
+$\sum_t \|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F^2<\infty$, hence $\|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F\to 0$
+(item (2)).
+
+For item (3), let $X^{(t_k)}\to X^\star$ be any convergent subsequence.
+By continuity of $\nabla E_{\mathrm{GH}}$ (it is Lipschitz),
+\[
+\nabla E_{\mathrm{GH}}(X^\star)
+=
+\lim_{k\to\infty} \nabla E_{\mathrm{GH}}(X^{(t_k)})
+=
+0,
+\]
+where the last equality uses item (2). Thus $X^\star$ is stationary.
 \end{proof}
 
 \subsection{Stability Condition}
@@ -315,39 +490,90 @@ For guaranteed convergence with step size $\eta$:
 \label{eq:step_size_bound}
 \end{equation}
 
-If using normalized Laplacian and assuming maximum degree $d_{\max}$:
-
+For the \textbf{normalized Laplacian} $L = I - D^{-1/2} A D^{-1/2}$, we have $\|L\| \le 2$:
 \begin{equation}
-\eta < \frac{2}{\beta \|M\|^2 + 1 + 2\lambda \cdot d_{\max}}
-\label{eq:step_size_bound_degree}
+\eta < \frac{2}{\beta \|M\|^2 + 1 + 4\lambda}
+\label{eq:step_size_bound_normalized}
+\end{equation}
+
+For the \textbf{unnormalized Laplacian} $L = D - A$ with maximum degree $d_{\max}$, we have $\|L\| \le 2d_{\max}$:
+\begin{equation}
+\eta < \frac{2}{\beta \|M\|^2 + 1 + 4\lambda d_{\max}}
+\label{eq:step_size_bound_unnormalized}
 \end{equation}
 
 \subsection{Alternative: Fixed-Point Convergence}
 
 For the fixed-point iteration in Equation~\eqref{eq:update_fixed}, we need to show it is a contraction mapping.
 
-\begin{theorem}[Fixed-Point Convergence]
-If the fixed-point update operator $T(X)$ defined by:
-\begin{equation}
-T(X)_v = M^T \softmax(\beta \cdot M x_v) - 2\lambda (L X)_v
-\end{equation}
-is a contraction mapping, then the iteration converges to a unique fixed point.
+\begin{remark}[Distinction between GD and fixed-point iteration]
+It is important to distinguish two different update schemes:
+\begin{enumerate}
+\item \textbf{Gradient descent:} $X^{(t+1)} = X^{(t)} - \eta \nabla E_{\text{GH}}(X^{(t)})$ guarantees \emph{energy descent} (Theorem~\ref{thm:gd_convergence}) under smoothness and appropriate step size, regardless of whether the energy is convex.
+\item \textbf{Fixed-point iteration:} $X^{(t+1)} = T(X^{(t)})$ (defined below) does \emph{not automatically} imply energy descent. Convergence is guaranteed \emph{only when $T$ is a contraction}, i.e., under the sufficient condition $\beta\|M\|^2 + 2\lambda\|L\| < 1$ (Theorem~\ref{thm:fp_contraction}).
+\end{enumerate}
+In practice, gradient descent is more robust, while the fixed-point iteration can be faster when the contraction condition holds.
+\end{remark}
+
+\begin{theorem}[Fixed-point contraction for the undamped operator]
+\label{thm:fp_contraction}
+Define the (row-wise) fixed-point operator $T:\mathbb{R}^{n\times d}\to\mathbb{R}^{n\times d}$ by
+\[
+[T(X)]_v \;=\; M^\top\softmax(\beta M x_v)\;-\;2\lambda (LX)_v.
+\]
+Then $T$ is globally Lipschitz (in Frobenius norm) with constant
+\[
+\mathrm{Lip}(T)\;\le\;\beta\|M\|^2\;+\;2\lambda\|L\|.
+\]
+In particular, if the sufficient condition
+\[
+\beta\|M\|^2 + 2\lambda\|L\| \;<\; 1
+\]
+holds, then $T$ is a contraction mapping. Consequently, $T$ has a unique fixed point $X^\star$ and, for any
+initialization $X^{(0)}$, the iteration $X^{(t+1)}=T(X^{(t)})$ converges geometrically:
+\[
+\|X^{(t)}-X^\star\|_F \;\le\; \rho^t \|X^{(0)}-X^\star\|_F,
+\qquad
+\rho := \beta\|M\|^2 + 2\lambda\|L\| \in (0,1).
+\]
 \end{theorem}
 
 \begin{proof}
-\textbf{To be completed:} Need to show:
-\begin{equation}
-\|T(X) - T(Y)\| \leq \rho \|X - Y\|
-\end{equation}
-for some $\rho < 1$.
-
-This requires bounding:
-\begin{enumerate}
-    \item The Lipschitz constant of the softmax function
-    \item The effect of the Laplacian term
-    \item Combining both to show overall contraction
-\end{enumerate}
+Decompose $T(X)=S(X)-2\lambda L X$ where, as before, $[S(X)]_v=s(x_v)$ and $s(x)=M^\top\softmax(\beta Mx)$.
+From the Jacobian calculation in Proposition~\ref{prop:lipschitz}, $s$ is $\beta\|M\|^2$-Lipschitz:
+\[
+\|s(x)-s(y)\|\le \beta\|M\|^2\|x-y\|\quad\forall x,y.
+\]
+Therefore, row-wise,
+\[
+\|S(X)-S(Y)\|_F \le \beta\|M\|^2\|X-Y\|_F.
+\]
+Also, linearity of the Laplacian term gives
+\[
+\|L(X-Y)\|_F \le \|L\|\|X-Y\|_F.
+\]
+Combining:
+\[
+\|T(X)-T(Y)\|_F
+\le
+\|S(X)-S(Y)\|_F + 2\lambda\|L(X-Y)\|_F
+\le
+\bigl(\beta\|M\|^2 + 2\lambda\|L\|\bigr)\|X-Y\|_F.
+\]
+Hence $\mathrm{Lip}(T)\le \beta\|M\|^2+2\lambda\|L\|$. If this quantity is $<1$,
+Banach's fixed-point theorem implies existence and uniqueness of $X^\star$ and geometric convergence with rate $\rho$.
 \end{proof}
+
+\begin{corollary}[Convenient sufficient condition via normalized Laplacian]
+If $L$ is the normalized Laplacian, then $\|L\|\le 2$, so a sufficient condition for contraction is
+\[
+\beta\|M\|^2 + 4\lambda < 1.
+\]
+If $L$ is the unnormalized Laplacian, then $\|L\|\le 2d_{\max}$, so a sufficient condition is
+\[
+\beta\|M\|^2 + 4\lambda d_{\max} < 1.
+\]
+\end{corollary}
 
 \section{Connection to Attention Mechanisms}
 
@@ -361,8 +587,8 @@ X \leftarrow \text{Attention}(X, M, M) + \text{GraphSmooth}(X, A)
 
 where:
 \begin{itemize}
-    \item $\text{Attention}(Q, K, V) = V \cdot \softmax(\beta Q K^T)$ is standard self-attention
-    \item $\text{GraphSmooth}(X, A) = -\lambda L X = -\lambda (D - A) X$ is graph diffusion/smoothing
+    \item $\text{Attention}(Q, K, V) = \softmax(\beta Q K^T) V$ is standard self-attention
+    \item $\text{GraphSmooth}(X, A) = -2\lambda L X = -2\lambda (D - A) X$ is graph diffusion/smoothing
 \end{itemize}
 
 This makes the Graph Hopfield layer interpretable as: \textbf{"attention-based pattern retrieval + graph-aware smoothing"}.
@@ -371,7 +597,7 @@ This makes the Graph Hopfield layer interpretable as: \textbf{"attention-based p
 
 In transformers, self-attention is:
 \begin{equation}
-\text{Attention}(X, X, X) = X \cdot \softmax(\beta X X^T)
+\text{Attention}(X, X, X) = \softmax(\beta X X^T) X
 \end{equation}
 
 Graph Hopfield extends this by:
@@ -380,27 +606,150 @@ Graph Hopfield extends this by:
     \item Adding graph structure regularization
 \end{enumerate}
 
-\section{Open Questions for Convergence Proof}
+\section{Resolved Theoretical Properties}
+\label{sec:resolved}
 
-The following need to be rigorously proven:
+This section answers the remaining theoretical questions: (1) DC structure, (2) explicit convergence rates,
+(3) characterization of critical points, and (4) initialization dependence.
 
-\begin{enumerate}
-    \item \textbf{Convexity/DC Structure:} Is $E_{\text{GH}}(X)$ convex, or is it a difference-of-convex (DC) function? If DC, what convergence guarantees can we establish?
-    
-    \item \textbf{Lipschitz Constant:} Compute the exact Lipschitz constant of $\nabla_X E_{\text{GH}}(X)$ and verify the bound in Proposition 2.
-    
-    \item \textbf{Energy Decrease:} Prove that gradient descent (or fixed-point iteration) monotonically decreases the energy: $E(X^{(t+1)}) \leq E(X^{(t)})$.
-    
-    \item \textbf{Gradient Convergence:} Show that $\lim_{t \to \infty} \|\nabla E(X^{(t)})\| = 0$.
-    
-    \item \textbf{Convergence Rate:} Establish whether convergence is linear, sublinear, or exponential, and provide explicit rates.
-    
-    \item \textbf{Fixed-Point Contraction:} For the fixed-point iteration, prove it is a contraction mapping and find the contraction factor.
-    
-    \item \textbf{Local vs Global Minima:} Characterize the nature of critical points (local minima, saddle points, global minima).
-    
-    \item \textbf{Initialization Dependence:} Analyze how initialization affects convergence and final solution.
-\end{enumerate}
+\subsection{Convexity / DC Structure}
+Proposition~\ref{prop:convex_dc} establishes that $E_{\text{GH}}$ is generally nonconvex (due to a concave
+negative log-sum-exp term), admits an explicit \emph{global} sufficient condition for convexity/strong convexity,
+and \emph{always} admits a DC decomposition whenever a global smoothness constant is available.
+
+\subsection{Convergence Rates}
+We separate the (typical) nonconvex smooth case from regimes where stronger structure yields linear rates.
+
+\begin{theorem}[Sublinear rate to stationarity for smooth (possibly nonconvex) $E_{\text{GH}}$]
+\label{thm:rate_nonconvex}
+Assume $\nabla E_{\text{GH}}$ is $L_{\text{lip}}$-Lipschitz and $E_{\text{GH}}$ is bounded below by $E_\inf$.
+Run gradient descent with fixed step size $\eta\in(0,2/L_{\text{lip}})$:
+\[
+X^{(t+1)} = X^{(t)} - \eta \nabla E_{\text{GH}}(X^{(t)}).
+\]
+Let $c := \eta\left(1-\frac{\eta L_{\text{lip}}}{2}\right)>0$. Then for all $T\ge 1$,
+\[
+\min_{0\le t \le T-1}\ \|\nabla E_{\text{GH}}(X^{(t)})\|_F^2
+\le
+\frac{E_{\text{GH}}(X^{(0)}) - E_\inf}{c\,T},
+\]
+and hence the method attains an $\varepsilon$-stationary point
+($\|\nabla E\|_F\le \varepsilon$) in at most $O(1/\varepsilon^2)$ iterations.
+\end{theorem}
+
+\begin{proof}
+From the descent inequality proved in Theorem 5.7,
+\[
+E_{\text{GH}}(X^{(t+1)}) \le E_{\text{GH}}(X^{(t)}) - c\|\nabla E_{\text{GH}}(X^{(t)})\|_F^2.
+\]
+Summing from $t=0$ to $T-1$ and using $E_{\text{GH}}(X^{(T)})\ge E_\inf$ gives
+\[
+c \sum_{t=0}^{T-1}\|\nabla E_{\text{GH}}(X^{(t)})\|_F^2
+\le E_{\text{GH}}(X^{(0)}) - E_\inf.
+\]
+Divide by $T$ and lower bound the average by the minimum.
+\end{proof}
+
+\begin{theorem}[Linear convergence in the strongly convex regime]
+\label{thm:rate_strongly_convex}
+Assume $E_{\text{GH}}$ is $\mu$-strongly convex and $L_{\text{lip}}$-smooth (e.g., under $\mu=1-\beta\|M\|^2>0$
+from Proposition~\ref{prop:convex_dc}). Let $X^\star$ be the unique minimizer.
+With step size $\eta \in (0, 1/L_{\text{lip}}]$, gradient descent satisfies
+\[
+\|X^{(t)} - X^\star\|_F \;\le\; (1-\eta\mu)^t \|X^{(0)} - X^\star\|_F,
+\]
+and similarly the function values converge geometrically:
+\[
+E_{\text{GH}}(X^{(t)}) - E_{\text{GH}}(X^\star)
+\;\le\; (1-\eta\mu)^t \bigl(E_{\text{GH}}(X^{(0)}) - E_{\text{GH}}(X^\star)\bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+This is the standard contraction result for gradient descent on $\mu$-strongly convex, $L$-smooth functions.
+One proof route: combine strong convexity with smoothness to obtain
+$\langle \nabla E(X)-\nabla E(Y), X-Y\rangle \ge \mu\|X-Y\|_F^2$ and
+$\|\nabla E(X)-\nabla E(Y)\|_F \le L_{\text{lip}}\|X-Y\|_F$,
+then show the GD update map is a contraction with factor $(1-\eta\mu)$ for $\eta\le 1/L_{\text{lip}}$.
+\end{proof}
+
+\begin{remark}[Exponential vs linear terminology]
+Theorems~\ref{thm:rate_strongly_convex} and the fixed-point contraction theorem both yield
+\emph{geometric} rates $(\rho^t)$, often called either \emph{linear convergence} or \emph{exponential decay}.
+\end{remark}
+
+\subsection{Local vs Global Minima (Critical Point Characterization)}
+We provide what can be said at the level of generality of this writeup.
+
+\begin{prop}[Existence of a global minimizer (coercivity)]
+\label{prop:coercive}
+Assume $M$ is fixed and finite. Then $E_{\text{GH}}(X)\to +\infty$ as $\|X\|_F\to\infty$.
+In particular, $E_{\text{GH}}$ attains at least one global minimizer.
+\end{prop}
+
+\begin{proof}
+For each node $v$, using the definition $\lse(\beta, \mathbf{z}) = \beta^{-1} \log \sum_i \exp(\beta z_i)$:
+\[
+\lse(\beta, M x_v) = \beta^{-1}\log\!\sum_{i=1}^N \exp(\beta m_i^\top x_v)
+\le \beta^{-1}\left(\log N + \beta \max_i m_i^\top x_v\right)
+= \beta^{-1}\log N + \max_i m_i^\top x_v.
+\]
+Since $\max_i m_i^\top x_v \le \|M\|\,\|x_v\|$ (where $\|M\|$ is the spectral norm), we have
+\[
+\lse(\beta, M x_v) \le \beta^{-1}\log N + \|M\|\,\|x_v\|.
+\]
+Hence
+\[
+-\lse(\beta, M x_v) \ge -\beta^{-1}\log N - \|M\|\,\|x_v\|.
+\]
+Summing over $v$ and using $\tr(X^T L X) \ge 0$ (since $L \succeq 0$) gives
+\[
+E_{\text{GH}}(X) \;\ge\; \frac12\|X\|_F^2 \;-\; \|M\|\sum_v \|x_v\| \;-\; C.
+\]
+By Cauchy--Schwarz, $\sum_v \|x_v\| \le \sqrt{n}\sqrt{\sum_v \|x_v\|^2} = \sqrt{n}\|X\|_F$, so
+\[
+E_{\text{GH}}(X) \;\ge\; \frac12\|X\|_F^2 \;-\; \|M\|\sqrt{n}\|X\|_F \;-\; C,
+\]
+for a constant $C = n\beta^{-1}\log N$ depending only on $(\beta,N,n)$.
+The right-hand side diverges to $+\infty$ as $\|X\|_F\to\infty$ (since the quadratic term dominates), so $E_{\text{GH}}$ is coercive.
+A coercive continuous function on $\mathbb{R}^{n\times d}$ attains a global minimizer.
+\end{proof}
+
+\begin{prop}[Stationary points and second-order characterization]
+\label{prop:critical_points}
+A point $X^\star$ is a first-order critical point iff $\nabla E_{\text{GH}}(X^\star)=0$
+(equivalently, it is a fixed point of the associated fixed-point map).
+Moreover:
+\begin{itemize}
+\item if $\nabla^2 E_{\text{GH}}(X^\star) \succ 0$ then $X^\star$ is a strict local minimizer;
+\item if $\nabla^2 E_{\text{GH}}(X^\star)$ has a negative eigenvalue then $X^\star$ is a strict saddle point.
+\end{itemize}
+If $E_{\text{GH}}$ is convex (e.g. $\beta\|M\|^2\le 1$), then \emph{every} critical point is a global minimizer;
+if it is strongly convex, that minimizer is unique.
+\end{prop}
+
+\subsection{Initialization Dependence}
+Initialization effects depend on whether the landscape is globally well-behaved.
+
+\begin{prop}[When initialization does \emph{not} matter]
+\label{prop:init_irrelevant}
+If $E_{\text{GH}}$ is strongly convex (e.g. $\beta\|M\|^2<1$), then gradient descent converges to the unique
+global minimizer $X^\star$ from any initialization.
+If the fixed-point map $T$ is a global contraction (Theorem~2), then fixed-point iteration converges to the unique
+fixed point from any initialization.
+\end{prop}
+
+\begin{remark}[When initialization \emph{does} matter]
+In the nonconvex regime, $E_{\text{GH}}$ can have multiple stationary points.
+Energy descent guarantees convergence to \emph{some} stationary point, but the selected limit point may depend on:
+(i) the starting point $X^{(0)}$ (basins of attraction), and (ii) the step size / algorithmic choices.
+Practically, different initializations can lead to different local minima or saddle escapes.
+
+A useful local criterion is stability of a fixed point under the iteration map:
+if the Jacobian of the iteration map has spectral radius $<1$ at $X^\star$, then $X^\star$ has a local basin of
+attraction (local contraction) and nearby initializations converge to it.
+\end{remark}
+
 
 \section{References}
 

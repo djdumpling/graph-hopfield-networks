@@ -1,0 +1,39 @@
+# Default experiment configuration for Graph Hopfield Networks
+
+# Dataset configuration
+dataset:
+  name: "cora"  # cora, citeseer, pubmed
+  root: "./data"
+  normalize_features: true
+
+# Model configuration
+model:
+  name: "ghn"  # ghn, gcn, gat, graphsage, mlp
+  hidden_dim: 64
+  num_patterns: 64  # For GHN only
+  beta: 1.0  # For GHN only
+  lambda_graph: 0.1  # For GHN only
+  num_iterations: 2  # For GHN only
+  alpha: 0.5  # For GHN only
+  num_layers: 2
+  dropout: 0.5
+
+# Training configuration
+training:
+  epochs: 200
+  lr: 0.01
+  weight_decay: 0.0005
+  patience: 50  # Early stopping patience
+  min_delta: 0.001  # Minimum improvement for early stopping
+
+# Corruption configuration (for evaluation)
+corruption:
+  type: "feature_noise"  # feature_noise, feature_mask, edge_drop, edge_add, label_flip
+  levels: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]
+
+# Experiment configuration
+experiment:
+  num_seeds: 5
+  device: "auto"  # auto, cpu, cuda
+  save_results: true
+  results_dir: "./results"
