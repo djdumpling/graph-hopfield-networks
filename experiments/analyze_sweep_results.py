@@ -100,9 +100,20 @@ def extract_results_from_files(result_files: List[str]) -> List[Dict[str, Any]]:
 def analyze_sweep(sweep_results_file: str, results_dir: str = "results"):
     """Analyze sweep results and find best configurations."""
     
-    print("Loading sweep plan...")
+    print("Loading sweep results...")
     sweep_data = load_sweep_results(sweep_results_file)
-    configs = sweep_data["configurations"]
+    
+    # Handle both sweep_results format and sweep_plan format
+    if "configurations" in sweep_data:
+        # This is a sweep plan file
+        configs = sweep_data["configurations"]
+        results_list = None
+    elif "results" in sweep_data:
+        # This is a sweep results file - extract configs from results
+        results_list = sweep_data["results"]
+        configs = [r["config"] for r in results_list if r.get("config")]
+    else:
+        raise ValueError("Unknown file format - expected 'configurations' or 'results' key")
     
     print(f"Analyzing {len(configs)} configurations...")
     print("Loading result files (this may take a while)...")
@@ -125,6 +136,11 @@ def analyze_sweep(sweep_results_file: str, results_dir: str = "results"):
                 })
         else:
             # Configuration not run or failed
+            # Check if we have status info from sweep results
+            status = "unknown"
+            if results_list and idx < len(results_list):
+                status = results_list[idx].get("status", "unknown")
+            
             all_results.append({
                 **config,
                 "test_acc_mean": None,
@@ -132,6 +148,7 @@ def analyze_sweep(sweep_results_file: str, results_dir: str = "results"):
                 "aurc_mean": None,
                 "aurc_std": None,
                 "file": None,
+                "status": status,
             })
     
     # Convert to DataFrame for analysis

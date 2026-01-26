@@ -1,0 +1,67 @@
+{
+  "dataset": "cora",
+  "num_seeds": 3,
+  "results": [
+    {
+      "experiment_name": "baseline_2layer",
+      "config_overrides": {
+        "model.num_layers": 2,
+        "model.memory_init_method": "normal",
+        "training.diversity_weight": 0.0
+      },
+      "test_acc_mean": 0.7816666960716248,
+      "test_acc_std": 0.0028867830988019705,
+      "aurc_mean": 0.7816333333333335,
+      "aurc_std": 0.0024684678108764417
+    },
+    {
+      "experiment_name": "single_layer",
+      "config_overrides": {
+        "model.num_layers": 1,
+        "model.memory_init_method": "normal",
+        "training.diversity_weight": 0.0
+      },
+      "test_acc_mean": 0.7709999680519104,
+      "test_acc_std": 0.0036055378150194883,
+      "aurc_mean": 0.7675333333333333,
+      "aurc_std": 0.00825853094280897
+    },
+    {
+      "experiment_name": "orthogonal_init_1layer",
+      "config_overrides": {
+        "model.num_layers": 1,
+        "model.memory_init_method": "orthogonal",
+        "training.diversity_weight": 0.0
+      },
+      "test_acc_mean": 0.7806666493415833,
+      "test_acc_std": 0.004509251099079847,
+      "aurc_mean": 0.7772,
+      "aurc_std": 0.006557438524302015
+    },
+    {
+      "experiment_name": "diversity_reg_0.1",
+      "config_overrides": {
+        "model.num_layers": 2,
+        "model.memory_init_method": "normal",
+        "training.diversity_weight": 0.1
+      },
+      "test_acc_mean": 0.7836666703224182,
+      "test_acc_std": 0.0047258115373551846,
+      "aurc_mean": 0.7841333333333335,
+      "aurc_std": 0.003453018003621328
+    },
+    {
+      "experiment_name": "combined_1layer_ortho_div0.1",
+      "config_overrides": {
+        "model.num_layers": 1,
+        "model.memory_init_method": "orthogonal",
+        "training.diversity_weight": 0.1
+      },
+      "test_acc_mean": 0.7853333353996277,
+      "test_acc_std": 0.006110113114118576,
+      "aurc_mean": 0.7809333333333334,
+      "aurc_std": 0.005159780357082415
+    }
+  ],
+  "best_config": "combined_1layer_ortho_div0.1"
+}

@@ -194,13 +194,22 @@ class GraphHopfieldLayer(nn.Module):
         
         # Iterative update
         for t in range(self.num_iterations):
+            # Compute energy BEFORE update (for tracking descent)
+            if return_energy:
+                energy_before = self._compute_total_energy(x, edge_index, num_nodes)
+                energies.append({
+                    "iteration": t,
+                    "energy_before": energy_before.item(),
+                })
+            
             # 1. Hopfield retrieval: R(X) = M^T @ softmax(β M X)
             retrieved, attn = self.memory.retrieve(
-                x, beta=self.beta, return_attention=return_attention
+                x, beta=self.beta, return_attention=return_attention or return_energy
             )
             
-            if return_attention and attn is not None:
-                attentions.append(attn)
+            # Always collect attention if requested (for analysis)
+            if (return_attention or return_energy) and attn is not None:
+                attentions.append(attn.detach().cpu())  # Detach to avoid memory issues
             
             # 2. Graph Laplacian term: L @ X
             laplacian_term = self._compute_laplacian_term(x, edge_index, num_nodes)
@@ -225,10 +234,12 @@ class GraphHopfieldLayer(nn.Module):
             
             x = x_new
             
-            # Compute energy if requested
+            # Compute energy AFTER update (for tracking descent)
             if return_energy:
-                energy = self._compute_total_energy(x, edge_index, num_nodes)
-                energies.append(energy.item())
+                energy_after = self._compute_total_energy(x, edge_index, num_nodes)
+                energies[-1]["energy_after"] = energy_after.item()
+                energies[-1]["energy_change"] = (energy_after - energy_before).item()
+                energies[-1]["energy_decreased"] = (energy_after < energy_before).item()
         
         # Apply dropout after all iterations (not during, to preserve energy descent)
         x = self.dropout(x)
@@ -236,10 +247,10 @@ class GraphHopfieldLayer(nn.Module):
         # Collect info
         if return_energy:
             info["energies"] = energies
-        if return_attention and attentions:
-            info["attentions"] = attentions
+        if (return_attention or return_energy) and attentions:
+            info["attentions"] = attentions  # Store even if only energy was requested (for analysis)
         
-        return x, info if (return_energy or return_attention) else None
+        return x, info if (return_energy or return_attention or attentions) else None
     
     def _compute_total_energy(
         self,

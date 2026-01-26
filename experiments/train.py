@@ -7,7 +7,7 @@ import yaml
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any, Optional, List, Tuple
+from typing import Dict, Any, Optional, List, Tuple, Union
 
 import torch
 import torch.nn as nn
@@ -90,19 +90,31 @@ def train_epoch(
     data,
     optimizer: torch.optim.Optimizer,
     device: torch.device,
-) -> float:
+    log_energy: bool = False,
+    log_attention: bool = False,
+) -> Tuple[float, Optional[dict]]:
     """Train for one epoch."""
     model.train()
     optimizer.zero_grad()
     
     data = data.to(device)
-    out, _ = model(data.x, data.edge_index)
+    
+    # Forward pass with optional energy/attention logging
+    if log_energy or log_attention:
+        out, info = model(
+            data.x, 
+            data.edge_index,
+            return_energy=log_energy,
+            return_attention=log_attention,
+        )
+    else:
+        out, info = model(data.x, data.edge_index)
     
     loss = F.cross_entropy(out[data.train_mask], data.y[data.train_mask])
     loss.backward()
     optimizer.step()
     
-    return loss.item()
+    return loss.item(), info
 
 
 @torch.no_grad()
@@ -110,12 +122,23 @@ def evaluate(
     model: nn.Module,
     data,
     device: torch.device,
-) -> Dict[str, float]:
+    log_energy: bool = False,
+    log_attention: bool = False,
+) -> Tuple[Dict[str, float], Optional[dict]]:
     """Evaluate on all splits."""
     model.eval()
     data = data.to(device)
     
-    out, _ = model(data.x, data.edge_index)
+    # Forward pass with optional energy/attention logging
+    if log_energy or log_attention:
+        out, info = model(
+            data.x,
+            data.edge_index,
+            return_energy=log_energy,
+            return_attention=log_attention,
+        )
+    else:
+        out, info = model(data.x, data.edge_index)
     
     results = {
         "train_acc": compute_accuracy(out, data.y, data.train_mask),
@@ -123,7 +146,7 @@ def evaluate(
         "test_acc": compute_accuracy(out, data.y, data.test_mask),
     }
     
-    return results
+    return results, info
 
 
 def train_model(
@@ -159,6 +182,15 @@ def train_model(
         "test_acc": [],
     }
     
+    # Energy and attention logging (if enabled)
+    log_energy = config.get("experiment", {}).get("log_energy", False)
+    log_attention = config.get("experiment", {}).get("log_attention", False)
+    
+    if log_energy:
+        history["energies"] = []
+    if log_attention:
+        history["attentions"] = []
+    
     epochs = training_config["epochs"]
     patience = training_config["patience"]
     min_delta = training_config["min_delta"]
@@ -167,23 +199,40 @@ def train_model(
     
     for epoch in pbar:
         # Train
-        loss = train_epoch(model, data, optimizer, device)
+        loss, train_info = train_epoch(model, data, optimizer, device, log_energy, log_attention)
         
         # Evaluate
-        metrics = evaluate(model, data, device)
+        metrics, eval_info = evaluate(model, data, device, log_energy, log_attention)
         
         history["train_loss"].append(loss)
         history["train_acc"].append(metrics["train_acc"])
         history["val_acc"].append(metrics["val_acc"])
         history["test_acc"].append(metrics["test_acc"])
         
-        # Early stopping
+        # Log energy if enabled
+        if log_energy and eval_info is not None and "energies" in eval_info:
+            history["energies"].append(eval_info["energies"])
+        
+        # Log attention if enabled (store periodically to avoid memory issues)
+        if log_attention and eval_info is not None and "attentions" in eval_info:
+            # Store attention every 10 epochs or at final epoch
+            if epoch % 10 == 0 or epoch == epochs - 1:
+                history["attentions"].append({
+                    "epoch": epoch,
+                    "attention": eval_info["attentions"],
+                })
+        
+        # Early stopping check
         if metrics["val_acc"] > best_val_acc + min_delta:
             best_val_acc = metrics["val_acc"]
             best_model_state = model.state_dict().copy()
             patience_counter = 0
         else:
             patience_counter += 1
+        
+        # Store best model state in history for diagnostics
+        if best_model_state is not None:
+            history["best_model_state"] = best_model_state
         
         if patience_counter >= patience:
             if verbose:
@@ -201,7 +250,9 @@ def train_model(
         model.load_state_dict(best_model_state)
     
     # Final evaluation
-    final_metrics = evaluate(model, data, device)
+    log_energy = config.get("experiment", {}).get("log_energy", False)
+    log_attention = config.get("experiment", {}).get("log_attention", False)
+    final_metrics, _ = evaluate(model, data, device, log_energy, log_attention)
     history["final_test_acc"] = final_metrics["test_acc"]
     history["best_val_acc"] = best_val_acc
     

@@ -1,0 +1,117 @@
+{
+  "dataset": "citeseer",
+  "num_seeds": 3,
+  "results": [
+    {
+      "experiment_name": "baseline_2layer",
+      "config_overrides": {
+        "model.num_layers": 2,
+        "model.memory_init_method": "normal",
+        "training.diversity_weight": 0.0
+      },
+      "test_acc_mean": 0.6756666302680969,
+      "test_acc_std": 0.01429451908916235,
+      "aurc_mean": 0.6756000000000001,
+      "aurc_std": 0.010849884792015055
+    },
+    {
+      "experiment_name": "single_layer",
+      "config_overrides": {
+        "model.num_layers": 1,
+        "model.memory_init_method": "normal",
+        "training.diversity_weight": 0.0
+      },
+      "test_acc_mean": 0.6826665997505188,
+      "test_acc_std": 0.005859457887709141,
+      "aurc_mean": 0.6799666666666667,
+      "aurc_std": 0.00787485449601028
+    },
+    {
+      "experiment_name": "orthogonal_init_2layer",
+      "config_overrides": {
+        "model.num_layers": 2,
+        "model.memory_init_method": "orthogonal",
+        "training.diversity_weight": 0.0
+      },
+      "test_acc_mean": 0.6803333163261414,
+      "test_acc_std": 0.01026319433003664,
+      "aurc_mean": 0.6806666666666666,
+      "aurc_std": 0.009984654893051234
+    },
+    {
+      "experiment_name": "orthogonal_init_1layer",
+      "config_overrides": {
+        "model.num_layers": 1,
+        "model.memory_init_method": "orthogonal",
+        "training.diversity_weight": 0.0
+      },
+      "test_acc_mean": 0.6493332982063293,
+      "test_acc_std": 0.004509251099079847,
+      "aurc_mean": 0.6482333333333333,
+      "aurc_std": 0.00402781992315109
+    },
+    {
+      "experiment_name": "diversity_reg_0.1",
+      "config_overrides": {
+        "model.num_layers": 2,
+        "model.memory_init_method": "normal",
+        "training.diversity_weight": 0.1
+      },
+      "test_acc_mean": 0.6796666979789734,
+      "test_acc_std": 0.006658308207988739,
+      "aurc_mean": 0.6791333333333333,
+      "aurc_std": 0.00611010092660778
+    },
+    {
+      "experiment_name": "diversity_reg_0.5",
+      "config_overrides": {
+        "model.num_layers": 2,
+        "model.memory_init_method": "normal",
+        "training.diversity_weight": 0.5
+      },
+      "test_acc_mean": 0.6760000586509705,
+      "test_acc_std": 0.015099652111530304,
+      "aurc_mean": 0.6730999999999999,
+      "aurc_std": 0.01506087646851939
+    },
+    {
+      "experiment_name": "separate_lr_0.001",
+      "config_overrides": {
+        "model.num_layers": 2,
+        "model.memory_init_method": "normal",
+        "training.memory_lr": 0.001,
+        "training.diversity_weight": 0.0
+      },
+      "test_acc_mean": 0.6663333773612976,
+      "test_acc_std": 0.019218040630221367,
+      "aurc_mean": 0.6688666666666666,
+      "aurc_std": 0.01828560453836112
+    },
+    {
+      "experiment_name": "combined_1layer_ortho_div0.1",
+      "config_overrides": {
+        "model.num_layers": 1,
+        "model.memory_init_method": "orthogonal",
+        "training.diversity_weight": 0.1
+      },
+      "test_acc_mean": 0.637999951839447,
+      "test_acc_std": 0.019313206896185875,
+      "aurc_mean": 0.6355666666666666,
+      "aurc_std": 0.015351330018383852
+    },
+    {
+      "experiment_name": "combined_2layer_ortho_div0.1_separ_lr",
+      "config_overrides": {
+        "model.num_layers": 2,
+        "model.memory_init_method": "orthogonal",
+        "training.diversity_weight": 0.1,
+        "training.memory_lr": 0.001
+      },
+      "test_acc_mean": 0.6776666641235352,
+      "test_acc_std": 0.015143752098083496,
+      "aurc_mean": 0.6762666666666667,
+      "aurc_std": 0.016973606962968495
+    }
+  ],
+  "best_config": "single_layer"
+}

@@ -46,10 +46,10 @@ data/
 *.pickle
 
 # Results and outputs
-results/
-*.json
-!package.json
-!package-lock.json
+results/*
+!results/diagnostics/
+!results/ghn_fixes/
+!results/sweeps/
 
 # Logs
 *.log
