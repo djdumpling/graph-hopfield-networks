@@ -50,6 +50,7 @@ class GraphHopfieldLayer(nn.Module):
         tie_keys_values: bool = False,
         learnable_beta: bool = True,
         use_spectral_norm_constraint: bool = True,
+        norm_mode: str = "per_layer",
     ):
         """
         Initialize the Graph Hopfield Layer.
@@ -62,7 +63,7 @@ class GraphHopfieldLayer(nn.Module):
             lambda_graph: Weight for graph Laplacian regularization
             num_iterations: Number of fixed-point iterations (T)
             alpha: Damping/mixing coefficient for update stability
-            use_layer_norm: Apply LayerNorm after each iteration
+            use_layer_norm: Apply LayerNorm (location depends on norm_mode)
             use_residual: Use residual connection in updates
             dropout: Dropout rate
             normalize_laplacian: Use symmetric normalized Laplacian
@@ -71,6 +72,10 @@ class GraphHopfieldLayer(nn.Module):
             tie_keys_values: If True, use same matrix for keys and values (default: False)
             learnable_beta: If True, make beta learnable (default: True)
             use_spectral_norm_constraint: Constrain beta for convexity (default: True)
+            norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
+                       "per_layer" (default): Apply once after all iterations (preserves energy descent)
+                       "per_iteration": Apply after each iteration (legacy behavior, breaks energy descent)
+                       "none": No normalization
         """
         super().__init__()
 
@@ -85,6 +90,12 @@ class GraphHopfieldLayer(nn.Module):
         self.use_residual = use_residual
         self.normalize_laplacian = normalize_laplacian
         self.learnable_beta = learnable_beta
+        self.norm_mode = norm_mode
+
+        # Validate norm_mode
+        valid_norm_modes = ("none", "per_layer", "per_iteration")
+        if norm_mode not in valid_norm_modes:
+            raise ValueError(f"norm_mode must be one of {valid_norm_modes}, got {norm_mode}")
 
         # Input projection (if dimensions differ)
         if in_dim != out_dim:
@@ -105,8 +116,10 @@ class GraphHopfieldLayer(nn.Module):
         )
 
         # Optional layer normalization
-        if use_layer_norm:
+        if use_layer_norm and norm_mode != "none":
             self.layer_norm = nn.LayerNorm(out_dim)
+        else:
+            self.layer_norm = None
 
         # Dropout
         self.dropout = nn.Dropout(dropout) if dropout > 0 else nn.Identity()
@@ -239,11 +252,11 @@ class GraphHopfieldLayer(nn.Module):
                 )
             else:
                 x_new = retrieved - laplacian_coeff * laplacian_term
-            
-            # 4. Apply layer norm (for stability)
-            if self.use_layer_norm:
+
+            # 4. Apply layer norm per iteration (legacy mode - breaks energy descent)
+            if self.layer_norm is not None and self.norm_mode == "per_iteration":
                 x_new = self.layer_norm(x_new)
-            
+
             x = x_new
             
             # Compute energy AFTER update (for tracking descent)
@@ -253,9 +266,13 @@ class GraphHopfieldLayer(nn.Module):
                 energies[-1]["energy_change"] = (energy_after - energy_before).item()
                 energies[-1]["energy_decreased"] = (energy_after < energy_before).item()
         
+        # Apply layer norm after all iterations (per_layer mode - preserves energy descent)
+        if self.layer_norm is not None and self.norm_mode == "per_layer":
+            x = self.layer_norm(x)
+
         # Apply dropout after all iterations (not during, to preserve energy descent)
         x = self.dropout(x)
-        
+
         # Collect info
         if return_energy:
             info["energies"] = energies
@@ -328,6 +345,7 @@ class GraphHopfieldBlock(nn.Module):
         tie_keys_values: bool = False,
         learnable_beta: bool = True,
         use_spectral_norm_constraint: bool = True,
+        norm_mode: str = "per_layer",
     ):
         """
         Initialize the Graph Hopfield Block.
@@ -350,6 +368,7 @@ class GraphHopfieldBlock(nn.Module):
             tie_keys_values: If True, use same matrix for keys and values
             learnable_beta: If True, make beta learnable
             use_spectral_norm_constraint: Constrain beta for convexity
+            norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
         """
         super().__init__()
 
@@ -384,6 +403,7 @@ class GraphHopfieldBlock(nn.Module):
             tie_keys_values=tie_keys_values,
             learnable_beta=learnable_beta,
             use_spectral_norm_constraint=use_spectral_norm_constraint,
+            norm_mode=norm_mode,
         )
         
         # Output MLP

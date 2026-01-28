@@ -21,6 +21,7 @@ model:
   tie_keys_values: false  # Untied keys/values for better capacity
   learnable_beta: true  # Learn inverse temperature
   use_spectral_norm_constraint: true  # Constrain beta for convexity
+  norm_mode: "per_layer"  # "per_layer" preserves energy descent, "per_iteration" is legacy
 
 # Training configuration
 training:

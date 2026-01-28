@@ -39,6 +39,7 @@ class GraphHopfieldNetwork(nn.Module):
         tie_keys_values: bool = False,
         learnable_beta: bool = True,
         use_spectral_norm_constraint: bool = True,
+        norm_mode: str = "per_layer",
     ):
         """
         Initialize the Graph Hopfield Network.
@@ -61,6 +62,7 @@ class GraphHopfieldNetwork(nn.Module):
             tie_keys_values: If True, use same matrix for keys and values (default: False)
             learnable_beta: If True, make beta learnable (default: True)
             use_spectral_norm_constraint: Constrain beta for convexity (default: True)
+            norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
         """
         super().__init__()
 
@@ -101,6 +103,7 @@ class GraphHopfieldNetwork(nn.Module):
                     tie_keys_values=tie_keys_values,
                     learnable_beta=learnable_beta,
                     use_spectral_norm_constraint=use_spectral_norm_constraint,
+                    norm_mode=norm_mode,
                 )
             )
 
@@ -191,6 +194,7 @@ class GraphHopfieldNetworkMinimal(nn.Module):
         tie_keys_values: bool = False,
         learnable_beta: bool = True,
         use_spectral_norm_constraint: bool = True,
+        norm_mode: str = "per_layer",
     ):
         super().__init__()
 
@@ -217,6 +221,7 @@ class GraphHopfieldNetworkMinimal(nn.Module):
             tie_keys_values=tie_keys_values,
             learnable_beta=learnable_beta,
             use_spectral_norm_constraint=use_spectral_norm_constraint,
+            norm_mode=norm_mode,
         )
 
         # Classifier

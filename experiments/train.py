@@ -61,6 +61,7 @@ def create_model(
             tie_keys_values=config["model"].get("tie_keys_values", False),
             learnable_beta=config["model"].get("learnable_beta", True),
             use_spectral_norm_constraint=config["model"].get("use_spectral_norm_constraint", True),
+            norm_mode=config["model"].get("norm_mode", "per_layer"),
         )
     elif model_name == "ghn_minimal":
         return GraphHopfieldNetworkMinimal(
@@ -79,6 +80,7 @@ def create_model(
             tie_keys_values=config["model"].get("tie_keys_values", False),
             learnable_beta=config["model"].get("learnable_beta", True),
             use_spectral_norm_constraint=config["model"].get("use_spectral_norm_constraint", True),
+            norm_mode=config["model"].get("norm_mode", "per_layer"),
         )
     else:
         return create_baseline(
