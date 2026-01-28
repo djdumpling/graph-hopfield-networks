@@ -64,6 +64,8 @@ def create_model(
             norm_mode=config["model"].get("norm_mode", "per_layer"),
             use_query_proj=config["model"].get("use_query_proj", True),
             num_heads=config["model"].get("num_heads", 1),
+            use_skip_connections=config["model"].get("use_skip_connections", True),
+            skip_weight=config["model"].get("skip_weight", 0.1),
         )
     elif model_name == "ghn_minimal":
         return GraphHopfieldNetworkMinimal(

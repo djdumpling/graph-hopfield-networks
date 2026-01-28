@@ -42,6 +42,8 @@ class GraphHopfieldNetwork(nn.Module):
         norm_mode: str = "per_layer",
         use_query_proj: bool = True,
         num_heads: int = 1,
+        use_skip_connections: bool = True,
+        skip_weight: float = 0.1,
     ):
         """
         Initialize the Graph Hopfield Network.
@@ -67,6 +69,8 @@ class GraphHopfieldNetwork(nn.Module):
             norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
             use_query_proj: If True, add a learnable query projection (default: True)
             num_heads: Number of attention heads for multi-head memory (default: 1)
+            use_skip_connections: Add inter-layer skip connections (default: True)
+            skip_weight: Weight for skip connections (default: 0.1)
         """
         super().__init__()
 
@@ -74,6 +78,8 @@ class GraphHopfieldNetwork(nn.Module):
         self.hidden_dim = hidden_dim
         self.out_dim = out_dim
         self.num_layers = num_layers
+        self.use_skip_connections = use_skip_connections
+        self.skip_weight = skip_weight
 
         # Input encoder
         if use_encoder:
@@ -141,14 +147,22 @@ class GraphHopfieldNetwork(nn.Module):
         
         # Encode input
         x = self.encoder(x)
-        
-        # Pass through GHN layers
-        for layer in self.ghn_layers:
+
+        # Pass through GHN layers with optional skip connections
+        x_prev = None
+        for i, layer in enumerate(self.ghn_layers):
             x, info = layer(
                 x, edge_index,
                 return_energy=return_energy,
                 return_attention=return_attention,
             )
+
+            # Add skip connection from previous layer (for layers > 0)
+            if self.use_skip_connections and i > 0 and x_prev is not None:
+                x = x + self.skip_weight * x_prev
+
+            x_prev = x
+
             if info:
                 if "energies" in info:
                     all_energies.extend(info["energies"])
