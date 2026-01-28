@@ -7,7 +7,7 @@ from torch import Tensor
 from torch_geometric.utils import degree, add_self_loops
 from typing import Optional, Tuple
 
-from .memory_bank import MemoryBank
+from .memory_bank import MemoryBank, MultiHeadMemoryBank
 
 
 class GraphHopfieldLayer(nn.Module):
@@ -52,6 +52,7 @@ class GraphHopfieldLayer(nn.Module):
         use_spectral_norm_constraint: bool = True,
         norm_mode: str = "per_layer",
         use_query_proj: bool = True,
+        num_heads: int = 1,
     ):
         """
         Initialize the Graph Hopfield Layer.
@@ -78,6 +79,7 @@ class GraphHopfieldLayer(nn.Module):
                        "per_iteration": Apply after each iteration (legacy behavior, breaks energy descent)
                        "none": No normalization
             use_query_proj: If True, add a learnable query projection (default: True)
+            num_heads: Number of attention heads for multi-head memory (default: 1, single-head)
         """
         super().__init__()
 
@@ -106,17 +108,32 @@ class GraphHopfieldLayer(nn.Module):
             self.proj_in = nn.Identity()
 
         # Memory bank for Hopfield retrieval
-        self.memory = MemoryBank(
-            num_patterns=num_patterns,
-            pattern_dim=out_dim,
-            tie_keys_values=tie_keys_values,
-            normalize_keys=normalize_memory_keys,
-            normalize_queries=normalize_memory_queries,
-            learnable_beta=learnable_beta,
-            initial_beta=beta,
-            use_spectral_norm_constraint=use_spectral_norm_constraint,
-            use_query_proj=use_query_proj,
-        )
+        self.num_heads = num_heads
+        if num_heads > 1:
+            self.memory = MultiHeadMemoryBank(
+                num_patterns=num_patterns,
+                pattern_dim=out_dim,
+                num_heads=num_heads,
+                tie_keys_values=tie_keys_values,
+                normalize_keys=normalize_memory_keys,
+                normalize_queries=normalize_memory_queries,
+                learnable_beta=learnable_beta,
+                initial_beta=beta,
+                use_spectral_norm_constraint=use_spectral_norm_constraint,
+                use_query_proj=use_query_proj,
+            )
+        else:
+            self.memory = MemoryBank(
+                num_patterns=num_patterns,
+                pattern_dim=out_dim,
+                tie_keys_values=tie_keys_values,
+                normalize_keys=normalize_memory_keys,
+                normalize_queries=normalize_memory_queries,
+                learnable_beta=learnable_beta,
+                initial_beta=beta,
+                use_spectral_norm_constraint=use_spectral_norm_constraint,
+                use_query_proj=use_query_proj,
+            )
 
         # Optional layer normalization
         if use_layer_norm and norm_mode != "none":
@@ -350,6 +367,7 @@ class GraphHopfieldBlock(nn.Module):
         use_spectral_norm_constraint: bool = True,
         norm_mode: str = "per_layer",
         use_query_proj: bool = True,
+        num_heads: int = 1,
     ):
         """
         Initialize the Graph Hopfield Block.
@@ -374,6 +392,7 @@ class GraphHopfieldBlock(nn.Module):
             use_spectral_norm_constraint: Constrain beta for convexity
             norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
             use_query_proj: If True, add a learnable query projection
+            num_heads: Number of attention heads for multi-head memory
         """
         super().__init__()
 
@@ -410,8 +429,9 @@ class GraphHopfieldBlock(nn.Module):
             use_spectral_norm_constraint=use_spectral_norm_constraint,
             norm_mode=norm_mode,
             use_query_proj=use_query_proj,
+            num_heads=num_heads,
         )
-        
+
         # Output MLP
         if use_output_mlp:
             self.output_mlp = nn.Sequential(

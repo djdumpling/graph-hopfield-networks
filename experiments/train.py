@@ -63,6 +63,7 @@ def create_model(
             use_spectral_norm_constraint=config["model"].get("use_spectral_norm_constraint", True),
             norm_mode=config["model"].get("norm_mode", "per_layer"),
             use_query_proj=config["model"].get("use_query_proj", True),
+            num_heads=config["model"].get("num_heads", 1),
         )
     elif model_name == "ghn_minimal":
         return GraphHopfieldNetworkMinimal(
@@ -83,6 +84,7 @@ def create_model(
             use_spectral_norm_constraint=config["model"].get("use_spectral_norm_constraint", True),
             norm_mode=config["model"].get("norm_mode", "per_layer"),
             use_query_proj=config["model"].get("use_query_proj", True),
+            num_heads=config["model"].get("num_heads", 1),
         )
     else:
         return create_baseline(

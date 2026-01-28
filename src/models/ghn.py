@@ -41,6 +41,7 @@ class GraphHopfieldNetwork(nn.Module):
         use_spectral_norm_constraint: bool = True,
         norm_mode: str = "per_layer",
         use_query_proj: bool = True,
+        num_heads: int = 1,
     ):
         """
         Initialize the Graph Hopfield Network.
@@ -65,6 +66,7 @@ class GraphHopfieldNetwork(nn.Module):
             use_spectral_norm_constraint: Constrain beta for convexity (default: True)
             norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
             use_query_proj: If True, add a learnable query projection (default: True)
+            num_heads: Number of attention heads for multi-head memory (default: 1)
         """
         super().__init__()
 
@@ -107,6 +109,7 @@ class GraphHopfieldNetwork(nn.Module):
                     use_spectral_norm_constraint=use_spectral_norm_constraint,
                     norm_mode=norm_mode,
                     use_query_proj=use_query_proj,
+                    num_heads=num_heads,
                 )
             )
 
@@ -122,7 +125,7 @@ class GraphHopfieldNetwork(nn.Module):
     ) -> Tuple[Tensor, Optional[dict]]:
         """
         Forward pass through the network.
-        
+
         Args:
             x: Node features [N, in_dim]
             edge_index: Graph edges [2, E]
@@ -199,6 +202,7 @@ class GraphHopfieldNetworkMinimal(nn.Module):
         use_spectral_norm_constraint: bool = True,
         norm_mode: str = "per_layer",
         use_query_proj: bool = True,
+        num_heads: int = 1,
     ):
         super().__init__()
 
@@ -227,6 +231,7 @@ class GraphHopfieldNetworkMinimal(nn.Module):
             use_spectral_norm_constraint=use_spectral_norm_constraint,
             norm_mode=norm_mode,
             use_query_proj=use_query_proj,
+            num_heads=num_heads,
         )
 
         # Classifier

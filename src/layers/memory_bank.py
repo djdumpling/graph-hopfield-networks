@@ -304,3 +304,183 @@ class MemoryBank(nn.Module):
             f"use_query_proj={self.use_query_proj}, "
             f"{beta_str}"
         )
+
+
+class MultiHeadMemoryBank(nn.Module):
+    """
+    Multi-head memory bank for increased capacity and expressiveness.
+
+    Similar to multi-head attention in Transformers, this module uses multiple
+    independent memory banks (heads) that operate on different subspaces of the
+    input. Each head has K/num_heads patterns of dimension d/num_heads.
+
+    This increases capacity (similar to GAT's multi-head attention) while
+    maintaining parameter count.
+
+    Attributes:
+        num_heads (int): Number of attention heads
+        num_patterns (int): Total number of patterns across all heads
+        pattern_dim (int): Total dimension (each head uses pattern_dim/num_heads)
+    """
+
+    def __init__(
+        self,
+        num_patterns: int,
+        pattern_dim: int,
+        num_heads: int = 4,
+        tie_keys_values: bool = False,
+        normalize_keys: bool = False,
+        normalize_queries: bool = False,
+        learnable_beta: bool = True,
+        initial_beta: float = 1.0,
+        use_spectral_norm_constraint: bool = True,
+        use_query_proj: bool = True,
+    ):
+        """
+        Initialize the multi-head memory bank.
+
+        Args:
+            num_patterns: Total number of patterns (divided among heads)
+            pattern_dim: Total dimension (must be divisible by num_heads)
+            num_heads: Number of attention heads (default: 4)
+            tie_keys_values: If True, use same matrix for keys and values
+            normalize_keys: Normalize memory keys to unit norm
+            normalize_queries: Normalize queries to unit norm
+            learnable_beta: If True, make beta learnable (shared across heads)
+            initial_beta: Initial value for beta
+            use_spectral_norm_constraint: Constrain beta for convexity
+            use_query_proj: Add learnable query projection
+        """
+        super().__init__()
+
+        if pattern_dim % num_heads != 0:
+            raise ValueError(f"pattern_dim ({pattern_dim}) must be divisible by num_heads ({num_heads})")
+
+        self.num_heads = num_heads
+        self.num_patterns = num_patterns
+        self.pattern_dim = pattern_dim
+        self.head_dim = pattern_dim // num_heads
+        self.patterns_per_head = num_patterns // num_heads
+
+        # Create individual memory banks for each head
+        self.heads = nn.ModuleList([
+            MemoryBank(
+                num_patterns=self.patterns_per_head,
+                pattern_dim=self.head_dim,
+                tie_keys_values=tie_keys_values,
+                normalize_keys=normalize_keys,
+                normalize_queries=normalize_queries,
+                learnable_beta=learnable_beta,
+                initial_beta=initial_beta,
+                use_spectral_norm_constraint=use_spectral_norm_constraint,
+                use_query_proj=use_query_proj,
+            )
+            for _ in range(num_heads)
+        ])
+
+        # Output projection to combine heads
+        self.output_proj = nn.Linear(pattern_dim, pattern_dim, bias=False)
+        nn.init.eye_(self.output_proj.weight)  # Initialize close to identity
+
+    def retrieve(
+        self,
+        queries: torch.Tensor,
+        beta: Optional[float] = None,
+        return_attention: bool = False,
+    ) -> Tuple[torch.Tensor, Optional[torch.Tensor]]:
+        """
+        Retrieve from memory using multi-head Hopfield/attention mechanism.
+
+        Args:
+            queries: Query vectors [N, d] or [B, N, d]
+            beta: Inverse temperature (if None, uses learnable beta)
+            return_attention: If True, also return attention weights
+
+        Returns:
+            retrieved: Retrieved patterns [N, d] or [B, N, d]
+            attention: Concatenated attention weights from all heads (if return_attention)
+        """
+        # Split queries into heads: [N, d] -> num_heads x [N, head_dim]
+        query_heads = queries.split(self.head_dim, dim=-1)
+
+        head_outputs = []
+        all_attentions = []
+
+        for i, (head, query_head) in enumerate(zip(self.heads, query_heads)):
+            retrieved, attn = head.retrieve(query_head, beta=beta, return_attention=return_attention)
+            head_outputs.append(retrieved)
+            if return_attention and attn is not None:
+                all_attentions.append(attn)
+
+        # Concatenate head outputs: [N, head_dim] * num_heads -> [N, d]
+        combined = torch.cat(head_outputs, dim=-1)
+
+        # Apply output projection
+        output = self.output_proj(combined)
+
+        if return_attention:
+            # Stack attentions: [num_heads, N, K_per_head]
+            attention = torch.stack(all_attentions, dim=0) if all_attentions else None
+            return output, attention
+        return output, None
+
+    def compute_energy(self, x: torch.Tensor, beta: Optional[float] = None) -> torch.Tensor:
+        """
+        Compute the total Hopfield energy across all heads.
+
+        Args:
+            x: State vectors [N, d]
+            beta: Inverse temperature
+
+        Returns:
+            Total energy (sum across heads)
+        """
+        x_heads = x.split(self.head_dim, dim=-1)
+        total_energy = 0.0
+
+        for head, x_head in zip(self.heads, x_heads):
+            total_energy = total_energy + head.compute_energy(x_head, beta=beta)
+
+        return total_energy
+
+    def compute_diversity_loss(self, threshold: float = 0.5) -> torch.Tensor:
+        """
+        Compute diversity loss across all heads.
+
+        Args:
+            threshold: Similarity threshold
+
+        Returns:
+            Average diversity loss across heads
+        """
+        total_loss = 0.0
+        for head in self.heads:
+            total_loss = total_loss + head.compute_diversity_loss(threshold)
+        return total_loss / self.num_heads
+
+    def get_pattern_similarity_stats(self) -> dict:
+        """
+        Get pattern similarity statistics across all heads.
+
+        Returns:
+            Dict with per-head and aggregate statistics
+        """
+        head_stats = [head.get_pattern_similarity_stats() for head in self.heads]
+
+        # Aggregate
+        mean_sims = [s["mean_similarity"] for s in head_stats]
+        max_sims = [s["max_similarity"] for s in head_stats]
+
+        return {
+            "per_head": head_stats,
+            "mean_similarity": sum(mean_sims) / len(mean_sims),
+            "max_similarity": max(max_sims),
+        }
+
+    def extra_repr(self) -> str:
+        return (
+            f"num_heads={self.num_heads}, "
+            f"num_patterns={self.num_patterns}, "
+            f"pattern_dim={self.pattern_dim}, "
+            f"head_dim={self.head_dim}"
+        )
