@@ -22,6 +22,7 @@ model:
   learnable_beta: true  # Learn inverse temperature
   use_spectral_norm_constraint: true  # Constrain beta for convexity
   norm_mode: "per_layer"  # "per_layer" preserves energy descent, "per_iteration" is legacy
+  use_query_proj: true  # Add learnable query projection for better matching
 
 # Training configuration
 training:

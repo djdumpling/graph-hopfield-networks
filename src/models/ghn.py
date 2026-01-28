@@ -40,6 +40,7 @@ class GraphHopfieldNetwork(nn.Module):
         learnable_beta: bool = True,
         use_spectral_norm_constraint: bool = True,
         norm_mode: str = "per_layer",
+        use_query_proj: bool = True,
     ):
         """
         Initialize the Graph Hopfield Network.
@@ -63,6 +64,7 @@ class GraphHopfieldNetwork(nn.Module):
             learnable_beta: If True, make beta learnable (default: True)
             use_spectral_norm_constraint: Constrain beta for convexity (default: True)
             norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
+            use_query_proj: If True, add a learnable query projection (default: True)
         """
         super().__init__()
 
@@ -104,12 +106,13 @@ class GraphHopfieldNetwork(nn.Module):
                     learnable_beta=learnable_beta,
                     use_spectral_norm_constraint=use_spectral_norm_constraint,
                     norm_mode=norm_mode,
+                    use_query_proj=use_query_proj,
                 )
             )
 
         # Output classifier
         self.classifier = nn.Linear(hidden_dim, out_dim)
-    
+
     def forward(
         self,
         x: Tensor,
@@ -195,6 +198,7 @@ class GraphHopfieldNetworkMinimal(nn.Module):
         learnable_beta: bool = True,
         use_spectral_norm_constraint: bool = True,
         norm_mode: str = "per_layer",
+        use_query_proj: bool = True,
     ):
         super().__init__()
 
@@ -222,11 +226,12 @@ class GraphHopfieldNetworkMinimal(nn.Module):
             learnable_beta=learnable_beta,
             use_spectral_norm_constraint=use_spectral_norm_constraint,
             norm_mode=norm_mode,
+            use_query_proj=use_query_proj,
         )
 
         # Classifier
         self.classifier = nn.Linear(hidden_dim, out_dim)
-    
+
     def forward(
         self,
         x: Tensor,
@@ -242,6 +247,6 @@ class GraphHopfieldNetworkMinimal(nn.Module):
         )
         logits = self.classifier(x)
         return logits, info
-    
+
     def get_num_params(self) -> int:
         return sum(p.numel() for p in self.parameters() if p.requires_grad)

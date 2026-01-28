@@ -51,6 +51,7 @@ class GraphHopfieldLayer(nn.Module):
         learnable_beta: bool = True,
         use_spectral_norm_constraint: bool = True,
         norm_mode: str = "per_layer",
+        use_query_proj: bool = True,
     ):
         """
         Initialize the Graph Hopfield Layer.
@@ -76,6 +77,7 @@ class GraphHopfieldLayer(nn.Module):
                        "per_layer" (default): Apply once after all iterations (preserves energy descent)
                        "per_iteration": Apply after each iteration (legacy behavior, breaks energy descent)
                        "none": No normalization
+            use_query_proj: If True, add a learnable query projection (default: True)
         """
         super().__init__()
 
@@ -113,6 +115,7 @@ class GraphHopfieldLayer(nn.Module):
             learnable_beta=learnable_beta,
             initial_beta=beta,
             use_spectral_norm_constraint=use_spectral_norm_constraint,
+            use_query_proj=use_query_proj,
         )
 
         # Optional layer normalization
@@ -346,6 +349,7 @@ class GraphHopfieldBlock(nn.Module):
         learnable_beta: bool = True,
         use_spectral_norm_constraint: bool = True,
         norm_mode: str = "per_layer",
+        use_query_proj: bool = True,
     ):
         """
         Initialize the Graph Hopfield Block.
@@ -369,6 +373,7 @@ class GraphHopfieldBlock(nn.Module):
             learnable_beta: If True, make beta learnable
             use_spectral_norm_constraint: Constrain beta for convexity
             norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
+            use_query_proj: If True, add a learnable query projection
         """
         super().__init__()
 
@@ -404,6 +409,7 @@ class GraphHopfieldBlock(nn.Module):
             learnable_beta=learnable_beta,
             use_spectral_norm_constraint=use_spectral_norm_constraint,
             norm_mode=norm_mode,
+            use_query_proj=use_query_proj,
         )
         
         # Output MLP

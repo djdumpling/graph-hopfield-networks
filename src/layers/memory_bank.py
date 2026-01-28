@@ -33,6 +33,7 @@ class MemoryBank(nn.Module):
         learnable_beta: bool = False,
         initial_beta: float = 1.0,
         use_spectral_norm_constraint: bool = True,
+        use_query_proj: bool = False,
     ):
         """
         Initialize the memory bank.
@@ -47,6 +48,7 @@ class MemoryBank(nn.Module):
             learnable_beta: If True, make beta (inverse temperature) learnable
             initial_beta: Initial value for beta (default: 1.0)
             use_spectral_norm_constraint: Constrain beta * ||M||^2 < 1 for convexity
+            use_query_proj: If True, add a learnable query projection (default: False)
         """
         super().__init__()
         self.num_patterns = num_patterns
@@ -56,6 +58,7 @@ class MemoryBank(nn.Module):
         self.normalize_queries = normalize_queries
         self.learnable_beta = learnable_beta
         self.use_spectral_norm_constraint = use_spectral_norm_constraint
+        self.use_query_proj = use_query_proj
 
         # Default initialization: 1/sqrt(pattern_dim) for better gradient flow
         if init_std is None:
@@ -81,6 +84,14 @@ class MemoryBank(nn.Module):
             self.log_beta = nn.Parameter(torch.tensor(math.log(initial_beta)))
         else:
             self.register_buffer("log_beta", torch.tensor(math.log(initial_beta)))
+
+        # Query projection for better matching capability
+        if use_query_proj:
+            self.query_proj = nn.Linear(pattern_dim, pattern_dim, bias=False)
+            # Initialize close to identity for stable training start
+            nn.init.eye_(self.query_proj.weight)
+        else:
+            self.query_proj = None
     
     def get_values(self) -> torch.Tensor:
         """Get the value matrix (may be tied to keys)."""
@@ -159,7 +170,7 @@ class MemoryBank(nn.Module):
         """
         Retrieve from memory using Hopfield/attention mechanism.
 
-        Computes: output = softmax(beta * queries @ keys.T) @ values
+        Computes: output = softmax(beta * proj(queries) @ keys.T) @ values
 
         Args:
             queries: Query vectors [N, d] or [B, N, d]
@@ -172,6 +183,10 @@ class MemoryBank(nn.Module):
         """
         keys = self.keys
         values = self.get_values()
+
+        # Apply query projection if enabled
+        if self.query_proj is not None:
+            queries = self.query_proj(queries)
 
         # Normalize for numerical stability (prevents overflow in exp(β * scores))
         if self.normalize_keys:
@@ -235,5 +250,6 @@ class MemoryBank(nn.Module):
             f"num_patterns={self.num_patterns}, "
             f"pattern_dim={self.pattern_dim}, "
             f"tie_keys_values={self.tie_keys_values}, "
+            f"use_query_proj={self.use_query_proj}, "
             f"{beta_str}"
         )
