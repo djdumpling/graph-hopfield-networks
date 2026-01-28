@@ -23,6 +23,9 @@ model:
   use_spectral_norm_constraint: true  # Constrain beta for convexity
   norm_mode: "per_layer"  # "per_layer" preserves energy descent, "per_iteration" is legacy
   use_query_proj: true  # Add learnable query projection for better matching
+  # Diversity regularization to prevent pattern collapse
+  diversity_loss_weight: 0.01  # Weight for diversity loss (0 = disabled)
+  diversity_threshold: 0.5  # Patterns with similarity > threshold are penalized
 
 # Training configuration
 training:

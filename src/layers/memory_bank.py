@@ -242,6 +242,57 @@ class MemoryBank(nn.Module):
 
         return hopfield_energy + reg_energy
     
+    def compute_diversity_loss(self, threshold: float = 0.5) -> torch.Tensor:
+        """
+        Compute diversity regularization loss to prevent pattern collapse.
+
+        Penalizes pairs of patterns that are too similar (cosine similarity > threshold).
+        This encourages the memory bank to maintain diverse, distinct patterns.
+
+        Args:
+            threshold: Similarity threshold above which patterns are penalized (default: 0.5)
+
+        Returns:
+            Diversity loss (scalar tensor). Lower means more diverse patterns.
+        """
+        # Normalize keys to unit vectors for cosine similarity
+        M_norm = F.normalize(self.keys, p=2, dim=-1)  # [K, d]
+
+        # Compute pairwise cosine similarities: [K, K]
+        sim = torch.matmul(M_norm, M_norm.T)
+
+        # Mask out diagonal (self-similarity = 1)
+        K = self.num_patterns
+        mask = ~torch.eye(K, dtype=torch.bool, device=sim.device)
+
+        # Penalize similarities above threshold using squared hinge loss
+        # Only off-diagonal elements
+        excess_sim = F.relu(sim[mask] - threshold)
+        diversity_loss = excess_sim.pow(2).mean()
+
+        return diversity_loss
+
+    def get_pattern_similarity_stats(self) -> dict:
+        """
+        Compute statistics about pattern similarity for monitoring.
+
+        Returns:
+            Dict with mean, max, and std of off-diagonal cosine similarities.
+        """
+        with torch.no_grad():
+            M_norm = F.normalize(self.keys, p=2, dim=-1)
+            sim = torch.matmul(M_norm, M_norm.T)
+
+            K = self.num_patterns
+            mask = ~torch.eye(K, dtype=torch.bool, device=sim.device)
+            off_diag = sim[mask]
+
+            return {
+                "mean_similarity": off_diag.mean().item(),
+                "max_similarity": off_diag.max().item(),
+                "std_similarity": off_diag.std().item(),
+            }
+
     def extra_repr(self) -> str:
         beta_str = f"learnable_beta={self.learnable_beta}"
         if self.learnable_beta:
