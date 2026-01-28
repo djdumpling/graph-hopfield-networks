@@ -36,10 +36,13 @@ class GraphHopfieldNetwork(nn.Module):
         use_layer_norm: bool = True,
         normalize_memory_keys: bool = False,
         normalize_memory_queries: bool = False,
+        tie_keys_values: bool = False,
+        learnable_beta: bool = True,
+        use_spectral_norm_constraint: bool = True,
     ):
         """
         Initialize the Graph Hopfield Network.
-        
+
         Args:
             in_dim: Input feature dimension
             hidden_dim: Hidden dimension (and memory pattern dimension)
@@ -55,14 +58,17 @@ class GraphHopfieldNetwork(nn.Module):
             use_layer_norm: Apply LayerNorm after iterations
             normalize_memory_keys: Normalize memory keys for stability
             normalize_memory_queries: Normalize queries for stability
+            tie_keys_values: If True, use same matrix for keys and values (default: False)
+            learnable_beta: If True, make beta learnable (default: True)
+            use_spectral_norm_constraint: Constrain beta for convexity (default: True)
         """
         super().__init__()
-        
+
         self.in_dim = in_dim
         self.hidden_dim = hidden_dim
         self.out_dim = out_dim
         self.num_layers = num_layers
-        
+
         # Input encoder
         if use_encoder:
             self.encoder = nn.Sequential(
@@ -74,7 +80,7 @@ class GraphHopfieldNetwork(nn.Module):
         else:
             self.encoder = nn.Identity()
             ghn_in_dim = in_dim
-        
+
         # Graph Hopfield layers
         self.ghn_layers = nn.ModuleList()
         for i in range(num_layers):
@@ -92,9 +98,12 @@ class GraphHopfieldNetwork(nn.Module):
                     use_layer_norm=use_layer_norm,
                     normalize_memory_keys=normalize_memory_keys,
                     normalize_memory_queries=normalize_memory_queries,
+                    tie_keys_values=tie_keys_values,
+                    learnable_beta=learnable_beta,
+                    use_spectral_norm_constraint=use_spectral_norm_constraint,
                 )
             )
-        
+
         # Output classifier
         self.classifier = nn.Linear(hidden_dim, out_dim)
     
@@ -179,16 +188,19 @@ class GraphHopfieldNetworkMinimal(nn.Module):
         use_layer_norm: bool = True,
         normalize_memory_keys: bool = False,
         normalize_memory_queries: bool = False,
+        tie_keys_values: bool = False,
+        learnable_beta: bool = True,
+        use_spectral_norm_constraint: bool = True,
     ):
         super().__init__()
-        
+
         # Input projection
         self.input_proj = nn.Sequential(
             nn.Linear(in_dim, hidden_dim),
             nn.ReLU(),
             nn.Dropout(dropout),
         )
-        
+
         # Single GHN layer with multiple iterations
         self.ghn = GraphHopfieldLayer(
             in_dim=hidden_dim,
@@ -202,8 +214,11 @@ class GraphHopfieldNetworkMinimal(nn.Module):
             use_layer_norm=use_layer_norm,
             normalize_memory_keys=normalize_memory_keys,
             normalize_memory_queries=normalize_memory_queries,
+            tie_keys_values=tie_keys_values,
+            learnable_beta=learnable_beta,
+            use_spectral_norm_constraint=use_spectral_norm_constraint,
         )
-        
+
         # Classifier
         self.classifier = nn.Linear(hidden_dim, out_dim)
     

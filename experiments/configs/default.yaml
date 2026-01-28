@@ -11,12 +11,16 @@ model:
   name: "ghn"  # ghn, gcn, gat, graphsage, mlp
   hidden_dim: 64
   num_patterns: 64  # For GHN only
-  beta: 0.1  # For GHN only (optimal: 0.1, gives ~80% accuracy on Cora)
-  lambda_graph: 0.3  # For GHN only (optimal: 0.3, gives ~80% accuracy on Cora)
+  beta: 1.0  # For GHN only - initial beta (learnable by default)
+  lambda_graph: 0.3  # For GHN only
   num_iterations: 4  # For GHN only
   alpha: 0.3  # For GHN only
-  num_layers: 2 # more is better
+  num_layers: 2  # more is better
   dropout: 0.5
+  # New GHN parameters
+  tie_keys_values: false  # Untied keys/values for better capacity
+  learnable_beta: true  # Learn inverse temperature
+  use_spectral_norm_constraint: true  # Constrain beta for convexity
 
 # Training configuration
 training:
