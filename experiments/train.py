@@ -110,13 +110,14 @@ def compute_diversity_loss(model: nn.Module, threshold: float = 0.5) -> torch.Te
     Returns:
         Total diversity loss (scalar tensor)
     """
-    from src.layers.memory_bank import MemoryBank
+    from src.layers.memory_bank import MemoryBank, MultiHeadMemoryBank
 
     total_loss = 0.0
     num_banks = 0
 
     for module in model.modules():
-        if isinstance(module, MemoryBank):
+        # Check for both single-head and multi-head memory banks
+        if isinstance(module, (MemoryBank, MultiHeadMemoryBank)):
             total_loss = total_loss + module.compute_diversity_loss(threshold)
             num_banks += 1
 

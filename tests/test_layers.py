@@ -164,7 +164,10 @@ class TestGraphHopfieldLayer:
         energies = info["energies"]
         
         # Energy should generally decrease (may not be strictly monotonic)
-        assert energies[-1] <= energies[0] + 1.0  # Allow small increases
+        # energies is a list of dicts with energy_before and energy_after
+        first_energy = energies[0]["energy_before"]
+        last_energy = energies[-1]["energy_after"]
+        assert last_energy <= first_energy + 1.0  # Allow small increases
     
     def test_gradient_flow(self, sample_graph):
         """Test that gradients flow through the layer."""

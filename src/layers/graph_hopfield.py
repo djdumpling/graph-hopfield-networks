@@ -324,10 +324,11 @@ class GraphHopfieldLayer(nn.Module):
         beta_for_energy = None if self.learnable_beta else self.beta
         hopfield_energy = self.memory.compute_energy(x, beta=beta_for_energy)
         
-        # Graph Laplacian energy: λ tr(X^T L X) = λ Σ_(u,v)∈E ||xᵤ - xᵥ||²
-        row, col = edge_index
-        diff = x[row] - x[col]
-        laplacian_energy = self.lambda_graph * (diff ** 2).sum()
+        # Graph Laplacian energy: λ tr(X^T L X)
+        # Use Laplacian-based computation which correctly handles the symmetric
+        # normalized Laplacian and avoids edge counting issues
+        laplacian_term = self._compute_laplacian_term(x, edge_index, num_nodes)
+        laplacian_energy = self.lambda_graph * (x * laplacian_term).sum()
         
         return hopfield_energy + laplacian_energy
     

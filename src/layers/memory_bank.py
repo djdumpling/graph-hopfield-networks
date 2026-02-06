@@ -47,7 +47,7 @@ class MemoryBank(nn.Module):
             normalize_queries: Normalize queries to unit norm (for numerical stability)
             learnable_beta: If True, make beta (inverse temperature) learnable
             initial_beta: Initial value for beta (default: 1.0)
-            use_spectral_norm_constraint: Constrain beta * ||M||^2 < 1 for convexity
+            use_spectral_norm_constraint: Constrain beta * ||M||^2 < 2 for convexity
             use_query_proj: If True, add a learnable query projection (default: False)
         """
         super().__init__()
@@ -103,8 +103,9 @@ class MemoryBank(nn.Module):
         """
         Get the effective beta value, optionally constrained by spectral norm.
 
-        For convexity of the Hopfield energy, we need: beta * ||M||^2 < 1
+        For convexity of the Hopfield energy, we need: beta * ||M||^2 < 2
         where ||M|| is the spectral norm (largest singular value) of the key matrix.
+        This uses the tighter bound ||Σ(p)|| ≤ 1/2 from the math document.
 
         Args:
             keys: Optional key matrix (uses self.keys if not provided)
@@ -120,9 +121,9 @@ class MemoryBank(nn.Module):
             # Compute spectral norm (largest singular value)
             # Use power iteration approximation for efficiency
             spectral_norm_sq = self._estimate_spectral_norm_sq(keys)
-            # Constrain: beta * ||M||^2 < 1  =>  beta < 1 / ||M||^2
+            # Constrain: beta * ||M||^2 < 2  =>  beta < 2 / ||M||^2
             # Use soft constraint with margin for stability
-            max_beta = 0.99 / (spectral_norm_sq + 1e-6)
+            max_beta = 1.98 / (spectral_norm_sq + 1e-6)  # 0.99 * 2
             beta = torch.minimum(beta, max_beta)
 
         return beta
