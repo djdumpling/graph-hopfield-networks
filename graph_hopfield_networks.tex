@@ -1,5 +1,4 @@
-
-\documentclass{article} % For LaTeX2e
+\documentclass{article}
 \usepackage{nfam2026_workshop}
 \usepackage{times}
 
@@ -8,13 +7,21 @@
 
 \usepackage{hyperref}
 \usepackage{url}
+\usepackage{amsmath,amssymb,amsthm}
 
+% Theorem-like environments (amsthm); numbering shared with section
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
 
-\title{Formatting Instructions for ICLR 2026 \\ Workshop Submission}
+\DeclareMathOperator{\lse}{lse}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\diag}{diag}
 
-% Authors must not appear in the submitted version. They should be hidden
-% as long as the \iclrfinalcopy macro remains commented out below.
-% Non-anonymous submissions will be rejected without review.
+\title{Your Paper Title}
 
 \author{Author One \\
 Affiliation \\
@@ -39,366 +46,673 @@ Affiliation \\
 %\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
 \begin{document}
 
-
 \maketitle
 
 \begin{abstract}
-The abstract paragraph should be indented 1/2~inch (3~picas) on both left and
-right-hand margins. Use 10~point type, with a vertical spacing of 11~points.
-The word \textsc{Abstract} must be centered, in small caps, and in point size 12. Two
-line spaces precede the abstract. The abstract must be limited to one
-paragraph.
 \end{abstract}
 
-\section{Submission of workshop papers to NFAM at ICLR 2026}
+\section{Introduction}
 
-The NFAM workshop requires electronic submissions via OpenReview at
-\url{https://openreview.net/group?id=ICLR.cc%2F2026%2FWorkshop%2FNFAM}.
+\section{Related Work}
 
-If your paper is ultimately accepted, the statement {\tt
-  {\textbackslash}iclrfinalcopy} should be inserted to adjust the
-format to the camera ready requirements.
+\section{Method}
 
-The format for the submissions is a variant of the NeurIPS format.
-Please read carefully the instructions below, and follow them
-faithfully.
+\subsection{Background: Modern Continuous Hopfield Networks}
 
-\subsection{Style}
+For a query vector $\xi \in \mathbb{R}^d$ and a memory bank $M = [m_1, m_2, \ldots, m_N]^T \in \mathbb{R}^{N \times d}$ containing $N$ stored patterns, the Modern Hopfield Network (MCHN) energy function is:
+\begin{equation}
+E_{\text{MH}}(\xi) = -\beta^{-1} \log \sum_{i=1}^{N} \exp(\beta \cdot \xi^T m_i) + \frac{1}{2}\|\xi\|^2
+\label{eq:mhn_energy}
+\end{equation}
+where $\beta > 0$ is the inverse temperature parameter controlling pattern selectivity.
 
-Papers to be submitted to the NFAM workshop at ICLR 2026 must be prepared according to the
-instructions presented here.
+The fixed-point update rule is:
+\begin{equation}
+\xi_{\text{new}} = M^T \cdot \softmax(\beta \cdot M \xi) = \sum_{i=1}^{N} \frac{\exp(\beta \cdot \xi^T m_i)}{\sum_{j=1}^{N} \exp(\beta \cdot \xi^T m_j)} m_i
+\label{eq:mhn_update}
+\end{equation}
+This can be interpreted as attention-weighted pattern retrieval, where patterns similar to the query receive higher weights.
 
-%% Please note that we have introduced automatic line number generation
-%% into the style file for \LaTeXe. This is to help reviewers
-%% refer to specific lines of the paper when they make their comments. Please do
-%% NOT refer to these line numbers in your paper as they will be removed from the
-%% style file for the final version of accepted papers.
+\subsection{Graph Hopfield Energy Function}
 
-Authors are required to use the NFAM workshop \LaTeX{} style files obtainable at the
-workshop website. Please make sure you use the current files and
-not previous versions. Tweaking the style files may be grounds for rejection.
+Consider a graph $G = (V, E)$ with $|V| = n$ nodes, node feature matrix $X = [x_1, x_2, \ldots, x_n]^T \in \mathbb{R}^{n \times d}$ where $x_v \in \mathbb{R}^d$ is the feature vector for node $v$, memory bank $M = [m_1, m_2, \ldots, m_N]^T \in \mathbb{R}^{N \times d}$, adjacency matrix $A \in \{0,1\}^{n \times n}$, degree matrix $D = \text{diag}(d_1, \ldots, d_n)$ where $d_v = \sum_{u} A_{uv}$, and graph Laplacian $L = D - A$.
 
-\subsection{Retrieval of style files}
+The Graph Hopfield energy function combines associative memory retrieval with graph structure regularization:
+\begin{equation}
+E_{\text{GH}}(X) = \sum_{v \in V} \left[ -\lse(\beta, M x_v) + \frac{1}{2}\|x_v\|^2 \right] + \lambda \sum_{\{u,v\} \in E} \|x_u - x_v\|^2
+\label{eq:gh_energy_node}
+\end{equation}
+where $\lse(\beta, \mathbf{z}) = \beta^{-1} \log \sum_{i=1}^{N} \exp(\beta z_i)$ is the log-sum-exp function, $\beta > 0$ controls pattern selectivity, and $\lambda \geq 0$ is the graph smoothness weight.
 
-The style files for NFAM and other workshop information are available online at:
-\begin{center}
-   \url{https://nfam2026.amemory.net/NFAM2026_template.zip}
-\end{center}
-The file \verb+nfam2026_workshop.tex+ contains these
-instructions and illustrates the
-various formatting requirements your NFAM workshop paper must satisfy.
-Submissions must be made using \LaTeX{} and the style files
-\verb+nfam2026_workshop.sty+ and \verb+nfam2026_workshop.bst+ (to be used with \LaTeX{}2e). The file
-\verb+nfam2026_workshop.tex+ may be used as a ``shell'' for writing your paper. All you
-have to do is replace the author, title, abstract, and text of the paper with
-your own.
+The energy can be written in compact matrix form:
+\begin{equation}
+E_{\text{GH}}(X) = -\sum_{v=1}^{n} \lse(\beta, M x_v) + \frac{1}{2}\|X\|_F^2 + \lambda \cdot \tr(X^T L X)
+\label{eq:gh_energy_matrix}
+\end{equation}
+where $\|X\|_F^2 = \sum_{v=1}^{n} \|x_v\|^2$ is the Frobenius norm squared. The Laplacian term $\tr(X^T L X)$ enforces smoothness between neighboring nodes (see Appendix~\ref{app:laplacian} for derivation).
 
-The formatting instructions contained in these style files are summarized in
-sections \ref{gen_inst}, \ref{headings}, and \ref{others} below.
+\subsection{Update Dynamics}
 
-\section{General formatting instructions}
-\label{gen_inst}
+The gradient of the energy with respect to node $v$'s feature vector is:
+\begin{equation}
+\nabla_{x_v} E_{\text{GH}}(X) = -M^T \softmax(\beta \cdot M x_v) + x_v + 2\lambda (L X)_v
+\label{eq:gradient}
+\end{equation}
+where $(L X)_v$ denotes the $v$-th row of $L X$. The detailed gradient computation is provided in Appendix~\ref{app:gradient}.
 
-The text must be confined within a rectangle 5.5~inches (33~picas) wide and
-9~inches (54~picas) long. The left margin is 1.5~inch (9~picas).
-Use 10~point type with a vertical spacing of 11~points. Times New Roman is the
-preferred typeface throughout. Paragraphs are separated by 1/2~line space,
-with no indentation.
+Using gradient descent with step size $\eta > 0$:
+\begin{equation}
+x_v^{(t+1)} = x_v^{(t)} + \eta \left[ M^T \softmax(\beta \cdot M x_v^{(t)}) - x_v^{(t)} - 2\lambda (L X^{(t)})_v \right]
+\label{eq:update_gd}
+\end{equation}
 
-Paper title is 17~point, in small caps and left-aligned.
-All pages should start at 1~inch (6~picas) from the top of the page.
+Alternatively, setting the gradient to zero gives the fixed-point condition:
+\begin{equation}
+x_v^{(t+1)} = M^T \softmax(\beta \cdot M x_v^{(t)}) - 2\lambda (L X^{(t)})_v
+\label{eq:update_fixed}
+\end{equation}
 
-Authors' names are
-set in boldface, and each name is placed above its corresponding
-address. The lead author's name is to be listed first, and
-the co-authors' names are set to follow. Authors sharing the
-same address can be on the same line.
+For numerical stability, we can add damping:
+\begin{equation}
+x_v^{(t+1)} = (1-\alpha) x_v^{(t)} + \alpha \left[ M^T \softmax(\beta \cdot M x_v^{(t)}) - 2\lambda (L X^{(t)})_v \right]
+\label{eq:update_damped}
+\end{equation}
+where $\alpha \in (0,1]$ is the damping coefficient.
 
-Please pay special attention to the instructions in section \ref{others}
-regarding figures, tables, acknowledgments, and references.
+\subsection{Convergence Guarantees}
 
+The gradient $\nabla E_{\text{GH}}$ is Lipschitz continuous with constant:
+\begin{equation}
+L_{\text{lip}} = \tfrac{\beta}{2}\|M\|^2 + 1 + 2\lambda\|L\|
+\label{eq:lipschitz}
+\end{equation}
+(see Appendix~\ref{app:lipschitz} for proof).
 
-There are two submission tracks: \textbf{full papers} with a strict upper limit of \textbf{5 pages}, and \textbf{tiny papers} with a strict upper limit of \textbf{3 pages}. Both limits exclude references, which have unlimited additional pages. 
+\begin{theorem}[Convergence to Stationary Points]
+\label{thm:gd_convergence}
+Consider gradient descent with fixed step size $\eta \in (0, 2/L_{\text{lip}})$. Then:
+\begin{enumerate}
+\item The energy is non-increasing: $E_{\text{GH}}(X^{(t+1)}) \leq E_{\text{GH}}(X^{(t)})$.
+\item The gradient norms vanish: $\|\nabla E_{\text{GH}}(X^{(t)})\|_F \to 0$.
+\item Every accumulation point $X^\star$ satisfies $\nabla E_{\text{GH}}(X^\star) = 0$.
+\end{enumerate}
+\end{theorem}
 
-\section{Headings: first level}
-\label{headings}
+The complete proof is provided in Appendix~\ref{app:convergence}. Under the condition $\beta\|M\|^2 < 2$, the energy function is strongly convex, guaranteeing a unique global minimizer and linear convergence (see Appendix~\ref{app:convexity}).
 
-First level headings are in small caps,
-flush left and in point size 12. One line space before the first level
-heading and 1/2~line space after the first level heading.
+\subsection{Connection to Attention Mechanisms}
 
-\subsection{Headings: second level}
+The Graph Hopfield update can be interpreted as:
+\begin{equation}
+X \leftarrow \text{Attention}(X, M, M) + \text{GraphSmooth}(X, A)
+\label{eq:attention}
+\end{equation}
+where $\text{Attention}(Q, K, V) = \softmax(\beta Q K^T) V$ is standard self-attention, and $\text{GraphSmooth}(X, A) = -2\lambda L X$ is graph diffusion. This makes Graph Hopfield interpretable as \textit{attention-based pattern retrieval + graph-aware smoothing}.
 
-Second level headings are in small caps,
-flush left and in point size 10. One line space before the second level
-heading and 1/2~line space after the second level heading.
+\section{Experiments}
 
-\subsubsection{Headings: third level}
-
-Third level headings are in small caps,
-flush left and in point size 10. One line space before the third level
-heading and 1/2~line space after the third level heading.
-
-\section{Citations, figures, tables, references}
-\label{others}
-
-These instructions apply to everyone, regardless of the formatter being used.
-
-\subsection{Citations within the text}
-
-Citations within the text should be based on the \texttt{natbib} package
-and include the authors' last names and year (with the ``et~al.'' construct
-for more than two authors). When the authors or the publication are
-included in the sentence, the citation should not be in parenthesis using \verb|\citet{}| (as
-in ``See \citet{Hinton06} for more information.''). Otherwise, the citation
-should be in parenthesis using \verb|\citep{}| (as in ``Deep learning shows promise to make progress
-towards AI~\citep{Bengio+chapter2007}.'').
-
-The corresponding references are to be listed in alphabetical order of
-authors, in the \textsc{References} section. As to the format of the
-references themselves, any style is acceptable as long as it is used
-consistently.
-
-\subsection{Footnotes}
-
-Indicate footnotes with a number\footnote{Sample of the first footnote} in the
-text. Place the footnotes at the bottom of the page on which they appear.
-Precede the footnote with a horizontal rule of 2~inches
-(12~picas).\footnote{Sample of the second footnote}
-
-\subsection{Figures}
-
-All artwork must be neat, clean, and legible. Lines should be dark
-enough for purposes of reproduction; art work should not be
-hand-drawn. The figure number and caption always appear after the
-figure. Place one line space before the figure caption, and one line
-space after the figure. The figure caption is lower case (except for
-first word and proper nouns); figures are numbered consecutively.
-
-Make sure the figure caption does not get separated from the figure.
-Leave sufficient space to avoid splitting the figure and figure caption.
-
-You may use color figures.
-However, it is best for the
-figure captions and the paper body to make sense if the paper is printed
-either in black/white or in color.
-\begin{figure}[h]
-\begin{center}
-%\framebox[4.0in]{$\;$}
-\fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
-\end{center}
-\caption{Sample figure caption.}
-\end{figure}
-
-\subsection{Tables}
-
-All tables must be centered, neat, clean and legible. Do not use hand-drawn
-tables. The table number and title always appear before the table. See
-Table~\ref{sample-table}.
-
-Place one line space before the table title, one line space after the table
-title, and one line space after the table. The table title must be lower case
-(except for first word and proper nouns); tables are numbered consecutively.
-
-\begin{table}[t]
-\caption{Sample table title}
-\label{sample-table}
-\begin{center}
-\begin{tabular}{ll}
-\multicolumn{1}{c}{\bf PART}  &\multicolumn{1}{c}{\bf DESCRIPTION}
-\\ \hline \\
-Dendrite         &Input terminal \\
-Axon             &Output terminal \\
-Soma             &Cell body (contains cell nucleus) \\
-\end{tabular}
-\end{center}
-\end{table}
-
-\section{Default Notation}
-
-In an attempt to encourage standardized notation, we have included the
-notation file from the textbook, \textit{Deep Learning}
-\cite{goodfellow2016deep} available at
-\url{https://github.com/goodfeli/dlbook_notation/}.  Use of this style
-is not required and can be disabled by commenting out
-\texttt{math\_commands.tex}.
-
-
-\centerline{\bf Numbers and Arrays}
-\bgroup
-\def\arraystretch{1.5}
-\begin{tabular}{p{1in}p{3.25in}}
-$\displaystyle a$ & A scalar (integer or real)\\
-$\displaystyle \va$ & A vector\\
-$\displaystyle \mA$ & A matrix\\
-$\displaystyle \tA$ & A tensor\\
-$\displaystyle \mI_n$ & Identity matrix with $n$ rows and $n$ columns\\
-$\displaystyle \mI$ & Identity matrix with dimensionality implied by context\\
-$\displaystyle \ve^{(i)}$ & Standard basis vector $[0,\dots,0,1,0,\dots,0]$ with a 1 at position $i$\\
-$\displaystyle \text{diag}(\va)$ & A square, diagonal matrix with diagonal entries given by $\va$\\
-$\displaystyle \ra$ & A scalar random variable\\
-$\displaystyle \rva$ & A vector-valued random variable\\
-$\displaystyle \rmA$ & A matrix-valued random variable\\
-\end{tabular}
-\egroup
-\vspace{0.25cm}
-
-\centerline{\bf Sets and Graphs}
-\bgroup
-\def\arraystretch{1.5}
-
-\begin{tabular}{p{1.25in}p{3.25in}}
-$\displaystyle \sA$ & A set\\
-$\displaystyle \R$ & The set of real numbers \\
-$\displaystyle \{0, 1\}$ & The set containing 0 and 1 \\
-$\displaystyle \{0, 1, \dots, n \}$ & The set of all integers between $0$ and $n$\\
-$\displaystyle [a, b]$ & The real interval including $a$ and $b$\\
-$\displaystyle (a, b]$ & The real interval excluding $a$ but including $b$\\
-$\displaystyle \sA \backslash \sB$ & Set subtraction, i.e., the set containing the elements of $\sA$ that are not in $\sB$\\
-$\displaystyle \gG$ & A graph\\
-$\displaystyle \parents_\gG(\ervx_i)$ & The parents of $\ervx_i$ in $\gG$
-\end{tabular}
-\vspace{0.25cm}
-
-
-\centerline{\bf Indexing}
-\bgroup
-\def\arraystretch{1.5}
-
-\begin{tabular}{p{1.25in}p{3.25in}}
-$\displaystyle \eva_i$ & Element $i$ of vector $\va$, with indexing starting at 1 \\
-$\displaystyle \eva_{-i}$ & All elements of vector $\va$ except for element $i$ \\
-$\displaystyle \emA_{i,j}$ & Element $i, j$ of matrix $\mA$ \\
-$\displaystyle \mA_{i, :}$ & Row $i$ of matrix $\mA$ \\
-$\displaystyle \mA_{:, i}$ & Column $i$ of matrix $\mA$ \\
-$\displaystyle \etA_{i, j, k}$ & Element $(i, j, k)$ of a 3-D tensor $\tA$\\
-$\displaystyle \tA_{:, :, i}$ & 2-D slice of a 3-D tensor\\
-$\displaystyle \erva_i$ & Element $i$ of the random vector $\rva$ \\
-\end{tabular}
-\egroup
-\vspace{0.25cm}
-
-
-\centerline{\bf Calculus}
-\bgroup
-\def\arraystretch{1.5}
-\begin{tabular}{p{1.25in}p{3.25in}}
-% NOTE: the [2ex] on the next line adds extra height to that row of the table.
-% Without that command, the fraction on the first line is too tall and collides
-% with the fraction on the second line.
-$\displaystyle\frac{d y} {d x}$ & Derivative of $y$ with respect to $x$\\ [2ex]
-$\displaystyle \frac{\partial y} {\partial x} $ & Partial derivative of $y$ with respect to $x$ \\
-$\displaystyle \nabla_\vx y $ & Gradient of $y$ with respect to $\vx$ \\
-$\displaystyle \nabla_\mX y $ & Matrix derivatives of $y$ with respect to $\mX$ \\
-$\displaystyle \nabla_\tX y $ & Tensor containing derivatives of $y$ with respect to $\tX$ \\
-$\displaystyle \frac{\partial f}{\partial \vx} $ & Jacobian matrix $\mJ \in \R^{m\times n}$ of $f: \R^n \rightarrow \R^m$\\
-$\displaystyle \nabla_\vx^2 f(\vx)\text{ or }\mH( f)(\vx)$ & The Hessian matrix of $f$ at input point $\vx$\\
-$\displaystyle \int f(\vx) d\vx $ & Definite integral over the entire domain of $\vx$ \\
-$\displaystyle \int_\sS f(\vx) d\vx$ & Definite integral with respect to $\vx$ over the set $\sS$ \\
-\end{tabular}
-\egroup
-\vspace{0.25cm}
-
-\centerline{\bf Probability and Information Theory}
-\bgroup
-\def\arraystretch{1.5}
-\begin{tabular}{p{1.25in}p{3.25in}}
-$\displaystyle P(\ra)$ & A probability distribution over a discrete variable\\
-$\displaystyle p(\ra)$ & A probability distribution over a continuous variable, or over
-a variable whose type has not been specified\\
-$\displaystyle \ra \sim P$ & Random variable $\ra$ has distribution $P$\\% so thing on left of \sim should always be a random variable, with name beginning with \r
-$\displaystyle  \E_{\rx\sim P} [ f(x) ]\text{ or } \E f(x)$ & Expectation of $f(x)$ with respect to $P(\rx)$ \\
-$\displaystyle \Var(f(x)) $ &  Variance of $f(x)$ under $P(\rx)$ \\
-$\displaystyle \Cov(f(x),g(x)) $ & Covariance of $f(x)$ and $g(x)$ under $P(\rx)$\\
-$\displaystyle H(\rx) $ & Shannon entropy of the random variable $\rx$\\
-$\displaystyle \KL ( P \Vert Q ) $ & Kullback-Leibler divergence of P and Q \\
-$\displaystyle \mathcal{N} ( \vx ; \vmu , \mSigma)$ & Gaussian distribution %
-over $\vx$ with mean $\vmu$ and covariance $\mSigma$ \\
-\end{tabular}
-\egroup
-\vspace{0.25cm}
-
-\centerline{\bf Functions}
-\bgroup
-\def\arraystretch{1.5}
-\begin{tabular}{p{1.25in}p{3.25in}}
-$\displaystyle f: \sA \rightarrow \sB$ & The function $f$ with domain $\sA$ and range $\sB$\\
-$\displaystyle f \circ g $ & Composition of the functions $f$ and $g$ \\
-  $\displaystyle f(\vx ; \vtheta) $ & A function of $\vx$ parametrized by $\vtheta$.
-  (Sometimes we write $f(\vx)$ and omit the argument $\vtheta$ to lighten notation) \\
-$\displaystyle \log x$ & Natural logarithm of $x$ \\
-$\displaystyle \sigma(x)$ & Logistic sigmoid, $\displaystyle \frac{1} {1 + \exp(-x)}$ \\
-$\displaystyle \zeta(x)$ & Softplus, $\log(1 + \exp(x))$ \\
-$\displaystyle || \vx ||_p $ & $\normlp$ norm of $\vx$ \\
-$\displaystyle || \vx || $ & $\normltwo$ norm of $\vx$ \\
-$\displaystyle x^+$ & Positive part of $x$, i.e., $\max(0,x)$\\
-$\displaystyle \1_\mathrm{condition}$ & is 1 if the condition is true, 0 otherwise\\
-\end{tabular}
-\egroup
-\vspace{0.25cm}
-
-
-
-\section{Final instructions}
-Do not change any aspects of the formatting parameters in the style files.
-In particular, do not modify the width or length of the rectangle the text
-should fit into, and do not change font sizes (except perhaps in the
-\textsc{References} section; see below). Please note that pages should be
-numbered.
-
-\section{Preparing PostScript or PDF files}
-
-Please prepare PostScript or PDF files with paper size ``US Letter'', and
-not, for example, ``A4''. The -t
-letter option on dvips will produce US Letter files.
-
-Consider directly generating PDF files using \verb+pdflatex+
-(especially if you are a MiKTeX user).
-PDF figures must be substituted for EPS figures, however.
-
-Otherwise, please generate your PostScript and PDF files with the following commands:
-\begin{verbatim}
-dvips mypaper.dvi -t letter -Ppdf -G0 -o mypaper.ps
-ps2pdf mypaper.ps mypaper.pdf
-\end{verbatim}
-
-\subsection{Margins in LaTeX}
-
-Most of the margin problems come from figures positioned by hand using
-\verb+\special+ or other commands. We suggest using the command
-\verb+\includegraphics+
-from the graphicx package. Always specify the figure width as a multiple of
-the line width as in the example below using .eps graphics
-\begin{verbatim}
-   \usepackage[dvips]{graphicx} ...
-   \includegraphics[width=0.8\linewidth]{myfile.eps}
-\end{verbatim}
-or % Apr 2009 addition
-\begin{verbatim}
-   \usepackage[pdftex]{graphicx} ...
-   \includegraphics[width=0.8\linewidth]{myfile.pdf}
-\end{verbatim}
-for .pdf graphics.
-See section~4.4 in the graphics bundle documentation (\url{http://www.ctan.org/tex-archive/macros/latex/required/graphics/grfguide.ps})
-
-A number of width problems arise when LaTeX cannot properly hyphenate a
-line. Please give LaTeX hyphenation hints using the \verb+\-+ command.
-
-\subsubsection*{Author Contributions}
-If you'd like to, you may include  a section for author contributions as is done
-in many journals. This is optional and at the discretion of the authors.
+\section{Conclusion}
 
 \subsubsection*{Acknowledgments}
-Use unnumbered third level headings for the acknowledgments. All
-acknowledgments, including those to funding agencies, go at the end of the paper.
-
 
 \bibliography{nfam2026_workshop}
 \bibliographystyle{nfam2026_workshop}
 
 \appendix
-\section{Appendix}
-You may include other additional sections here.
 
+\newpage
+
+\section{Appendix}
+
+\subsection{Detailed Laplacian Term Derivation}
+\label{app:laplacian}
+
+\textbf{Graph convention:} We assume the graph is undirected (adjacency matrix $A$ is symmetric) and each undirected edge is counted exactly once in the edge set $E$ (no double-counting). The Laplacian $L = D - A$ is therefore symmetric and positive semi-definite.
+
+Under this convention, we derive the Laplacian identity:
+\begin{align}
+\sum_{\{u,v\} \in E} \|x_u - x_v\|^2 &= \sum_{\{u,v\} \in E} (x_u - x_v)^T (x_u - x_v) \\
+&= \sum_{\{u,v\} \in E} (x_u^T x_u + x_v^T x_v - 2 x_u^T x_v) \\
+&= \sum_{v} d_v x_v^T x_v - 2 \sum_{\{u,v\} \in E} x_u^T x_v \\
+&= \tr(X^T D X) - \tr(X^T A X) \\
+&= \tr(X^T (D - A) X) = \tr(X^T L X)
+\end{align}
+where line 3 uses: (i) each node $v$ appears in exactly $d_v$ edges, contributing $d_v x_v^T x_v$, and (ii) since $A$ is symmetric and $A_{uv} = 1$ iff $\{u,v\} \in E$ (with $A_{vv} = 0$), we have $\tr(X^T A X) = \sum_{u,v} A_{uv} x_u^T x_v = 2\sum_{\{u,v\} \in E} x_u^T x_v$ (the factor of 2 accounts for the fact that $A_{uv} = A_{vu} = 1$ for each edge $\{u,v\}$). The diagonal terms $A_{vv} = 0$ ensure no self-loop contributions.
+
+\subsection{Gradient Computation Details}
+\label{app:gradient}
+
+To derive the update dynamics, we compute the gradient of the energy with respect to each node's feature vector.
+
+\textbf{For node $v$:}
+\begin{align}
+\nabla_{x_v} E_{\text{GH}}(X) &= \nabla_{x_v} \left[ -\lse(\beta, M x_v) + \frac{1}{2}\|x_v\|^2 + \lambda \sum_{u \in \mathcal{N}(v)} \|x_v - x_u\|^2 \right] \\
+&= -\nabla_{x_v} \lse(\beta, M x_v) + x_v + \lambda \nabla_{x_v} \sum_{u \in \mathcal{N}(v)} \|x_v - x_u\|^2
+\end{align}
+
+\textbf{First term (Hopfield retrieval):}
+
+Let $\mathbf{z} = M x_v \in \mathbb{R}^N$ where $z_i = m_i^T x_v$. By the chain rule:
+\begin{align}
+\nabla_{x_v} \lse(\beta, M x_v) &= M^T \nabla_{\mathbf{z}} \lse(\beta, \mathbf{z}) \\
+&= M^T \softmax(\beta \mathbf{z}) \\
+&= M^T \softmax(\beta M x_v)
+\end{align}
+where we used $\nabla_{\mathbf{z}} \lse(\beta, \mathbf{z}) = \softmax(\beta \mathbf{z})$.
+
+\textbf{Third term (Graph regularization):}
+\begin{align}
+\nabla_{x_v} \sum_{u \in \mathcal{N}(v)} \|x_v - x_u\|^2 &= \sum_{u \in \mathcal{N}(v)} 2(x_v - x_u) \\
+&= 2d_v x_v - 2 \sum_{u \in \mathcal{N}(v)} x_u \\
+&= 2(L X)_v
+\end{align}
+
+\textbf{Complete gradient:}
+\begin{equation}
+\nabla_{x_v} E_{\text{GH}}(X) = -M^T \softmax(\beta \cdot M x_v) + x_v + 2\lambda (L X)_v
+\end{equation}
+
+\subsection{Convexity Analysis}
+\label{app:convexity}
+
+\begin{lemma}[Convexity of Log-Sum-Exp]
+The function $f(x) = \lse(\beta, M x)$ is convex in $x$.
+\end{lemma}
+
+\begin{proof}
+The log-sum-exp function $h(z) = \beta^{-1} \log \sum_i \exp(\beta z_i)$ is convex in $z$ (this is a standard result: the log of a sum of exponentials is convex). The function $f(x) = \lse(\beta, M x)$ is the composition of:
+\begin{itemize}
+    \item Affine function: $g(x) = M x$
+    \item Convex function: $h(z) = \beta^{-1} \log \sum_i \exp(\beta z_i)$
+\end{itemize}
+Since the composition of a convex function with an affine function is convex, $f(x)$ is convex.
+\end{proof}
+
+\begin{lemma}[Convexity of Quadratic Regularization]
+The function $f(X) = \frac{1}{2}\|X\|_F^2$ is strictly convex.
+\end{lemma}
+
+\begin{proof}
+The Hessian is $\nabla^2 f(X) = I$, which is positive definite. Therefore, $f$ is strictly convex.
+\end{proof}
+
+\begin{lemma}[Convexity of Laplacian Term]
+The function $f(X) = \tr(X^T L X)$ is convex (but not strictly convex if $L$ is singular).
+\end{lemma}
+
+\begin{proof}
+The graph Laplacian $L$ is symmetric and positive semi-definite (all eigenvalues $\geq 0$). 
+By PSD, for any $X, Y$:
+\[
+0 \le \tr((X-Y)^T L (X-Y)) = f(X) + f(Y) - 2\tr(X^T L Y),
+\]
+which implies
+\[
+\tr(X^T L Y) \le \tfrac{1}{2}\bigl(f(X) + f(Y)\bigr).
+\]
+Now expand $f(\theta X + (1-\theta)Y)$ for $\theta \in [0,1]$:
+\begin{align}
+f(\theta X + (1-\theta)Y) &= \theta^2 f(X) + (1-\theta)^2 f(Y) + 2\theta(1-\theta)\tr(X^T L Y) \\
+&\le \theta^2 f(X) + (1-\theta)^2 f(Y) + \theta(1-\theta)\bigl(f(X) + f(Y)\bigr) \\
+&= \theta f(X) + (1-\theta) f(Y).
+\end{align}
+Therefore, $f$ is convex.
+\end{proof}
+
+\begin{proposition}[Convexity and Strong Convexity]
+\label{prop:convex_dc}
+Let $E_{\text{GH}}(X)$ be the Graph Hopfield energy. Define $p_v(X):=\softmax(\beta M x_v)\in\mathbb{R}^N$ and $\Sigma(p):=\diag(p)-pp^\top$.
+
+For each node $v$, the Hessian of the Hopfield retrieval term is:
+\[
+\nabla_{x_v}^2 \lse(\beta, M x_v) = \beta M^\top \Sigma(p_v(X)) M.
+\]
+The covariance matrix $\Sigma(p)$ is positive semidefinite and satisfies $\Sigma(p) \preceq \frac{1}{2}I$. Therefore,
+\[
+0 \preceq M^\top \Sigma(p_v(X)) M \preceq \tfrac{1}{2}\|M\|^2 I.
+\]
+Consequently, the node-wise contribution to the Hessian satisfies:
+\[
+\nabla_{x_v}^2 \left[ -\lse(\beta, M x_v) + \frac{1}{2}\|x_v\|^2 \right] = I - \beta M^\top \Sigma(p_v(X)) M \succeq \left(1 - \frac{\beta\|M\|^2}{2}\right) I.
+\]
+The Laplacian term contributes $2\lambda(L \otimes I_d)$ globally. Therefore, the (block) Hessian of $E_{\text{GH}}$ admits the uniform lower bound
+\[
+\nabla^2 E_{\text{GH}}(X) \;\succeq\; \bigl(1-\tfrac{\beta\|M\|^2}{2}\bigr)\,I \;+\; 2\lambda\,(L\otimes I_d),
+\]
+hence:
+\begin{itemize}
+\item if $\beta\|M\|^2 \le 2$, then $E_{\text{GH}}$ is convex;
+\item if $\beta\|M\|^2 < 2$, then $E_{\text{GH}}$ is $\mu$-strongly convex with $\mu := 1-\tfrac{\beta\|M\|^2}{2}$ (and in particular has a unique global minimizer).
+\end{itemize}
+\end{proposition}
+
+\section{Lipschitz Smoothness}
+\label{app:lipschitz}
+
+\begin{proposition}[Lipschitz gradient / $L$-smoothness]
+\label{prop:lipschitz}
+Let
+\[
+E_{\mathrm{GH}}(X)= -\sum_{v=1}^n \lse(\beta, M x_v)\;+\;\frac12\|X\|_F^2\;+\;\lambda\,\tr(X^\top L X),
+\]
+with $X\in\mathbb{R}^{n\times d}$, rows $x_v\in\mathbb{R}^d$, memory $M\in\mathbb{R}^{N\times d}$, and Laplacian $L\in\mathbb{R}^{n\times n}$.
+Then $\nabla E_{\mathrm{GH}}$ is Lipschitz (in Frobenius norm) with constant
+\[
+L_{\mathrm{lip}}\;=\;\tfrac{\beta}{2}\|M\|^2\;+\;1\;+\;2\lambda\|L\|,
+\]
+i.e.
+\[
+\|\nabla E_{\mathrm{GH}}(X)-\nabla E_{\mathrm{GH}}(Y)\|_F
+\;\le\;
+L_{\mathrm{lip}}\;\|X-Y\|_F
+\qquad \forall X,Y.
+\]
+\end{proposition}
+
+\begin{proof}
+Write the gradient in matrix form. Define the row-wise retrieval map
+\[
+s(x)\;:=\;M^\top \softmax(\beta Mx)\in\mathbb{R}^d,
+\qquad
+S(X)\in\mathbb{R}^{n\times d}\ \text{by}\ [S(X)]_v:=s(x_v).
+\]
+From the derivation,
+\[
+\nabla_X E_{\mathrm{GH}}(X)\;=\;X\;-\;S(X)\;+\;2\lambda L X.
+\]
+Hence
+\begin{align}
+\|\nabla E_{\mathrm{GH}}(X)-\nabla E_{\mathrm{GH}}(Y)\|_F
+&\le \|X-Y\|_F + \|S(X)-S(Y)\|_F + 2\lambda\|L(X-Y)\|_F \\
+&\le \bigl(1+2\lambda\|L\|\bigr)\|X-Y\|_F \;+\;\|S(X)-S(Y)\|_F,
+\label{eq:lip_reduce_to_S}
+\end{align}
+using $\|LZ\|_F\le \|L\|\|Z\|_F$ for any $Z$.
+
+It remains to bound $\|S(X)-S(Y)\|_F$.
+Fix a single row $x\in\mathbb{R}^d$ and define $p(x):=\softmax(\beta Mx)\in\mathbb{R}^N$.
+The Jacobian of $s(x)=M^\top p(x)$ is
+\[
+\nabla s(x)
+\;=\;
+M^\top \nabla p(x)
+\;=\;
+\beta\,M^\top\Bigl(\diag(p(x)) - p(x)p(x)^\top\Bigr)M.
+\]
+Let $\Sigma(p):=\diag(p)-pp^\top$. It is positive semidefinite (it is the covariance matrix of a categorical distribution),
+and satisfies the tighter bound $\Sigma(p)\preceq \tfrac{1}{2}I$ (since for any unit $u$, $u^\top\Sigma(p)u=\mathrm{Var}(u_I)\le (\max_i u_i-\min_i u_i)^2/4\le 1/2$ by Popoviciu's inequality).
+Therefore, for every $x$,
+\[
+\|\nabla s(x)\|
+=
+\bigl\|\beta\,M^\top \Sigma(p(x)) M\bigr\|
+\le
+\beta\,\|M^\top\|\,\|\Sigma(p(x))\|\,\|M\|
+\le
+\tfrac{\beta}{2}\,\|M\|^2.
+\]
+By the mean value theorem for vector-valued maps, this implies $s$ is $\tfrac{\beta}{2}\|M\|^2$-Lipschitz:
+\[
+\|s(x)-s(y)\|\le \tfrac{\beta}{2}\|M\|^2\|x-y\|\qquad\forall x,y\in\mathbb{R}^d.
+\]
+Applying this row-wise and summing,
+\[
+\|S(X)-S(Y)\|_F^2
+=
+\sum_{v=1}^n \|s(x_v)-s(y_v)\|^2
+\le
+\sum_{v=1}^n \left(\tfrac{\beta}{2}\|M\|^2\right)^2 \|x_v-y_v\|^2
+=
+\left(\tfrac{\beta}{2}\|M\|^2\right)^2\|X-Y\|_F^2,
+\]
+so
+\[
+\|S(X)-S(Y)\|_F\le \tfrac{\beta}{2}\|M\|^2\|X-Y\|_F.
+\]
+Plugging this into the earlier inequality gives
+\[
+\|\nabla E_{\mathrm{GH}}(X)-\nabla E_{\mathrm{GH}}(Y)\|_F
+\le
+\bigl(\tfrac{\beta}{2}\|M\|^2+1+2\lambda\|L\|\bigr)\|X-Y\|_F,
+\]
+as claimed.
+\end{proof}
+
+\subsection{Convergence Analysis}
+\label{app:convergence}
+
+\begin{theorem}[Monotone descent and convergence to stationary points]
+\label{thm:gd_convergence}
+By Proposition~\ref{prop:coercive}, $E_{\mathrm{GH}}$ is coercive and hence bounded below. Let $L_{\mathrm{lip}}$ be as in
+Proposition~\ref{prop:lipschitz}.
+Consider gradient descent
+\[
+X^{(t+1)} \;=\; X^{(t)} - \eta \nabla E_{\mathrm{GH}}(X^{(t)}),
+\]
+with a fixed step size $\eta\in(0,2/L_{\mathrm{lip}})$.
+Then:
+\begin{enumerate}
+\item (\textbf{Energy descent}) The energy is non-increasing, and decreases by at least the stated amount when $\nabla E_{\mathrm{GH}}(X^{(t)})\neq 0$:
+\[
+E_{\mathrm{GH}}(X^{(t+1)})
+\le
+E_{\mathrm{GH}}(X^{(t)})
+-\eta\Bigl(1-\frac{\eta L_{\mathrm{lip}}}{2}\Bigr)\|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F^2.
+\]
+\item (\textbf{Gradient norms vanish}) We have
+\[
+\sum_{t=0}^{\infty}\|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F^2 < \infty,
+\qquad\text{hence}\qquad
+\|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F \to 0.
+\]
+\item (\textbf{Limit points are stationary}) Every accumulation point $X^\star$ of $\{X^{(t)}\}$ satisfies
+$\nabla E_{\mathrm{GH}}(X^\star)=0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Because $\nabla E_{\mathrm{GH}}$ is $L_{\mathrm{lip}}$-Lipschitz (Proposition~\ref{prop:lipschitz}),
+$E_{\mathrm{GH}}$ is $L_{\mathrm{lip}}$-smooth, so the standard descent lemma holds:
+for all $X,Y\in\mathbb{R}^{n\times d}$,
+\begin{equation}
+\label{eq:descent_lemma}
+E_{\mathrm{GH}}(Y)
+\le
+E_{\mathrm{GH}}(X) + \langle \nabla E_{\mathrm{GH}}(X),\,Y-X\rangle
++\frac{L_{\mathrm{lip}}}{2}\|Y-X\|_F^2.
+\end{equation}
+Apply this with $Y=X-\eta\nabla E_{\mathrm{GH}}(X)$:
+\begin{align*}
+E_{\mathrm{GH}}(X-\eta\nabla E_{\mathrm{GH}}(X))
+&\le
+E_{\mathrm{GH}}(X)
++\left\langle \nabla E_{\mathrm{GH}}(X),\, -\eta\nabla E_{\mathrm{GH}}(X)\right\rangle
++\frac{L_{\mathrm{lip}}}{2}\eta^2\|\nabla E_{\mathrm{GH}}(X)\|_F^2\\
+&=
+E_{\mathrm{GH}}(X)
+-\eta\Bigl(1-\frac{\eta L_{\mathrm{lip}}}{2}\Bigr)\|\nabla E_{\mathrm{GH}}(X)\|_F^2.
+\end{align*}
+Setting $X=X^{(t)}$ yields item (1). Since $\eta\in(0,2/L_{\mathrm{lip}})$,
+the coefficient $c:=\eta\left(1-\frac{\eta L_{\mathrm{lip}}}{2}\right)$ is strictly positive, hence
+$E_{\mathrm{GH}}(X^{(t)})$ is decreasing and bounded below, so it converges.
+
+Summing the inequality from $t=0$ to $T-1$ telescopes:
+\[
+E_{\mathrm{GH}}(X^{(0)}) - E_{\mathrm{GH}}(X^{(T)})
+\ge
+c\sum_{t=0}^{T-1}\|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F^2.
+\]
+Letting $T\to\infty$ and using bounded-below implies the left-hand side is finite, proving
+$\sum_t \|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F^2<\infty$, hence $\|\nabla E_{\mathrm{GH}}(X^{(t)})\|_F\to 0$
+(item (2)).
+
+For item (3), let $X^{(t_k)}\to X^\star$ be any convergent subsequence.
+By continuity of $\nabla E_{\mathrm{GH}}$ (it is Lipschitz),
+\[
+\nabla E_{\mathrm{GH}}(X^\star)
+=
+\lim_{k\to\infty} \nabla E_{\mathrm{GH}}(X^{(t_k)})
+=
+0,
+\]
+where the last equality uses item (2). Thus $X^\star$ is stationary.
+\end{proof}
+
+\subsubsection{Stability Condition}
+
+For guaranteed convergence with step size $\eta$, using the tighter Lipschitz bound:
+\begin{equation}
+\eta < \frac{2}{\tfrac{\beta}{2}\|M\|^2 + 1 + 2\lambda \|L\|}
+\label{eq:step_size_bound}
+\end{equation}
+
+\textbf{Note:} Throughout this document, we use the unnormalized combinatorial Laplacian $L = D - A$. For this Laplacian with maximum degree $d_{\max}$, we have $\|L\| \le 2d_{\max}$, giving:
+\begin{equation}
+\eta < \frac{2}{\tfrac{\beta}{2}\|M\|^2 + 1 + 4\lambda d_{\max}}
+\label{eq:step_size_bound_unnormalized}
+\end{equation}
+
+\section{Fixed-Point Convergence Analysis}
+\label{app:fixed_point}
+
+\begin{remark}[Distinction between GD and fixed-point iteration]
+It is important to distinguish two different update schemes:
+\begin{enumerate}
+\item \textbf{Gradient descent:} $X^{(t+1)} = X^{(t)} - \eta \nabla E_{\text{GH}}(X^{(t)})$ guarantees \emph{energy descent} (Theorem~\ref{thm:gd_convergence}) under smoothness and appropriate step size, regardless of whether the energy is convex.
+\item \textbf{Fixed-point iteration:} $X^{(t+1)} = T(X^{(t)})$ (defined below) does \emph{not automatically} imply energy descent. Convergence is guaranteed \emph{only when $T$ is a contraction}, i.e., under the sufficient condition $\tfrac{\beta}{2}\|M\|^2 + 2\lambda\|L\| < 1$ (Theorem~\ref{thm:fp_contraction}).
+\end{enumerate}
+In practice, gradient descent is more robust, while the fixed-point iteration can be faster when the contraction condition holds.
+\end{remark}
+
+\begin{theorem}[Fixed-point contraction for the undamped operator]
+\label{thm:fp_contraction}
+Define the (row-wise) fixed-point operator $T:\mathbb{R}^{n\times d}\to\mathbb{R}^{n\times d}$ by
+\[
+[T(X)]_v \;=\; M^\top\softmax(\beta M x_v)\;-\;2\lambda (LX)_v.
+\]
+Then $T$ is globally Lipschitz (in Frobenius norm) with constant
+\[
+\mathrm{Lip}(T)\;\le\;\tfrac{\beta}{2}\|M\|^2\;+\;2\lambda\|L\|.
+\]
+In particular, if the sufficient condition
+\[
+\tfrac{\beta}{2}\|M\|^2 + 2\lambda\|L\| \;<\; 1
+\]
+holds, then $T$ is a contraction mapping. Consequently, $T$ has a unique fixed point $X^\star$ and, for any
+initialization $X^{(0)}$, the iteration $X^{(t+1)}=T(X^{(t)})$ converges geometrically:
+\[
+\|X^{(t)}-X^\star\|_F \;\le\; \rho^t \|X^{(0)}-X^\star\|_F,
+\qquad
+\rho := \tfrac{\beta}{2}\|M\|^2 + 2\lambda\|L\| \in (0,1).
+\]
+\end{theorem}
+
+\begin{proof}
+Decompose $T(X)=S(X)-2\lambda L X$ where, as before, $[S(X)]_v=s(x_v)$ and $s(x)=M^\top\softmax(\beta Mx)$.
+From the Jacobian calculation in Proposition~\ref{prop:lipschitz}, $s$ is $\tfrac{\beta}{2}\|M\|^2$-Lipschitz:
+\[
+\|s(x)-s(y)\|\le \tfrac{\beta}{2}\|M\|^2\|x-y\|\quad\forall x,y.
+\]
+Therefore, row-wise,
+\[
+\|S(X)-S(Y)\|_F \le \tfrac{\beta}{2}\|M\|^2\|X-Y\|_F.
+\]
+Also, linearity of the Laplacian term gives
+\[
+\|L(X-Y)\|_F \le \|L\|\|X-Y\|_F.
+\]
+Combining:
+\[
+\|T(X)-T(Y)\|_F
+\le
+\|S(X)-S(Y)\|_F + 2\lambda\|L(X-Y)\|_F
+\le
+\bigl(\tfrac{\beta}{2}\|M\|^2 + 2\lambda\|L\|\bigr)\|X-Y\|_F.
+\]
+Hence $\mathrm{Lip}(T)\le \tfrac{\beta}{2}\|M\|^2+2\lambda\|L\|$. If this quantity is $<1$,
+Banach's fixed-point theorem implies existence and uniqueness of $X^\star$ and geometric convergence with rate $\rho$.
+\end{proof}
+
+\begin{corollary}[Convenient sufficient condition for contraction]
+For the unnormalized Laplacian $L = D - A$ used throughout this document, we have $\|L\|\le 2d_{\max}$, so a sufficient condition for contraction is
+\[
+\tfrac{\beta}{2}\|M\|^2 + 4\lambda d_{\max} < 1.
+\]
+\end{corollary}
+
+\section{Additional Theoretical Properties}
+\label{app:additional}
+
+\subsection{Convergence Rates}
+
+\begin{theorem}[Sublinear rate to stationarity for smooth (possibly nonconvex) $E_{\text{GH}}$]
+\label{thm:rate_nonconvex}
+Assume $\nabla E_{\text{GH}}$ is $L_{\text{lip}}$-Lipschitz and $E_{\text{GH}}$ is bounded below by $E_\inf$.
+Run gradient descent with fixed step size $\eta\in(0,2/L_{\text{lip}})$:
+\[
+X^{(t+1)} = X^{(t)} - \eta \nabla E_{\text{GH}}(X^{(t)}).
+\]
+Let $c := \eta\left(1-\frac{\eta L_{\text{lip}}}{2}\right)>0$. Then for all $T\ge 1$,
+\[
+\min_{0\le t \le T-1}\ \|\nabla E_{\text{GH}}(X^{(t)})\|_F^2
+\le
+\frac{E_{\text{GH}}(X^{(0)}) - E_\inf}{c\,T},
+\]
+and hence the method attains an $\varepsilon$-stationary point
+($\|\nabla E\|_F\le \varepsilon$) in at most $O(1/\varepsilon^2)$ iterations.
+\end{theorem}
+
+\begin{proof}
+From the descent inequality proved in Theorem~\ref{thm:gd_convergence},
+\[
+E_{\text{GH}}(X^{(t+1)}) \le E_{\text{GH}}(X^{(t)}) - c\|\nabla E_{\text{GH}}(X^{(t)})\|_F^2.
+\]
+Summing from $t=0$ to $T-1$ and using $E_{\text{GH}}(X^{(T)})\ge E_\inf$ gives
+\[
+c \sum_{t=0}^{T-1}\|\nabla E_{\text{GH}}(X^{(t)})\|_F^2
+\le E_{\text{GH}}(X^{(0)}) - E_\inf.
+\]
+Divide by $T$ and lower bound the average by the minimum.
+\end{proof}
+
+\begin{theorem}[Linear convergence in the strongly convex regime]
+\label{thm:rate_strongly_convex}
+Assume $E_{\text{GH}}$ is $\mu$-strongly convex and $L_{\text{lip}}$-smooth (e.g., under $\mu=1-\tfrac{\beta\|M\|^2}{2}>0$
+from Proposition~\ref{prop:convex_dc}). Let $X^\star$ be the unique minimizer.
+With step size $\eta \in (0, 1/L_{\text{lip}}]$, gradient descent satisfies
+\[
+\|X^{(t)} - X^\star\|_F \;\le\; (1-\eta\mu)^t \|X^{(0)} - X^\star\|_F,
+\]
+and similarly the function values converge geometrically:
+\[
+E_{\text{GH}}(X^{(t)}) - E_{\text{GH}}(X^\star)
+\;\le\; (1-\eta\mu)^t \bigl(E_{\text{GH}}(X^{(0)}) - E_{\text{GH}}(X^\star)\bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+By strong convexity and smoothness, we have the global Hessian bounds:
+\[
+\mu I \preceq \nabla^2 E_{\text{GH}}(X) \preceq L_{\text{lip}} I, \qquad \forall X.
+\]
+For any two points $X, Y$, by the mean value theorem (integral form), there exists a symmetric matrix $A$ (depending on the path from $Y$ to $X$) such that
+\[
+\nabla E_{\text{GH}}(X) - \nabla E_{\text{GH}}(Y) = A(X - Y),
+\]
+where $A = \int_0^1 \nabla^2 E_{\text{GH}}(Y + t(X-Y)) \, dt$ satisfies $\mu I \preceq A \preceq L_{\text{lip}} I$.
+
+Consider one gradient descent step:
+\[
+X^{(t+1)} - X^\star = X^{(t)} - \eta \nabla E_{\text{GH}}(X^{(t)}) - (X^\star - \eta \nabla E_{\text{GH}}(X^\star)).
+\]
+Since $X^\star$ is a stationary point, $\nabla E_{\text{GH}}(X^\star) = 0$. Applying the mean value theorem with $A^{(t)}$ satisfying $\mu I \preceq A^{(t)} \preceq L_{\text{lip}} I$:
+\[
+X^{(t+1)} - X^\star = (I - \eta A^{(t)})(X^{(t)} - X^\star).
+\]
+Taking Frobenius norms:
+\[
+\|X^{(t+1)} - X^\star\|_F = \|(I - \eta A^{(t)})(X^{(t)} - X^\star)\|_F \le \max_{\lambda \in [\mu, L_{\text{lip}}]} |1 - \eta\lambda| \cdot \|X^{(t)} - X^\star\|_F.
+\]
+For $\eta \in (0, 1/L_{\text{lip}}]$, the maximum occurs at $\lambda = \mu$, giving:
+\[
+\|X^{(t+1)} - X^\star\|_F \le (1 - \eta\mu) \|X^{(t)} - X^\star\|_F.
+\]
+Iterating this inequality yields the geometric convergence in iterates.
+
+For function values, use the descent lemma and strong convexity:
+\[
+E_{\text{GH}}(X^{(t+1)}) - E_{\text{GH}}(X^\star) \le E_{\text{GH}}(X^{(t)}) - E_{\text{GH}}(X^\star) - \eta \|\nabla E_{\text{GH}}(X^{(t)})\|_F^2 + \frac{L_{\text{lip}}\eta^2}{2}\|\nabla E_{\text{GH}}(X^{(t)})\|_F^2.
+\]
+By strong convexity, $\|\nabla E_{\text{GH}}(X^{(t)})\|_F^2 \ge 2\mu (E_{\text{GH}}(X^{(t)}) - E_{\text{GH}}(X^\star))$. With $\eta \le 1/L_{\text{lip}}$:
+\[
+E_{\text{GH}}(X^{(t+1)}) - E_{\text{GH}}(X^\star) \le (1 - \eta\mu)(E_{\text{GH}}(X^{(t)}) - E_{\text{GH}}(X^\star)),
+\]
+yielding geometric convergence in function values.
+\end{proof}
+
+\subsection{Critical Point Characterization}
+
+\begin{proposition}[Existence of a global minimizer (coercivity)]
+\label{prop:coercive}
+Assume $M$ is fixed and finite. Then $E_{\text{GH}}(X)\to +\infty$ as $\|X\|_F\to\infty$.
+In particular, $E_{\text{GH}}$ attains at least one global minimizer.
+\end{proposition}
+
+\begin{proof}
+For each node $v$, using the definition $\lse(\beta, \mathbf{z}) = \beta^{-1} \log \sum_i \exp(\beta z_i)$:
+\[
+\lse(\beta, M x_v) = \beta^{-1}\log\!\sum_{i=1}^N \exp(\beta m_i^\top x_v)
+\le \beta^{-1}\left(\log N + \beta \max_i m_i^\top x_v\right)
+= \beta^{-1}\log N + \max_i m_i^\top x_v.
+\]
+Since $\max_i m_i^\top x_v \le \|M\|\,\|x_v\|$ (where $\|M\|$ is the operator/spectral norm), we have
+\[
+\lse(\beta, M x_v) \le \beta^{-1}\log N + \|M\|\,\|x_v\|.
+\]
+Hence
+\[
+-\lse(\beta, M x_v) \ge -\beta^{-1}\log N - \|M\|\,\|x_v\|.
+\]
+Summing over $v$ and using $\tr(X^T L X) \ge 0$ (since $L \succeq 0$) gives
+\[
+E_{\text{GH}}(X) \;\ge\; \frac12\|X\|_F^2 \;-\; \|M\|\sum_v \|x_v\| \;-\; C.
+\]
+By Cauchy--Schwarz, $\sum_v \|x_v\| \le \sqrt{n}\sqrt{\sum_v \|x_v\|^2} = \sqrt{n}\|X\|_F$, so
+\[
+E_{\text{GH}}(X) \;\ge\; \frac12\|X\|_F^2 \;-\; \|M\|\sqrt{n}\|X\|_F \;-\; C,
+\]
+for a constant $C = n\beta^{-1}\log N$ depending only on $(\beta,N,n)$.
+The right-hand side diverges to $+\infty$ as $\|X\|_F\to\infty$ (since the quadratic term dominates), so $E_{\text{GH}}$ is coercive.
+A coercive continuous function on $\mathbb{R}^{n\times d}$ attains a global minimizer.
+\end{proof}
+
+\begin{proposition}[Stationary points and second-order characterization]
+\label{prop:critical_points}
+A point $X^\star$ is a first-order critical point iff $\nabla E_{\text{GH}}(X^\star)=0$
+(equivalently, it is a fixed point of the associated fixed-point map).
+Moreover:
+\begin{itemize}
+\item if $\nabla^2 E_{\text{GH}}(X^\star) \succ 0$ then $X^\star$ is a strict local minimizer;
+\item if $\nabla^2 E_{\text{GH}}(X^\star)$ has a negative eigenvalue then $X^\star$ is a strict saddle point.
+\end{itemize}
+If $E_{\text{GH}}$ is convex (e.g. $\beta\|M\|^2\le 2$ from Proposition~\ref{prop:convex_dc}), then \emph{every} critical point is a global minimizer;
+if it is strongly convex, that minimizer is unique.
+\end{proposition}
+
+\begin{proof}
+For the first-order characterization: $X^\star$ is a critical point iff $\nabla E_{\text{GH}}(X^\star) = 0$, which is equivalent to being a fixed point of the associated fixed-point map.
+
+For the second-order characterization, use a second-order Taylor expansion around $X^\star$:
+\[
+E_{\text{GH}}(X^\star + \Delta) = E_{\text{GH}}(X^\star) + \langle \nabla E_{\text{GH}}(X^\star), \Delta \rangle + \frac{1}{2}\langle \Delta, \nabla^2 E_{\text{GH}}(X^\star) \Delta \rangle + o(\|\Delta\|^2).
+\]
+Since $\nabla E_{\text{GH}}(X^\star) = 0$:
+\begin{itemize}
+\item If $\nabla^2 E_{\text{GH}}(X^\star) \succ 0$, then for small $\Delta \neq 0$, the quadratic term is positive, so $E_{\text{GH}}(X^\star + \Delta) > E_{\text{GH}}(X^\star)$, making $X^\star$ a strict local minimizer.
+\item If $\nabla^2 E_{\text{GH}}(X^\star)$ has a negative eigenvalue with eigenvector $v$, then moving along $v$ (i.e., $X^\star + \varepsilon v$ for small $\varepsilon > 0$) decreases the function, making $X^\star$ a strict saddle point.
+\end{itemize}
+The convexity statements follow from standard convex optimization theory: in a convex function, all critical points are global minimizers; strong convexity ensures uniqueness.
+\end{proof}
+
+\subsection{Initialization Dependence}
+
+\begin{proposition}[When initialization does \emph{not} matter]
+\label{prop:init_irrelevant}
+If $E_{\text{GH}}$ is strongly convex (e.g. $\beta\|M\|^2<2$ from Proposition~\ref{prop:convex_dc}), then gradient descent converges to the unique
+global minimizer $X^\star$ from any initialization (by Theorem~\ref{thm:rate_strongly_convex}).
+If the fixed-point map $T$ is a global contraction (Theorem~\ref{thm:fp_contraction}), then fixed-point iteration converges to the unique
+fixed point from any initialization (by Banach's fixed-point theorem).
+\end{proposition}
+
+\begin{remark}[When initialization \emph{does} matter]
+In the nonconvex regime, $E_{\text{GH}}$ can have multiple stationary points.
+Energy descent guarantees convergence to \emph{some} stationary point, but the selected limit point may depend on:
+(i) the starting point $X^{(0)}$ (basins of attraction), and (ii) the step size / algorithmic choices.
+Practically, different initializations can lead to different local minima or saddle escapes.
+
+A useful local criterion is stability of a fixed point under the iteration map:
+if the Jacobian of the iteration map has spectral radius $<1$ at $X^\star$, then $X^\star$ has a local basin of
+attraction (local contraction) and nearby initializations converge to it.
+\end{remark}
 
 \end{document}
