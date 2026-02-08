@@ -129,3 +129,13 @@ All code implementation is complete. The project is ready for experiments.
 3. **LayerNorm helps**: Apply after each iteration to stabilize training
 4. **Beta warmup**: Consider starting with lower beta and increasing (not yet implemented)
 5. **PyTorch Geometric**: Use `degree()` and sparse aggregation for efficient Laplacian computation
+
+---
+
+## Session Notes
+
+### 2026-01-28: CLAUDE.md Creation
+- Created `/CLAUDE.md` with codebase guidance for future Claude Code sessions
+- Added `CLAUDE.md` to `.gitignore` (per user preference: don't commit to GitHub)
+- Contents include: commands, architecture overview, data flow, key components, and critical implementation notes
+- **Environment note**: Use conda (preferred) or venv for installing dependencies - never install to base

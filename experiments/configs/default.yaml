@@ -1,4 +1,5 @@
 # Default experiment configuration for Graph Hopfield Networks
+# Optimized to outperform GCN on node classification (target: >81.5% on Cora)
 
 # Dataset configuration
 dataset:
@@ -10,23 +11,51 @@ dataset:
 model:
   name: "ghn"  # ghn, gcn, gat, graphsage, mlp
   hidden_dim: 64
-  num_patterns: 64  # For GHN only
-  beta: 0.1  # For GHN only (optimal: 0.1, gives ~80% accuracy on Cora)
-  lambda_graph: 0.3  # For GHN only (optimal: 0.3, gives ~80% accuracy on Cora)
-  num_iterations: 4  # For GHN only
-  alpha: 0.3  # For GHN only
-  num_layers: 2 # more is better
+  num_layers: 2
+
+  # === Hopfield Memory Configuration ===
+  num_patterns: 64  # Memory bank size (K patterns)
+  beta: 0.2  # Inverse temperature (0.2 with multi-head=4 gives best results ~80.4%)
+  learnable_beta: false  # Fixed beta works better
+  use_spectral_norm_constraint: false  # Disabled: was clamping beta incorrectly
+
+  # === Keys/Values Configuration ===
+  tie_keys_values: true  # Original setting from main branch
+  use_query_proj: false  # Disabled - original didn't have this
+
+  # === Multi-Head Configuration ===
+  num_heads: 4  # 4 heads improves accuracy from ~78% to ~80%
+
+  # === Iteration Configuration ===
+  num_iterations: 4  # Hopfield iterations per layer (4 is optimal)
+  alpha: 0.3  # Damping coefficient (0.3 is optimal)
+
+  # === Graph Configuration ===
+  lambda_graph: 0.3  # Graph Laplacian regularization (0.3 is optimal)
+
+  # === Normalization ===
+  norm_mode: "per_layer"  # Apply LayerNorm once after all iterations (preserves energy descent)
+
+  # === Skip Connections ===
+  use_skip_connections: true  # Inter-layer skip connections
+  skip_weight: 0.1  # Weight for skip connections
+
+  # === Diversity Regularization ===
+  diversity_loss_weight: 0.01  # Prevent pattern collapse
+  diversity_threshold: 0.5  # Penalize patterns with similarity > threshold
+
+  # === Regularization ===
   dropout: 0.5
 
 # Training configuration
 training:
   epochs: 200
   lr: 0.01
-  weight_decay: 0.001
+  weight_decay: 0.0005  # Reduced from 0.001 for better generalization
   patience: 50  # Early stopping patience
   min_delta: 0.001  # Minimum improvement for early stopping
 
-# Corruption configuration (for evaluation)
+# Corruption configuration (for robustness evaluation)
 corruption:
   type: "feature_noise"  # feature_noise, feature_mask, edge_drop, edge_add, label_flip
   levels: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]

@@ -58,6 +58,14 @@ def create_model(
             use_layer_norm=config["model"].get("use_layer_norm", True),
             normalize_memory_keys=config["model"].get("normalize_memory_keys", False),
             normalize_memory_queries=config["model"].get("normalize_memory_queries", False),
+            tie_keys_values=config["model"].get("tie_keys_values", False),
+            learnable_beta=config["model"].get("learnable_beta", True),
+            use_spectral_norm_constraint=config["model"].get("use_spectral_norm_constraint", True),
+            norm_mode=config["model"].get("norm_mode", "per_layer"),
+            use_query_proj=config["model"].get("use_query_proj", True),
+            num_heads=config["model"].get("num_heads", 1),
+            use_skip_connections=config["model"].get("use_skip_connections", True),
+            skip_weight=config["model"].get("skip_weight", 0.1),
         )
     elif model_name == "ghn_minimal":
         return GraphHopfieldNetworkMinimal(
@@ -73,6 +81,12 @@ def create_model(
             use_layer_norm=config["model"].get("use_layer_norm", True),
             normalize_memory_keys=config["model"].get("normalize_memory_keys", False),
             normalize_memory_queries=config["model"].get("normalize_memory_queries", False),
+            tie_keys_values=config["model"].get("tie_keys_values", False),
+            learnable_beta=config["model"].get("learnable_beta", True),
+            use_spectral_norm_constraint=config["model"].get("use_spectral_norm_constraint", True),
+            norm_mode=config["model"].get("norm_mode", "per_layer"),
+            use_query_proj=config["model"].get("use_query_proj", True),
+            num_heads=config["model"].get("num_heads", 1),
         )
     else:
         return create_baseline(
@@ -85,6 +99,33 @@ def create_model(
         )
 
 
+def compute_diversity_loss(model: nn.Module, threshold: float = 0.5) -> torch.Tensor:
+    """
+    Compute diversity loss across all memory banks in the model.
+
+    Args:
+        model: Model containing MemoryBank modules
+        threshold: Similarity threshold for diversity loss
+
+    Returns:
+        Total diversity loss (scalar tensor)
+    """
+    from src.layers.memory_bank import MemoryBank, MultiHeadMemoryBank
+
+    total_loss = 0.0
+    num_banks = 0
+
+    for module in model.modules():
+        # Check for both single-head and multi-head memory banks
+        if isinstance(module, (MemoryBank, MultiHeadMemoryBank)):
+            total_loss = total_loss + module.compute_diversity_loss(threshold)
+            num_banks += 1
+
+    if num_banks > 0:
+        return total_loss / num_banks
+    return torch.tensor(0.0, device=next(model.parameters()).device)
+
+
 def train_epoch(
     model: nn.Module,
     data,
@@ -92,28 +133,39 @@ def train_epoch(
     device: torch.device,
     log_energy: bool = False,
     log_attention: bool = False,
+    diversity_loss_weight: float = 0.0,
+    diversity_threshold: float = 0.5,
 ) -> Tuple[float, Optional[dict]]:
     """Train for one epoch."""
     model.train()
     optimizer.zero_grad()
-    
+
     data = data.to(device)
-    
+
     # Forward pass with optional energy/attention logging
     if log_energy or log_attention:
         out, info = model(
-            data.x, 
+            data.x,
             data.edge_index,
             return_energy=log_energy,
             return_attention=log_attention,
         )
     else:
         out, info = model(data.x, data.edge_index)
-    
-    loss = F.cross_entropy(out[data.train_mask], data.y[data.train_mask])
+
+    # Classification loss
+    ce_loss = F.cross_entropy(out[data.train_mask], data.y[data.train_mask])
+
+    # Add diversity regularization if enabled
+    if diversity_loss_weight > 0:
+        div_loss = compute_diversity_loss(model, diversity_threshold)
+        loss = ce_loss + diversity_loss_weight * div_loss
+    else:
+        loss = ce_loss
+
     loss.backward()
     optimizer.step()
-    
+
     return loss.item(), info
 
 
@@ -194,12 +246,20 @@ def train_model(
     epochs = training_config["epochs"]
     patience = training_config["patience"]
     min_delta = training_config["min_delta"]
-    
+
+    # Diversity regularization parameters
+    diversity_loss_weight = config.get("model", {}).get("diversity_loss_weight", 0.0)
+    diversity_threshold = config.get("model", {}).get("diversity_threshold", 0.5)
+
     pbar = tqdm(range(epochs), disable=not verbose, desc="Training")
-    
+
     for epoch in pbar:
         # Train
-        loss, train_info = train_epoch(model, data, optimizer, device, log_energy, log_attention)
+        loss, train_info = train_epoch(
+            model, data, optimizer, device, log_energy, log_attention,
+            diversity_loss_weight=diversity_loss_weight,
+            diversity_threshold=diversity_threshold,
+        )
         
         # Evaluate
         metrics, eval_info = evaluate(model, data, device, log_energy, log_attention)

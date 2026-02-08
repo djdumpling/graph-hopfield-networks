@@ -36,10 +36,18 @@ class GraphHopfieldNetwork(nn.Module):
         use_layer_norm: bool = True,
         normalize_memory_keys: bool = False,
         normalize_memory_queries: bool = False,
+        tie_keys_values: bool = False,
+        learnable_beta: bool = True,
+        use_spectral_norm_constraint: bool = True,
+        norm_mode: str = "per_layer",
+        use_query_proj: bool = True,
+        num_heads: int = 1,
+        use_skip_connections: bool = True,
+        skip_weight: float = 0.1,
     ):
         """
         Initialize the Graph Hopfield Network.
-        
+
         Args:
             in_dim: Input feature dimension
             hidden_dim: Hidden dimension (and memory pattern dimension)
@@ -55,14 +63,24 @@ class GraphHopfieldNetwork(nn.Module):
             use_layer_norm: Apply LayerNorm after iterations
             normalize_memory_keys: Normalize memory keys for stability
             normalize_memory_queries: Normalize queries for stability
+            tie_keys_values: If True, use same matrix for keys and values (default: False)
+            learnable_beta: If True, make beta learnable (default: True)
+            use_spectral_norm_constraint: Constrain beta for convexity (default: True)
+            norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
+            use_query_proj: If True, add a learnable query projection (default: True)
+            num_heads: Number of attention heads for multi-head memory (default: 1)
+            use_skip_connections: Add inter-layer skip connections (default: True)
+            skip_weight: Weight for skip connections (default: 0.1)
         """
         super().__init__()
-        
+
         self.in_dim = in_dim
         self.hidden_dim = hidden_dim
         self.out_dim = out_dim
         self.num_layers = num_layers
-        
+        self.use_skip_connections = use_skip_connections
+        self.skip_weight = skip_weight
+
         # Input encoder
         if use_encoder:
             self.encoder = nn.Sequential(
@@ -74,7 +92,7 @@ class GraphHopfieldNetwork(nn.Module):
         else:
             self.encoder = nn.Identity()
             ghn_in_dim = in_dim
-        
+
         # Graph Hopfield layers
         self.ghn_layers = nn.ModuleList()
         for i in range(num_layers):
@@ -92,12 +110,18 @@ class GraphHopfieldNetwork(nn.Module):
                     use_layer_norm=use_layer_norm,
                     normalize_memory_keys=normalize_memory_keys,
                     normalize_memory_queries=normalize_memory_queries,
+                    tie_keys_values=tie_keys_values,
+                    learnable_beta=learnable_beta,
+                    use_spectral_norm_constraint=use_spectral_norm_constraint,
+                    norm_mode=norm_mode,
+                    use_query_proj=use_query_proj,
+                    num_heads=num_heads,
                 )
             )
-        
+
         # Output classifier
         self.classifier = nn.Linear(hidden_dim, out_dim)
-    
+
     def forward(
         self,
         x: Tensor,
@@ -107,7 +131,7 @@ class GraphHopfieldNetwork(nn.Module):
     ) -> Tuple[Tensor, Optional[dict]]:
         """
         Forward pass through the network.
-        
+
         Args:
             x: Node features [N, in_dim]
             edge_index: Graph edges [2, E]
@@ -123,14 +147,22 @@ class GraphHopfieldNetwork(nn.Module):
         
         # Encode input
         x = self.encoder(x)
-        
-        # Pass through GHN layers
-        for layer in self.ghn_layers:
+
+        # Pass through GHN layers with optional skip connections
+        x_prev = None
+        for i, layer in enumerate(self.ghn_layers):
             x, info = layer(
                 x, edge_index,
                 return_energy=return_energy,
                 return_attention=return_attention,
             )
+
+            # Add skip connection from previous layer (for layers > 0)
+            if self.use_skip_connections and i > 0 and x_prev is not None:
+                x = x + self.skip_weight * x_prev
+
+            x_prev = x
+
             if info:
                 if "energies" in info:
                     all_energies.extend(info["energies"])
@@ -179,16 +211,22 @@ class GraphHopfieldNetworkMinimal(nn.Module):
         use_layer_norm: bool = True,
         normalize_memory_keys: bool = False,
         normalize_memory_queries: bool = False,
+        tie_keys_values: bool = False,
+        learnable_beta: bool = True,
+        use_spectral_norm_constraint: bool = True,
+        norm_mode: str = "per_layer",
+        use_query_proj: bool = True,
+        num_heads: int = 1,
     ):
         super().__init__()
-        
+
         # Input projection
         self.input_proj = nn.Sequential(
             nn.Linear(in_dim, hidden_dim),
             nn.ReLU(),
             nn.Dropout(dropout),
         )
-        
+
         # Single GHN layer with multiple iterations
         self.ghn = GraphHopfieldLayer(
             in_dim=hidden_dim,
@@ -202,11 +240,17 @@ class GraphHopfieldNetworkMinimal(nn.Module):
             use_layer_norm=use_layer_norm,
             normalize_memory_keys=normalize_memory_keys,
             normalize_memory_queries=normalize_memory_queries,
+            tie_keys_values=tie_keys_values,
+            learnable_beta=learnable_beta,
+            use_spectral_norm_constraint=use_spectral_norm_constraint,
+            norm_mode=norm_mode,
+            use_query_proj=use_query_proj,
+            num_heads=num_heads,
         )
-        
+
         # Classifier
         self.classifier = nn.Linear(hidden_dim, out_dim)
-    
+
     def forward(
         self,
         x: Tensor,
@@ -222,6 +266,6 @@ class GraphHopfieldNetworkMinimal(nn.Module):
         )
         logits = self.classifier(x)
         return logits, info
-    
+
     def get_num_params(self) -> int:
         return sum(p.numel() for p in self.parameters() if p.requires_grad)

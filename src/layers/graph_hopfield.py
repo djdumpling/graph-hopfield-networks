@@ -7,7 +7,7 @@ from torch import Tensor
 from torch_geometric.utils import degree, add_self_loops
 from typing import Optional, Tuple
 
-from .memory_bank import MemoryBank
+from .memory_bank import MemoryBank, MultiHeadMemoryBank
 
 
 class GraphHopfieldLayer(nn.Module):
@@ -47,10 +47,16 @@ class GraphHopfieldLayer(nn.Module):
         normalize_laplacian: bool = True,
         normalize_memory_keys: bool = False,
         normalize_memory_queries: bool = False,
+        tie_keys_values: bool = False,
+        learnable_beta: bool = True,
+        use_spectral_norm_constraint: bool = True,
+        norm_mode: str = "per_layer",
+        use_query_proj: bool = True,
+        num_heads: int = 1,
     ):
         """
         Initialize the Graph Hopfield Layer.
-        
+
         Args:
             in_dim: Input feature dimension
             out_dim: Output feature dimension (also memory pattern dimension)
@@ -59,15 +65,24 @@ class GraphHopfieldLayer(nn.Module):
             lambda_graph: Weight for graph Laplacian regularization
             num_iterations: Number of fixed-point iterations (T)
             alpha: Damping/mixing coefficient for update stability
-            use_layer_norm: Apply LayerNorm after each iteration
+            use_layer_norm: Apply LayerNorm (location depends on norm_mode)
             use_residual: Use residual connection in updates
             dropout: Dropout rate
             normalize_laplacian: Use symmetric normalized Laplacian
             normalize_memory_keys: Normalize memory keys for numerical stability
             normalize_memory_queries: Normalize queries for numerical stability
+            tie_keys_values: If True, use same matrix for keys and values (default: False)
+            learnable_beta: If True, make beta learnable (default: True)
+            use_spectral_norm_constraint: Constrain beta for convexity (default: True)
+            norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
+                       "per_layer" (default): Apply once after all iterations (preserves energy descent)
+                       "per_iteration": Apply after each iteration (legacy behavior, breaks energy descent)
+                       "none": No normalization
+            use_query_proj: If True, add a learnable query projection (default: True)
+            num_heads: Number of attention heads for multi-head memory (default: 1, single-head)
         """
         super().__init__()
-        
+
         self.in_dim = in_dim
         self.out_dim = out_dim
         self.num_patterns = num_patterns
@@ -78,26 +93,54 @@ class GraphHopfieldLayer(nn.Module):
         self.use_layer_norm = use_layer_norm
         self.use_residual = use_residual
         self.normalize_laplacian = normalize_laplacian
-        
+        self.learnable_beta = learnable_beta
+        self.norm_mode = norm_mode
+
+        # Validate norm_mode
+        valid_norm_modes = ("none", "per_layer", "per_iteration")
+        if norm_mode not in valid_norm_modes:
+            raise ValueError(f"norm_mode must be one of {valid_norm_modes}, got {norm_mode}")
+
         # Input projection (if dimensions differ)
         if in_dim != out_dim:
             self.proj_in = nn.Linear(in_dim, out_dim)
         else:
             self.proj_in = nn.Identity()
-        
+
         # Memory bank for Hopfield retrieval
-        self.memory = MemoryBank(
-            num_patterns=num_patterns,
-            pattern_dim=out_dim,
-            tie_keys_values=True,
-            normalize_keys=normalize_memory_keys,
-            normalize_queries=normalize_memory_queries,
-        )
-        
+        self.num_heads = num_heads
+        if num_heads > 1:
+            self.memory = MultiHeadMemoryBank(
+                num_patterns=num_patterns,
+                pattern_dim=out_dim,
+                num_heads=num_heads,
+                tie_keys_values=tie_keys_values,
+                normalize_keys=normalize_memory_keys,
+                normalize_queries=normalize_memory_queries,
+                learnable_beta=learnable_beta,
+                initial_beta=beta,
+                use_spectral_norm_constraint=use_spectral_norm_constraint,
+                use_query_proj=use_query_proj,
+            )
+        else:
+            self.memory = MemoryBank(
+                num_patterns=num_patterns,
+                pattern_dim=out_dim,
+                tie_keys_values=tie_keys_values,
+                normalize_keys=normalize_memory_keys,
+                normalize_queries=normalize_memory_queries,
+                learnable_beta=learnable_beta,
+                initial_beta=beta,
+                use_spectral_norm_constraint=use_spectral_norm_constraint,
+                use_query_proj=use_query_proj,
+            )
+
         # Optional layer normalization
-        if use_layer_norm:
+        if use_layer_norm and norm_mode != "none":
             self.layer_norm = nn.LayerNorm(out_dim)
-        
+        else:
+            self.layer_norm = None
+
         # Dropout
         self.dropout = nn.Dropout(dropout) if dropout > 0 else nn.Identity()
     
@@ -203,8 +246,10 @@ class GraphHopfieldLayer(nn.Module):
                 })
             
             # 1. Hopfield retrieval: R(X) = M^T @ softmax(β M X)
+            # If learnable_beta is enabled, pass None to use the learned beta
+            beta_for_retrieval = None if self.learnable_beta else self.beta
             retrieved, attn = self.memory.retrieve(
-                x, beta=self.beta, return_attention=return_attention or return_energy
+                x, beta=beta_for_retrieval, return_attention=return_attention or return_energy
             )
             
             # Always collect attention if requested (for analysis)
@@ -227,11 +272,11 @@ class GraphHopfieldLayer(nn.Module):
                 )
             else:
                 x_new = retrieved - laplacian_coeff * laplacian_term
-            
-            # 4. Apply layer norm (for stability)
-            if self.use_layer_norm:
+
+            # 4. Apply layer norm per iteration (legacy mode - breaks energy descent)
+            if self.layer_norm is not None and self.norm_mode == "per_iteration":
                 x_new = self.layer_norm(x_new)
-            
+
             x = x_new
             
             # Compute energy AFTER update (for tracking descent)
@@ -241,9 +286,13 @@ class GraphHopfieldLayer(nn.Module):
                 energies[-1]["energy_change"] = (energy_after - energy_before).item()
                 energies[-1]["energy_decreased"] = (energy_after < energy_before).item()
         
+        # Apply layer norm after all iterations (per_layer mode - preserves energy descent)
+        if self.layer_norm is not None and self.norm_mode == "per_layer":
+            x = self.layer_norm(x)
+
         # Apply dropout after all iterations (not during, to preserve energy descent)
         x = self.dropout(x)
-        
+
         # Collect info
         if return_energy:
             info["energies"] = energies
@@ -272,12 +321,14 @@ class GraphHopfieldLayer(nn.Module):
             Total energy (scalar)
         """
         # Hopfield energy per node
-        hopfield_energy = self.memory.compute_energy(x, beta=self.beta)
+        beta_for_energy = None if self.learnable_beta else self.beta
+        hopfield_energy = self.memory.compute_energy(x, beta=beta_for_energy)
         
-        # Graph Laplacian energy: λ tr(X^T L X) = λ Σ_(u,v)∈E ||xᵤ - xᵥ||²
-        row, col = edge_index
-        diff = x[row] - x[col]
-        laplacian_energy = self.lambda_graph * (diff ** 2).sum()
+        # Graph Laplacian energy: λ tr(X^T L X)
+        # Use Laplacian-based computation which correctly handles the symmetric
+        # normalized Laplacian and avoids edge counting issues
+        laplacian_term = self._compute_laplacian_term(x, edge_index, num_nodes)
+        laplacian_energy = self.lambda_graph * (x * laplacian_term).sum()
         
         return hopfield_energy + laplacian_energy
     
@@ -312,10 +363,16 @@ class GraphHopfieldBlock(nn.Module):
         use_layer_norm: bool = True,
         normalize_memory_keys: bool = False,
         normalize_memory_queries: bool = False,
+        tie_keys_values: bool = False,
+        learnable_beta: bool = True,
+        use_spectral_norm_constraint: bool = True,
+        norm_mode: str = "per_layer",
+        use_query_proj: bool = True,
+        num_heads: int = 1,
     ):
         """
         Initialize the Graph Hopfield Block.
-        
+
         Args:
             in_dim: Input dimension
             hidden_dim: Hidden/memory dimension
@@ -331,12 +388,18 @@ class GraphHopfieldBlock(nn.Module):
             use_layer_norm: Apply LayerNorm after iterations
             normalize_memory_keys: Normalize memory keys for stability
             normalize_memory_queries: Normalize queries for stability
+            tie_keys_values: If True, use same matrix for keys and values
+            learnable_beta: If True, make beta learnable
+            use_spectral_norm_constraint: Constrain beta for convexity
+            norm_mode: When to apply LayerNorm - "none", "per_layer", "per_iteration"
+            use_query_proj: If True, add a learnable query projection
+            num_heads: Number of attention heads for multi-head memory
         """
         super().__init__()
-        
+
         self.use_input_mlp = use_input_mlp
         self.use_output_mlp = use_output_mlp
-        
+
         # Input MLP
         if use_input_mlp:
             self.input_mlp = nn.Sequential(
@@ -348,7 +411,7 @@ class GraphHopfieldBlock(nn.Module):
         else:
             self.input_mlp = nn.Identity()
             hopfield_in_dim = in_dim
-        
+
         # Graph Hopfield Layer
         self.hopfield = GraphHopfieldLayer(
             in_dim=hopfield_in_dim,
@@ -362,8 +425,14 @@ class GraphHopfieldBlock(nn.Module):
             use_layer_norm=use_layer_norm,
             normalize_memory_keys=normalize_memory_keys,
             normalize_memory_queries=normalize_memory_queries,
+            tie_keys_values=tie_keys_values,
+            learnable_beta=learnable_beta,
+            use_spectral_norm_constraint=use_spectral_norm_constraint,
+            norm_mode=norm_mode,
+            use_query_proj=use_query_proj,
+            num_heads=num_heads,
         )
-        
+
         # Output MLP
         if use_output_mlp:
             self.output_mlp = nn.Sequential(
