@@ -13,7 +13,10 @@ def load_model_results(results_dir: str = "results") -> Dict[str, List[Dict]]:
     """Load results for all models on Citeseer."""
     
     results_path = Path(results_dir)
-    all_files = list(results_path.glob("*_citeseer_*.json"))
+    # GHN Citeseer results live in results/ghn_citeseer/
+    ghn_files = list((results_path / "ghn_citeseer").glob("ghn_citeseer_*.json"))
+    other_files = list(results_path.glob("*_citeseer_*.json"))  # gcn, gat, graphsage
+    all_files = ghn_files + other_files
     
     model_results = {
         "ghn": [],

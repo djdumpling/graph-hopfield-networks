@@ -1,0 +1,616 @@
+
+
+=== PAGE 1 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+THECAPACITY OF MODERN HOPFIELD NETWORKS
+UNDER THE DATA MANIFOLD HYPOTHESIS
+Beatrice Achilli1Luca Ambrogioni2Carlo Lucibello1Marc M ´ezard1
+Enrico Ventura1
+1Department of Computing Sciences, BIDSA, Bocconi University, Milan, MI 20100, Italy.
+2Donders Institute for Brain, Cognition and Behaviour, Radboud University,
+6500 HD Nijmegen, The Netherlands.
+ABSTRACT
+We generalize the computation of the capacity of exponential Hopfield model from
+Lucibello and M ´ezard (2024) to more generic pattern ensembles, including binary
+patterns and patterns generated from a hidden manifold model.
+1 I NTRODUCTION
+Since its introduction in 1982, the Hopfield Model (Hopfield, 1982) has been the standard model
+for associative memory. The retrieval of a full memory from partial information was shown to be
+possible for this model up to a critical capacity, which scales linearly with the system size (Amit
+et al., 1985). Hopfield-like models with super-linear capacity have been investigated for a long time
+Gardner (1987), and they achieved renewed popularity in recent years. In particular, Krotov and
+Hopfield (2016) discuss generalizations with polynomial capacity, while Demircigil et al. (2017) and
+Ramsauer et al. (2020b) introduce exponential capacity networks. In particular, these exponential
+models have attracted substantial interest in the past few years, partially due to their connections with
+transformer attention blocks (Ramsauer et al., 2020b; Hoover et al., 2024) and generative diffusion
+models (Ambrogioni, 2023; Hoover et al., 2023; Ambrogioni, 2024; Biroli et al., 2024). We will
+refer to the exponential capacity model of Ramsauer et al. (2020b) as to Modern Hopfield Network.
+In Ref. (Lucibello and M ´ezard, 2024), the authors proposed the use of an auxiliary Random Energy
+Model (REM) to study the retrieval transition in MHNs with a signal-to-noise argument. In this
+paper, we further develop this approach and extend it to more general pattern ensembles, beyond
+the rotationally invariant ones they considered. In particular, we study structured patterns, generated
+according to the Hidden Manifold Model (Goldt et al., 2020) with non-linear activations. We use the
+replica formalism to study the auxiliary REM associated to the problem and characterize the critical
+retrieval threshold as a function of the latent dimensionality of the patterns.
+2 T HERANDOM ENERGY MODEL FORMALISM
+MHNs are analogous to physical systems with randomly sampled energy levels, where each level
+corresponds to a pattern to be memorized (Lucibello and M ´ezard, 2024). In statistical physics, the
+Random Energy Model is a well-known analytically tractable disordered system whose thermody-
+namic limit can be studied both either large deviation theory or the replica method (Derrida, 1981;
+Mezard and Montanari, 2009; Fedrigo et al., 2007). In this section, we summarize the probabilistic
+tools needed to solve a generic REM. Let us consider P=eαNi.i.d. energy levels εµ∼p(ε|ω),
+where αis a positive real number and we extend the typical REM setting allowing for a common
+source of quenched disorder ω∼pω. In machine learning terms ωrepresents a common set of latent
+variables that influence the sampling of the observable patterns, or data points.
+We are interested in the thermodynamic properties of the system for a large number of energy levels,
+that is the large NandPlimit. These properties can be obtained from the asymptotic free energy of
+1
+
+=== PAGE 2 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+the system at an inverse temperature λ, defined by
+ϕα(λ) = lim
+N→∞1
+λNElogX
+µeλN εµ. (1)
+Notice that we adopt a convention where the energy has the opposite sign with respect to the usual
+physics convention. In order to study the thermodynamic limit, it is convenient to introduce the
+cumulant generating function and its Legendre transform:
+ζ(λ) = lim
+N→∞1
+NEωlogEε|ωeλN ε, (2)
+s(ε) = sup
+λε λ−ζ(λ). (3)
+The generating function ζ(λ)is more tractable than ϕα(λ)since the expectation with respect to εis
+moved inside the logarithm, where it can often be computed explicitly.
+The quantity Σα(ϵ) =α−s(ε)corresponds to the annealed entropy of the system (Mezard and
+Montanari, 2009). The annealed entropy corresponds to the correct (quenched) one, as long as it is
+positive. Let us define the condensation energy ε∗(α)as the largest root of Σα(ε∗) = 0 . We have
+Σ(ε)<0forε > ε∗(α). Let us also call ˜ε(λ) =ζ′(λ)the stationary energy.
+For given λandα, ifΣ(˜ε(λ)) =α−s(˜ε(λ)) =α+ζ(λ)−λζ′(λ)is larger than zero, the annealed
+description is correct, and an exponential number of energy levels with typical value ˜ε(λ)dominate
+the partition function. This is called the uncondensed phase .
+Increasing λ, we select higher energy levels, until we reach the condensation transition where the
+entropy becomes zero, and will stay zero also for larger values of λ. The partition function is
+dominated by the ground state ε∗(α)in this region. Therefore we have what is called a condensed
+phase forλ > λ∗(α), with λ∗defined as the solution of:
+α+ζ(λ∗)−λ∗ζ′(λ∗) = 0 . (4)
+Finally, the free energy is given by
+ϕα(λ) =(
+α+ζ(λ)
+λλ < λ ∗(α),
+ε∗(α)λ≥λ∗(α).(5)
+3 M ODERN HOPFIELD NETWORKS
+Here we review and extend the formalism introduced in Lucibello and M ´ezard (2024) to compute
+the exact asymptotic thresholds for the capacity of the MHN introduced in Ramsauer et al. (2020a).
+While the study in Lucibello and M ´ezard (2024) was limited to rotational invariant pattern ensem-
+bles, we generalize it to a much larger class of ensembles for which the free energy of an auxiliary
+REM has the commonly found self-averaging property (M ´ezard et al., 1986). We will apply the
+REM formalism to the computation of the capacity in presence of binary patterns (Section 3.2) and
+then to patterns generated to live on a latent manifold (Section 3.3). Eventually, we consider the
+infinitive data-points scenario and prove that a linear manifold becomes the only attractor in this
+case.
+We consider the generalization of the Hopfield model proposed in Ramsauer et al. (2020a). Given
+Ppatterns ξµ∈RNand continuous configurations x∈RN, the energy of the model is defined as
+E(x) =−1
+λlogPX
+µ=1eλx·ξµ+1
+2∥x∥2, (6)
+where ·denotes scalar product and λplays the role of a fictitious inverse temperature. We study
+the retrieval of a a generic pattern, say ξ1, by analyzing under which conditions the energy has a
+local minimum in correspondence of ξ1, in particular in the limit of large systems size Nand i.i.d.
+patterns. We shall assume that the components of xand of ξµare of order 1, so that the energy
+scales linearly with Nat large N.
+2
+
+=== PAGE 3 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+3.1 T HE SIGNAL -TO-NOISE ARGUMENT
+An exact capacity threshold can be obtained using a simple signal-to-noise argument. The idea
+is that, if we are evaluating the energy close to a given pattern ξ1, all the other patterns can be
+interpreted as ‘unrelated noise’ that interferes with the retrieval of the pattern. One can therefore
+split the energy into a signal and a noise contribution and approximate to exponential precision the
+energy density at large Nby
+1
+NE(x)≈ −maxx·ξ1
+N,Φ(x)
++1
+2N∥x∥2, (7)
+where the noise function Φis defined by
+Φ(x) =1
+λNlogX
+µ≥2eλx·ξµ. (8)
+As we shall see, this function has a finite limit when N→+∞. The condition for retrieval is that
+the signal term in x=ξ1dominates the noise term, that is ∥ξ1∥2>Φ(ξ1). We consider the case
+in which we have an exponential number P=eαN,α >0, of i.i.d. or conditionally i.i.d. patterns
+(as in the case of patterns produced by the hidden manifold model discussed later), normalized such
+thatlimN→∞1
+NE∥ξ∥2≡r2
+ξis finite. For reasonable pattern distributions, ∥ξ1∥2/NandΦ(ξ1)
+will jointly concentrate on their expected value for large N. Therefore, depending on the values on
+the coupling strength λand the load α, the retrieval condition ∥ξ1∥2/N > Φ(ξ1)is either almost
+always true or almost always false. The critical line α1(λ)separating the retrieval phase from the
+non-retrieval one when considering a uniformly chosen pattern, can be obtained solving the equation
+r2
+ξ= lim
+N→∞1
+NEΦ(ξ1) =ϕα(λ). (9)
+Following Lucibello and M ´ezard (2024), we now make the crucial observation that ϕα(λ)cor-
+responds to the asymptotic free energy of a REM (Derrida, 1981), with distribution of energies
+induced by the distribution of patterns. This allows the computation of the free energy by using
+simple probabilistic techniques developed in this context.
+The REM formalism introduced in Section 2 can be used to compute the single pattern retrieval
+threshold α1(λ)obtained from Eq. (9). Specifically, one can employ the expression of the free
+energy of a REM presented in Eq. (5).
+When the norm of the patterns is not bounded, we can have rare events in which the scalar product
+between ξ1and another pattern with a very large norm can be dominating. In particular, when the
+typical norm is smaller than the maximum norm, there is a saturation effect in the capacity: even
+for very large λ, forαlarge enough you can always find a pattern that destabilizes the signal. This
+saturation of the single pattern retrieval threshold was already observed in Lucibello and M ´ezard
+(2024) in the case of Gaussian patterns.
+3.2 M ODERN HOPFIELD NETWORKS WITH BINARY PATTERNS
+As a first application, let us evaluate the retrieval capacity α1(λ)from Eq. (9) in the case of binary
+pattern ξµ∼Unif({−1,+1}N). In order to compute EΦ(ξ1)/N, we first compute the generating
+and the rate function from Eqs. (2) and (3):
+ζbin(λ) = lim
+N→∞1
+NEξ1logEξ2eλξ1·ξ2= log cosh( λ), (10)
+sbin(ϵ) =1 +ϵ
+2log(1 + ϵ) +1−ϵ
+2log(1−ϵ). (11)
+Next, we compute numerically ϵ∗(α)solving sbin(ϵ) =αforε, and set λ∗(α) =s′
+bin(ϵ∗(α)). At
+this point, we can compute the REM free energy ϕα(λ)from Eq. (5) and we can find the single
+pattern retrieval threshold α1(λ)as the αfor which ϕα(λ) = 1 . The corresponding phase diagram
+is shown in Fig. 1.
+3
+
+=== PAGE 4 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+Figure 1: Phase diagram for binary patterns and variable. We also show the line α∗(λ)where the
+REM condensation occurs.
+Figure 2: The retrieval lines α1(λ)for patterns from an Hidden Manifold Model with ReLU (left),
+linear ( center ) and tanh (right ) activations and different aspect ratios αD=D/N .
+3.3 P ATTERNS FROM THE HIDDEN MANIFOLD MODEL
+Let us now consider patterns generated by a Hidden Manifold Model (HMM). The HMM is a sim-
+ple synthetic generative process displaying the idea of the data manifold hypothesis, where data lies
+onD-dimensional sub-manifold of the ambient N-dimensional space. This generative process has
+been introduced and investigated in Goldt et al. (2020; 2022); Gerace et al. (2020) in the supervised
+learning context and studied in Negri et al. (2023) in the standard Hopfield case. Patterns are gen-
+erated as ξµ=σ
+1√
+DFzµ
+, where the latent variables zµare Gaussian, zµ∼ N (0, ID),σis
+an element-wise non-linearity, and F∈RN×Dis a random matrix with i.i.d. standard Gaussian
+entries. We define αD=D/N , and assume D, N→+∞withαDhaving a finite limit. The REM
+generating function (2) can be written as
+ζHMM (λ) = lim
+N→∞1
+NEF,z1logEz2eλ σ
+1√
+DFz1
+·σ
+1√
+DFz2
+(12)
+We leverage the replica method to perform the computation, that is for a given integer n > 0we
+write the replicated partition function
+EZn
+HMM =EF,z,z1:neλPn
+a=1σ
+1√
+DFz
+·σ
+1√
+DFza
+, (13)
+we perform saddle point evaluation within a Replica Symmetric (RS) ansatz, and we obtain by
+analytical continuation the result for ζHMM (λ) = lim n→0limN→∞1
+nNlogEZn
+HMM . The details
+of the computation are provided in A. The result is
+ζHMM (λ) =−αDmˆm−αD
+2(qdˆqd−q0ˆq0) +αDGS+GE, (14)
+4
+
+=== PAGE 5 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+with
+GS=−1
+2log (1−ˆqd+ ˆq0) +1
+2ˆm2+ ˆq0
+1−ˆqd+ ˆq0, (15)
+GE=Z
+DtZ
+Du0logZ
+Du eλσ(u0)σ√qd−q0u+mu0−√
+q0−m2t
+. (16)
+HereR
+Dxdenotes standard Gaussian integration. Eq. (14) has to be evaluated on its stationary
+point with respect to the auxiliary parameters qd,ˆqd, q0,ˆq0. Solving numerically the saddle point
+equations and then using the usual REM formalism we can obtain the single pattern retrieval thresh-
+oldα1(λ). Results are shown for patterns from a linear manilfold, ReLU and tanh activations in
+Fig. 2. The capacity decreases as the latent dimension Dshrinks. Notice that this is not straightfor-
+ward, since the expected distance between the patterns does not depend on D. Another phenomena
+is the saturation effect that we can observe in all the three studied cases, though for σ= tanh it
+takes place at larger λvalues. This was anticipated in Section 3.1: if the typical norm of the patterns
+is smaller than the maximum norm, even at large λ, forαbig enough we will find patterns with large
+scalar product in the noise term.
+4 G ENERALIZATION IN MODERN HOPFIELD NETWORKS
+We hereby consider data generated on a linear manifold defined by a feature matrix F. In the pre-
+vious sections we have proved the existence of a maximum amount of patterns that can be retrieved
+as local minima of the energy function defined in Eq. (6). We will now show that, by increasing
+the number of patterns, we can bring the model closer to the condition of having the entire latent
+manifold as the only attractor in the landscape. We call this specific scenario generalization limit of
+the MHN. Consider data generated on a linear hidden manifold as σ(Fz) =Fz, where we have
+re-absorbed the factor 1/√
+DintoFfor simplicity of the notation. Then we can compute the energy
+gradient-descent dynamics driving the memory retrieval as
+x(t+1)=x(t)− ∇ xE(x(t)), (17)
+Let us rewrite the energy function of the MHN as
+E(x) =−1
+λlogZ
+DzeλxFz+1
+2∥x∥2(18)
+=−1
+λlog
+eλ2
+2x⊤FF⊤x
++1
+2∥x∥2(19)
+=1
+2x⊤ 
+1N−λFF⊤
+x, (20)
+By choosing λ= 1we obtain the following updating rule for the dynamics
+x(t+1)=FF⊤x(t), (21)
+which projects any configuration x(t)on the data-manifold in one single iteration. The entire mani-
+fold is now attractive for the gradient descent dynamics.
+5 C ONCLUSIONS
+In this paper, we extended the formalism of the Random Energy Model applied to study the retrieval
+transition in dense associative memory to more general pattern ensembles. In particular, we analyzed
+a simple case of structured patterns, the Hidden Manifold Model, considering the effect that the
+latent dimension and the non-linearity have on the retrieval of a pattern. Even if the typical distance
+between patterns does not depend on the hidden dimension, we found that it affects the retrieval
+threshold, which decreases with a smaller latent dimension. It would be interesting to extend this
+study to what happens beyond the retrieval threshold. For instance, one possible research direction
+is to analyze the stability of mixtures of patterns as in Kalaj et al. (2024), to see how generalization
+extends to the exponential regime. We finally stress the importance of studying MHNs because
+of their formal equivalence with empirical-score-driven Diffusion Models (DMs), state-of-the-art
+generative models (Ventura et al., 2025; Achilli et al., 2024; Biroli et al., 2024; Ambrogioni, 2024).
+Specifically, the energy function of a MHN with spherical patterns (as treated in Lucibello and
+M´ezard (2024)) coincides with the time-dependent potential of a DM by substituting 1/λwith the
+diffusion time t.
+5
+
+=== PAGE 6 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+ACKNOWLEDGEMENTS
+This publication benefited from European Union - Next Generation EU funds, component M4.C2,
+investment 1.1. - CUP J53D23001330001.
+REFERENCES
+Beatrice Achilli, Enrico Ventura, Gianluigi Silvestri, Bao Pham, Gabriel Raya, Dmitry Krotov, Carlo
+Lucibello, and Luca Ambrogioni. Losing dimensions: Geometric memorization in generative
+diffusion. arXiv:2410.08727 , 2024.
+Luca Ambrogioni. In search of dispersed memories: Generative diffusion models are associative
+memory networks. arXiv:2309.17290 , 2023.
+Luca Ambrogioni. The statistical thermodynamics of generative diffusion models: Phase transitions,
+symmetry breaking and critical instability. arXiv:2310.17467 , 2024.
+Daniel J Amit, Hanoch Gutfreund, and Haim Sompolinsky. Spin-glass models of neural networks.
+Physical Review A , 32(2):1007–1018, 1985.
+Giulio Biroli, Tony Bonnaire, Valentin de Bortoli, and Marc M ´ezard. Dynamical regimes of diffu-
+sion models. Nature Communications , 15(1):9957, 2024.
+Mete Demircigil, Judith Heusel, Matthias L ¨owe, Sven Upgang, and Franck Vermet. On a model of
+associative memory with huge storage capacity. Journal of Statistical Physics , 168(2):288–299,
+2017.
+Bernard Derrida. Random-energy model: An exactly solvable model of disordered systems. Physi-
+cal Review B , 24(5):2613–2626, 1981.
+Mattia Fedrigo, Franco Flandoli, and Francesco Morandin. A large deviation principle for the free
+energy of random gibbs measures with application to the rem. Annali di Matematica Pura ed
+Applicata , 186:381–417, 2007.
+Elizabeth Gardner. Multiconnected neural network models. Journal of Physics A: Mathematical
+and General , 20(11):3453, 1987.
+Federica Gerace, Bruno Loureiro, Florent Krzakala, Marc M ´ezard, and Lenka Zdeborov ´a. Gener-
+alisation error in learning with random features and the hidden manifold model. In International
+Conference on Machine Learning , pages 3452–3462, 2020.
+Sebastian Goldt, Marc M ´ezard, Florent Krzakala, and Lenka Zdeborov ´a. Modeling the influence of
+data structure on learning in neural networks: The hidden manifold model. Physical Review X ,
+10(4):041044, 2020.
+Sebastian Goldt, Bruno Loureiro, Galen Reeves, Florent Krzakala, Marc M ´ezard, and Lenka Zde-
+borov ´a. The gaussian equivalence of generative models for learning with shallow neural networks.
+InMathematical and Scientific Machine Learning , pages 426–471, 2022.
+Benjamin Hoover, Hendrik Strobelt, Dmitry Krotov, Judy Hoffman, Zsolt Kira, and Duen Horng
+Chau. Memory in Plain Sight: A Survey of the Uncanny Resemblances between Diffusion Models
+and Associative Memories. arXiv:2309.16750 , 2023.
+Benjamin Hoover, Yuchen Liang, Bao Pham, Rameswar Panda, Hendrik Strobelt, Duen Horng
+Chau, Mohammed Zaki, and Dmitry Krotov. Energy transformer. Advances in Neural Infor-
+mation Processing Systems , 36, 2024.
+John J Hopfield. Neural networks and physical systems with emergent collective computational
+abilities. Proceedings of the national academy of sciences , 79(8):2554–2558, 1982.
+Silvio Kalaj, Clarissa Lauditi, Gabriele Perugini, Carlo Lucibello, Enrico M. Malatesta, and Matteo
+Negri. Random features hopfield networks generalize retrieval to previously unseen examples.
+arXiv:2407.05658 , 2024.
+6
+
+=== PAGE 7 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+Dmitry Krotov and John J. Hopfield. Dense associative memory for pattern recognition. In D. Lee,
+M. Sugiyama, U. Luxburg, I. Guyon, and R. Garnett, editors, Advances in Neural Information
+Processing Systems , volume 29, 2016.
+Carlo Lucibello and Marc M ´ezard. Exponential capacity of dense associative memories. Phys. Rev.
+Lett., 132:077301, 2024.
+Marc Mezard and Andrea Montanari. Information, physics, and computation . Oxford University
+Press, 2009.
+Marc M ´ezard, Giorgio Parisi, and Miguel Virasoro. Spin Glass Theory and Beyond . World Scientific,
+1986.
+Matteo Negri, Clarissa Lauditi, Gabriele Perugini, Carlo Lucibello, and Enrico Malatesta. Storage
+and learning phase transitions in the random-features hopfield model. Physical Review Letters ,
+131:257301, 2023.
+Hubert Ramsauer, Bernhard Sch ¨afl, Johannes Lehner, Philipp Seidl, Michael Widrich, Thomas
+Adler, Lukas Gruber, Markus Holzleitner, Milena Pavlovi ´c, Geir Kjetil Sandve, Victor Greiff,
+David Kreil, Michael Kopp, G ¨unter Klambauer, Johannes Brandstetter, and Sepp Hochreiter.
+Hopfield Networks is All You Need. arXiv: 2008.02217 , 2020a.
+Hubert Ramsauer, Bernhard Sch ¨afl, Johannes Lehner, Philipp Seidl, Michael Widrich, Thomas
+Adler, Lukas Gruber, Markus Holzleitner, Milena Pavlovi ´c, Geir Kjetil Sandve, et al. Hopfield
+networks is all you need. arXiv:2008.02217 , 2020b.
+Enrico Ventura, Beatrice Achilli, Gianluigi Silvestri, Carlo Lucibello, and Luca Ambrogioni. Man-
+ifolds, random matrices and spectral gaps: The geometric phases of generative diffusion. In
+International Conference on Learning Representations , 2025.
+7
+
+=== PAGE 8 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+A R EPLICA CALCULATION FOR THE MHN CAPACITY WITH HMM PATTERNS
+Setting n= 0fixes the reference-only overlaps, i.e. q00= 1andˆq00= 0.
+The RS ansatz is
+qab=
+1m . . . m
+m q d q0
+......
+m q 0 qd
+; ˆqab=
+0 ˆm . . . ˆm
+ˆmˆqd ˆq0
+......
+ˆmˆq0 ˆqd
+(22)
+The entropic term is
+GS=1
+nlogZnY
+a=0dza
+√
+2πe−1
+2P
+a(za)2e1
+2P
+abˆqabzazb(23)
+=1
+nlogZdz0
+√
+2πnY
+a′=1dza′
+√
+2πe−1
+2(z0)2+ ˆmz0P
+a′za′
+e−1
+2(1−(ˆqd−ˆq0))P
+a′
+za′2+1
+2ˆq0P
+a′za′2
+(24)
+=1
+nlogZ nY
+a′=1dza′
+√
+2πe1
+2ˆm2P
+a′za′2
+e−1
+2(1−ˆqd+ˆq0)P
+a′
+za′2+1
+2ˆq0P
+a′za′2
+(25)
+=1
+nlogZ
+DtZ nY
+a′=1dza′
+√
+2πe−1
+2(1−ˆqd+ˆq0)P
+a′
+za′2
+e√
+ˆm2+ˆq0tP
+a′za′
+(26)
+=1
+nlogZ
+Dt 
+1p
+1−(ˆqd−ˆq0)e1
+2(ˆm2+ˆq0)
+(1−ˆqd+ˆq0)t2!n
+(27)
+so that
+lim
+n→0GS=−1
+2log (1−ˆqd+ ˆq0) +1
+2ˆm2+ ˆq0
+1−ˆqd+ ˆq0(28)
+while the energetic part is
+GE=1
+nlogZnY
+a=0duadˆua
+2πeλPn
+a′=1σ(u0)σ
+ua′
+−P
+aiˆuaua−1
+2P
+abˆuaˆubqab(29)
+=1
+nlogZdu0dˆu0
+2πnY
+a′=1dua′dˆua′
+2πeλPn
+a′=1σ(u0)σ
+ua′
+−P
+a′iˆua′ua′−iˆu0u0
+×e−1
+2(ˆu0)2−mˆu0P
+a′ˆua′−1
+2(qd−q0)P
+a′
+ˆua′2−1
+2q0P
+a′ˆua′2
+(30)
+=1
+nlogZdu0
+√
+2πnY
+a′=1dua′dˆua′
+2πe1
+2
+mP
+a′ˆua′+iu02
+eλPn
+a′=1σ(u0)σ
+ua′
+−P
+a′iˆua′ua′
+×e−1
+2(qd−q0)P
+a′
+ˆua′2−1
+2q0P
+a′ˆua′2
+(31)
+=1
+nlogZ
+DtZdu0
+√
+2πnY
+a′=1dua′dˆua′
+2πe−(u0)2
+2eλPn
+a′=1σ(u0)σ
+ua′
+×e−iP
+a′ˆua′
+ua′−mu0+√
+q0−m2t
+−1
+2(qd−q0)P
+a′
+ˆua′2
+(32)
+=1
+nlogZ
+DtZ
+Du0(33)
+×Zdu√
+2πeλσ(u0)σ(u) 1√qd−q0e−1
+2(qd−q0)
+u−mu0+√
+q0−m2t2n
+(34)
+8
+
+=== PAGE 9 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+So that
+lim
+n→0GE=Z
+DtZ
+Du0log Zdup
+2π(qd−q0)eλσ(u0)σ(u)−1
+2(qd−q0)
+u−mu0+√
+q0−m2t2!
+.
+(35)
+We can then write
+ζλ(qd, q0, m,ˆqd,ˆq0,ˆm) =−αDmˆm−αD
+2(qdˆqd−q0ˆq0)−αD
+2log (1−ˆqd+ ˆq0) +αD
+2ˆm2+ ˆq0
+1−ˆqd+ ˆq0
++Z
+DtZ
+Du0logZ
+Du eλσ(u0)σ√qd−q0u+mu0−√
+q0−m2t
+(36)
+and take its derivatives to obtain the saddle point equations
+ˆqd=2
+αDZ
+DtZ
+Du0Z
+Du eλσ(u0)σ√qd−q0u+mu0−√
+q0−m2t
+×"
+u−mu0+√
+q0−m2t2−(qd−q0)
+2(qd−q0)2
+R
+Du eλσ(u0)σ√qd−q0u+mu0−√
+q0−m2t#
+(37)
+ˆq0=−2
+αDZ
+DtZ
+Du0Z
+Du eλσ(u0)σ√qd−q0u+mu0−√
+q0−m2t
+×" 
+u−mu0+√
+q0−m2t2
+2(qd−q0)2 +
+u−mu0+√
+q0−m2t√
+q0−m2t+1
+2(qd−q0)!
+R
+Du eλσ(u0)σ√qd−q0u+mu0−√
+q0−m2t#
+(38)
+ˆm=1
+αDZ
+DtZ
+Du0Z
+Du eλσ(u0)σ√qd−q0u+mu0−√
+q0−m2t
+×"
+u−mu0+√
+q0−m2t
+(u0+mt(q0−m2)−1/2)
+(qd−q0)
+R
+Du eλσ(u0)σ√qd−q0u+mu0−√
+q0−m2t#
+(39)
+qd=1
+1−ˆqd+ ˆq0+ˆm2+ ˆq0
+(1−ˆqd+ ˆq0)2(40)
+q0=1
+1−ˆqd+ ˆq0+ˆm2+ ˆqd−1
+(1−ˆqd+ ˆq0)2(41)
+m=ˆm
+1−ˆqd+ ˆq0(42)
+9

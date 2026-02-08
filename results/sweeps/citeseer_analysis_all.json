@@ -14,7 +14,7 @@
     "test_acc_std": 0.01984494738280773,
     "aurc_mean": 0.6935399999999999,
     "aurc_std": 0.01986936223323625,
-    "file": "results/ghn_citeseer_b0.10_l0.10_iter4_pat32_a0.5_lay2_dr0.7_lr0.005_wd0.0100_s10_20260126_072401.json"
+    "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter4_pat32_a0.5_lay2_dr0.7_lr0.005_wd0.0100_s10_20260126_072401.json"
   },
   "top20": [
     {

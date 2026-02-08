@@ -491,10 +491,12 @@ def run_full_experiment(config: Dict[str, Any], verbose: bool = True) -> Dict[st
 def save_results(results: Dict[str, Any], config: Dict[str, Any]) -> str:
     """Save results to file with descriptive filename."""
     results_dir = Path(config["experiment"]["results_dir"])
-    results_dir.mkdir(parents=True, exist_ok=True)
-    
     model_name = config["model"]["name"]
     dataset_name = config["dataset"]["name"]
+    # GHN Citeseer results go in a dedicated subfolder
+    if model_name.lower() == "ghn" and dataset_name.lower() == "citeseer":
+        results_dir = results_dir / "ghn_citeseer"
+    results_dir.mkdir(parents=True, exist_ok=True)
     
     # Build descriptive filename with key hyperparameters
     parts = [model_name, dataset_name]

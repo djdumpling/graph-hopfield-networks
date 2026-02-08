@@ -34,13 +34,13 @@
       "best_acc_std": 1.9844947382807732,
       "mean_acc": 54.9731111071176,
       "best_aurc": 69.354,
-      "best_file": "results/ghn_citeseer_b0.10_l0.10_iter4_pat32_a0.5_lay2_dr0.7_lr0.005_wd0.0100_s10_20260126_072401.json"
+      "best_file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter4_pat32_a0.5_lay2_dr0.7_lr0.005_wd0.0100_s10_20260126_072401.json"
     }
   ],
   "all_results": {
     "ghn": [
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter3_pat64_a0.7_lay2_dr0.5_lr0.005_wd0.0010_s10_20260126_044628.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter3_pat64_a0.7_lay2_dr0.5_lr0.005_wd0.0010_s10_20260126_044628.json",
         "test_acc_mean": 0.6449999809265137,
         "test_acc_std": 0.03828548267483711,
         "aurc_mean": 0.64512,
@@ -52,7 +52,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter4_pat128_a0.7_lay1_dr0.5_lr0.005_wd0.0005_s10_20260126_052334.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter4_pat128_a0.7_lay1_dr0.5_lr0.005_wd0.0005_s10_20260126_052334.json",
         "test_acc_mean": 0.6777998805046082,
         "test_acc_std": 0.009126272052526474,
         "aurc_mean": 0.67558,
@@ -64,7 +64,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter1_pat96_a0.3_lay1_dr0.5_lr0.020_wd0.0100_s10_20260126_065338.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter1_pat96_a0.3_lay1_dr0.5_lr0.020_wd0.0100_s10_20260126_065338.json",
         "test_acc_mean": 0.5633999705314636,
         "test_acc_std": 0.024267949163913727,
         "aurc_mean": 0.5612999999999999,
@@ -76,7 +76,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter4_pat96_a0.7_lay2_dr0.3_lr0.010_wd0.0005_s10_20260126_040717.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter4_pat96_a0.7_lay2_dr0.3_lr0.010_wd0.0005_s10_20260126_040717.json",
         "test_acc_mean": 0.6592000126838684,
         "test_acc_std": 0.00659629050642252,
         "aurc_mean": 0.65657,
@@ -88,7 +88,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter4_pat64_a0.5_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_075821.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter4_pat64_a0.5_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_075821.json",
         "test_acc_mean": 0.16599999368190765,
         "test_acc_std": 0.05342284217476845,
         "aurc_mean": 0.166,
@@ -100,7 +100,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter2_pat128_a0.7_lay4_dr0.3_lr0.010_wd0.0010_s10_20260126_034341.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter2_pat128_a0.7_lay4_dr0.3_lr0.010_wd0.0010_s10_20260126_034341.json",
         "test_acc_mean": 0.6484000086784363,
         "test_acc_std": 0.022520121186971664,
         "aurc_mean": 0.64747,
@@ -112,7 +112,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter1_pat32_a0.5_lay3_dr0.5_lr0.010_wd0.0100_s10_20260126_033723.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter1_pat32_a0.5_lay3_dr0.5_lr0.010_wd0.0100_s10_20260126_033723.json",
         "test_acc_mean": 0.680899977684021,
         "test_acc_std": 0.019604133442044258,
         "aurc_mean": 0.6781200000000001,
@@ -124,7 +124,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter4_pat96_a0.5_lay2_dr0.3_lr0.010_wd0.0010_s10_20260126_061751.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter4_pat96_a0.5_lay2_dr0.3_lr0.010_wd0.0010_s10_20260126_061751.json",
         "test_acc_mean": 0.6506000757217407,
         "test_acc_std": 0.02420835569500923,
         "aurc_mean": 0.64961,
@@ -136,7 +136,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter1_pat64_a0.7_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_071802.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter1_pat64_a0.7_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_071802.json",
         "test_acc_mean": 0.6057999730110168,
         "test_acc_std": 0.023957371711730957,
         "aurc_mean": 0.6048500000000001,
@@ -148,7 +148,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter1_pat96_a0.7_lay3_dr0.5_lr0.005_wd0.0100_s10_20260126_083135.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter1_pat96_a0.7_lay3_dr0.5_lr0.005_wd0.0100_s10_20260126_083135.json",
         "test_acc_mean": 0.6554000377655029,
         "test_acc_std": 0.023003388196229935,
         "aurc_mean": 0.6552899999999999,
@@ -160,7 +160,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter3_pat128_a0.5_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_041415.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter3_pat128_a0.5_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_041415.json",
         "test_acc_mean": 0.6839999556541443,
         "test_acc_std": 0.009545213542878628,
         "aurc_mean": 0.68071,
@@ -172,7 +172,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter5_pat32_a0.7_lay4_dr0.7_lr0.020_wd0.0005_s10_20260126_022146.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter5_pat32_a0.7_lay4_dr0.7_lr0.020_wd0.0005_s10_20260126_022146.json",
         "test_acc_mean": 0.16749998927116394,
         "test_acc_std": 0.04578755050897598,
         "aurc_mean": 0.16749999999999998,
@@ -184,7 +184,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter4_pat128_a0.5_lay1_dr0.7_lr0.020_wd0.0010_s10_20260126_075208.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter4_pat128_a0.5_lay1_dr0.7_lr0.020_wd0.0010_s10_20260126_075208.json",
         "test_acc_mean": 0.6561999917030334,
         "test_acc_std": 0.04596811532974243,
         "aurc_mean": 0.65493,
@@ -196,7 +196,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter4_pat64_a0.3_lay4_dr0.7_lr0.010_wd0.0100_s10_20260126_055137.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter4_pat64_a0.3_lay4_dr0.7_lr0.010_wd0.0100_s10_20260126_055137.json",
         "test_acc_mean": 0.15410000085830688,
         "test_acc_std": 0.04150622338056564,
         "aurc_mean": 0.15411999999999998,
@@ -208,7 +208,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter2_pat32_a0.5_lay2_dr0.7_lr0.020_wd0.0010_s10_20260126_020816.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter2_pat32_a0.5_lay2_dr0.7_lr0.020_wd0.0010_s10_20260126_020816.json",
         "test_acc_mean": 0.5817000269889832,
         "test_acc_std": 0.07218348979949951,
         "aurc_mean": 0.5801400000000001,
@@ -220,7 +220,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter2_pat64_a0.3_lay2_dr0.7_lr0.010_wd0.0005_s10_20260126_054131.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter2_pat64_a0.3_lay2_dr0.7_lr0.010_wd0.0005_s10_20260126_054131.json",
         "test_acc_mean": 0.6557000279426575,
         "test_acc_std": 0.022730547934770584,
         "aurc_mean": 0.65381,
@@ -232,7 +232,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter4_pat128_a0.7_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_040928.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter4_pat128_a0.7_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_040928.json",
         "test_acc_mean": 0.1727999895811081,
         "test_acc_std": 0.04301111027598381,
         "aurc_mean": 0.1728,
@@ -244,7 +244,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter2_pat96_a0.7_lay4_dr0.3_lr0.020_wd0.0005_s10_20260126_071427.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter2_pat96_a0.7_lay4_dr0.3_lr0.020_wd0.0005_s10_20260126_071427.json",
         "test_acc_mean": 0.6407999992370605,
         "test_acc_std": 0.0245257206261158,
         "aurc_mean": 0.64116,
@@ -256,7 +256,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter1_pat96_a0.7_lay1_dr0.7_lr0.020_wd0.0005_s10_20260126_045130.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter1_pat96_a0.7_lay1_dr0.7_lr0.020_wd0.0005_s10_20260126_045130.json",
         "test_acc_mean": 0.6223000288009644,
         "test_acc_std": 0.0449148565530777,
         "aurc_mean": 0.6215200000000001,
@@ -268,7 +268,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter4_pat32_a0.5_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_034714.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter4_pat32_a0.5_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_034714.json",
         "test_acc_mean": 0.4887999892234802,
         "test_acc_std": 0.20371155440807343,
         "aurc_mean": 0.48823999999999995,
@@ -280,7 +280,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter4_pat64_a0.7_lay4_dr0.5_lr0.010_wd0.0005_s10_20260126_021529.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter4_pat64_a0.7_lay4_dr0.5_lr0.010_wd0.0005_s10_20260126_021529.json",
         "test_acc_mean": 0.18959999084472656,
         "test_acc_std": 0.046380553394556046,
         "aurc_mean": 0.18954000000000001,
@@ -292,7 +292,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter4_pat128_a0.3_lay1_dr0.3_lr0.005_wd0.0010_s10_20260126_042112.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter4_pat128_a0.3_lay1_dr0.3_lr0.005_wd0.0010_s10_20260126_042112.json",
         "test_acc_mean": 0.6585000157356262,
         "test_acc_std": 0.01602949947118759,
         "aurc_mean": 0.65668,
@@ -304,7 +304,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter3_pat32_a0.5_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_071729.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter3_pat32_a0.5_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_071729.json",
         "test_acc_mean": 0.17270000278949738,
         "test_acc_std": 0.07047466188669205,
         "aurc_mean": 0.1727,
@@ -316,7 +316,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter2_pat96_a0.3_lay4_dr0.3_lr0.005_wd0.0100_s10_20260126_071132.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter2_pat96_a0.3_lay4_dr0.3_lr0.005_wd0.0100_s10_20260126_071132.json",
         "test_acc_mean": 0.6804999709129333,
         "test_acc_std": 0.019929036498069763,
         "aurc_mean": 0.67775,
@@ -328,7 +328,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter2_pat64_a0.5_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_073808.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter2_pat64_a0.5_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_073808.json",
         "test_acc_mean": 0.49060001969337463,
         "test_acc_std": 0.11159569770097733,
         "aurc_mean": 0.48978,
@@ -340,7 +340,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter2_pat128_a0.5_lay3_dr0.7_lr0.010_wd0.0005_s10_20260126_085504.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter2_pat128_a0.5_lay3_dr0.7_lr0.010_wd0.0005_s10_20260126_085504.json",
         "test_acc_mean": 0.3977999985218048,
         "test_acc_std": 0.1952751874923706,
         "aurc_mean": 0.39715,
@@ -352,7 +352,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter4_pat32_a0.3_lay3_dr0.5_lr0.005_wd0.0100_s10_20260126_075449.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter4_pat32_a0.3_lay3_dr0.5_lr0.005_wd0.0100_s10_20260126_075449.json",
         "test_acc_mean": 0.6834999322891235,
         "test_acc_std": 0.012376058846712112,
         "aurc_mean": 0.68231,
@@ -364,7 +364,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter1_pat32_a0.3_lay1_dr0.5_lr0.010_wd0.0010_s10_20260126_034045.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter1_pat32_a0.3_lay1_dr0.5_lr0.010_wd0.0010_s10_20260126_034045.json",
         "test_acc_mean": 0.5976000428199768,
         "test_acc_std": 0.028214266523718834,
         "aurc_mean": 0.59712,
@@ -376,7 +376,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter5_pat96_a0.7_lay3_dr0.7_lr0.010_wd0.0100_s10_20260126_064342.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter5_pat96_a0.7_lay3_dr0.7_lr0.010_wd0.0100_s10_20260126_064342.json",
         "test_acc_mean": 0.15029999613761902,
         "test_acc_std": 0.039387110620737076,
         "aurc_mean": 0.15030000000000002,
@@ -388,7 +388,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter4_pat32_a0.3_lay1_dr0.5_lr0.020_wd0.0100_s10_20260126_072606.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter4_pat32_a0.3_lay1_dr0.5_lr0.020_wd0.0100_s10_20260126_072606.json",
         "test_acc_mean": 0.6409000158309937,
         "test_acc_std": 0.02650555782020092,
         "aurc_mean": 0.6397600000000001,
@@ -400,7 +400,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter2_pat128_a0.5_lay1_dr0.5_lr0.005_wd0.0010_s10_20260126_034757.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter2_pat128_a0.5_lay1_dr0.5_lr0.005_wd0.0010_s10_20260126_034757.json",
         "test_acc_mean": 0.6102999448776245,
         "test_acc_std": 0.022395681589841843,
         "aurc_mean": 0.6079,
@@ -412,7 +412,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter4_pat128_a0.5_lay2_dr0.3_lr0.005_wd0.0005_s10_20260126_020943.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter4_pat128_a0.5_lay2_dr0.3_lr0.005_wd0.0005_s10_20260126_020943.json",
         "test_acc_mean": 0.6683000326156616,
         "test_acc_std": 0.00900678988546133,
         "aurc_mean": 0.6661300000000001,
@@ -424,7 +424,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter2_pat64_a0.5_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_043516.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter2_pat64_a0.5_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_043516.json",
         "test_acc_mean": 0.6797000169754028,
         "test_acc_std": 0.01836693286895752,
         "aurc_mean": 0.67585,
@@ -436,7 +436,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter3_pat32_a0.7_lay4_dr0.5_lr0.020_wd0.0100_s10_20260126_093051.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter3_pat32_a0.7_lay4_dr0.5_lr0.020_wd0.0100_s10_20260126_093051.json",
         "test_acc_mean": 0.16249999403953552,
         "test_acc_std": 0.03044576197862625,
         "aurc_mean": 0.16250000000000003,
@@ -448,7 +448,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter5_pat96_a0.3_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_091805.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter5_pat96_a0.3_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_091805.json",
         "test_acc_mean": 0.3068999946117401,
         "test_acc_std": 0.16001559793949127,
         "aurc_mean": 0.30604,
@@ -460,7 +460,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter1_pat128_a0.5_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_083339.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter1_pat128_a0.5_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_083339.json",
         "test_acc_mean": 0.24040000140666962,
         "test_acc_std": 0.14982448518276215,
         "aurc_mean": 0.24051999999999998,
@@ -472,7 +472,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter4_pat32_a0.5_lay2_dr0.5_lr0.020_wd0.0010_s10_20260126_085610.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter4_pat32_a0.5_lay2_dr0.5_lr0.020_wd0.0010_s10_20260126_085610.json",
         "test_acc_mean": 0.6807999610900879,
         "test_acc_std": 0.014551057480275631,
         "aurc_mean": 0.6779,
@@ -484,7 +484,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter3_pat64_a0.7_lay1_dr0.5_lr0.010_wd0.0005_s10_20260126_044827.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter3_pat64_a0.7_lay1_dr0.5_lr0.010_wd0.0005_s10_20260126_044827.json",
         "test_acc_mean": 0.6483999490737915,
         "test_acc_std": 0.03709806501865387,
         "aurc_mean": 0.64585,
@@ -496,7 +496,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter4_pat128_a0.3_lay2_dr0.7_lr0.020_wd0.0100_s10_20260126_082618.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter4_pat128_a0.3_lay2_dr0.7_lr0.020_wd0.0100_s10_20260126_082618.json",
         "test_acc_mean": 0.16779999434947968,
         "test_acc_std": 0.03784118965268135,
         "aurc_mean": 0.1678,
@@ -508,7 +508,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter5_pat128_a0.7_lay4_dr0.3_lr0.020_wd0.0100_s10_20260126_084027.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter5_pat128_a0.7_lay4_dr0.3_lr0.020_wd0.0100_s10_20260126_084027.json",
         "test_acc_mean": 0.1670999825000763,
         "test_acc_std": 0.052903372794389725,
         "aurc_mean": 0.16709999999999997,
@@ -520,7 +520,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter2_pat32_a0.3_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_080533.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter2_pat32_a0.3_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_080533.json",
         "test_acc_mean": 0.6119999885559082,
         "test_acc_std": 0.009261627681553364,
         "aurc_mean": 0.60967,
@@ -532,7 +532,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter3_pat32_a0.5_lay2_dr0.5_lr0.005_wd0.0100_s10_20260126_080719.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter3_pat32_a0.5_lay2_dr0.5_lr0.005_wd0.0100_s10_20260126_080719.json",
         "test_acc_mean": 0.6698999404907227,
         "test_acc_std": 0.024323975667357445,
         "aurc_mean": 0.6673,
@@ -544,7 +544,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter4_pat32_a0.7_lay2_dr0.5_lr0.005_wd0.0005_s10_20260126_043351.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter4_pat32_a0.7_lay2_dr0.5_lr0.005_wd0.0005_s10_20260126_043351.json",
         "test_acc_mean": 0.675000011920929,
         "test_acc_std": 0.014414502307772636,
         "aurc_mean": 0.6734,
@@ -556,7 +556,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter2_pat96_a0.7_lay4_dr0.5_lr0.005_wd0.0005_s10_20260126_091059.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter2_pat96_a0.7_lay4_dr0.5_lr0.005_wd0.0005_s10_20260126_091059.json",
         "test_acc_mean": 0.6662000417709351,
         "test_acc_std": 0.010443508625030518,
         "aurc_mean": 0.66414,
@@ -568,7 +568,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter2_pat64_a0.5_lay3_dr0.5_lr0.005_wd0.0005_s10_20260126_042711.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter2_pat64_a0.5_lay3_dr0.5_lr0.005_wd0.0005_s10_20260126_042711.json",
         "test_acc_mean": 0.6721000075340271,
         "test_acc_std": 0.005646034609526396,
         "aurc_mean": 0.67,
@@ -580,7 +580,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter2_pat96_a0.3_lay2_dr0.7_lr0.010_wd0.0100_s10_20260126_025403.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter2_pat96_a0.3_lay2_dr0.7_lr0.010_wd0.0100_s10_20260126_025403.json",
         "test_acc_mean": 0.3578000068664551,
         "test_acc_std": 0.13166944682598114,
         "aurc_mean": 0.35690999999999995,
@@ -592,7 +592,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter3_pat32_a0.3_lay1_dr0.5_lr0.020_wd0.0100_s10_20260126_030459.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter3_pat32_a0.3_lay1_dr0.5_lr0.020_wd0.0100_s10_20260126_030459.json",
         "test_acc_mean": 0.6197999715805054,
         "test_acc_std": 0.03554277494549751,
         "aurc_mean": 0.61756,
@@ -604,7 +604,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter3_pat128_a0.5_lay3_dr0.7_lr0.005_wd0.0100_s10_20260126_061135.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter3_pat128_a0.5_lay3_dr0.7_lr0.005_wd0.0100_s10_20260126_061135.json",
         "test_acc_mean": 0.24250002205371857,
         "test_acc_std": 0.08152198046445847,
         "aurc_mean": 0.24312000000000006,
@@ -616,7 +616,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter4_pat64_a0.5_lay4_dr0.5_lr0.010_wd0.0010_s10_20260126_060101.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter4_pat64_a0.5_lay4_dr0.5_lr0.010_wd0.0010_s10_20260126_060101.json",
         "test_acc_mean": 0.6676999926567078,
         "test_acc_std": 0.01223882008343935,
         "aurc_mean": 0.66676,
@@ -628,7 +628,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter1_pat96_a0.5_lay4_dr0.7_lr0.010_wd0.0010_s10_20260126_050347.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter1_pat96_a0.5_lay4_dr0.7_lr0.010_wd0.0010_s10_20260126_050347.json",
         "test_acc_mean": 0.15850000083446503,
         "test_acc_std": 0.048371821641922,
         "aurc_mean": 0.15849000000000002,
@@ -640,7 +640,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter4_pat32_a0.3_lay1_dr0.3_lr0.010_wd0.0005_s10_20260126_065948.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter4_pat32_a0.3_lay1_dr0.3_lr0.010_wd0.0005_s10_20260126_065948.json",
         "test_acc_mean": 0.6216999888420105,
         "test_acc_std": 0.009821177460253239,
         "aurc_mean": 0.61929,
@@ -652,7 +652,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter3_pat96_a0.7_lay2_dr0.5_lr0.010_wd0.0005_s10_20260126_085206.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter3_pat96_a0.7_lay2_dr0.5_lr0.010_wd0.0005_s10_20260126_085206.json",
         "test_acc_mean": 0.6543999910354614,
         "test_acc_std": 0.03510049358010292,
         "aurc_mean": 0.6538799999999999,
@@ -664,7 +664,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter1_pat64_a0.7_lay3_dr0.3_lr0.010_wd0.0100_s10_20260126_024930.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter1_pat64_a0.7_lay3_dr0.3_lr0.010_wd0.0100_s10_20260126_024930.json",
         "test_acc_mean": 0.6269999742507935,
         "test_acc_std": 0.04473625868558884,
         "aurc_mean": 0.62459,
@@ -676,7 +676,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter2_pat96_a0.5_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_023024.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter2_pat96_a0.5_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_023024.json",
         "test_acc_mean": 0.6358000040054321,
         "test_acc_std": 0.02373838983476162,
         "aurc_mean": 0.63375,
@@ -688,7 +688,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter5_pat32_a0.5_lay1_dr0.3_lr0.005_wd0.0100_s10_20260126_085309.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter5_pat32_a0.5_lay1_dr0.3_lr0.005_wd0.0100_s10_20260126_085309.json",
         "test_acc_mean": 0.6717000007629395,
         "test_acc_std": 0.023748919367790222,
         "aurc_mean": 0.67011,
@@ -700,7 +700,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter3_pat96_a0.7_lay2_dr0.7_lr0.005_wd0.0010_s10_20260126_073718.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter3_pat96_a0.7_lay2_dr0.7_lr0.005_wd0.0010_s10_20260126_073718.json",
         "test_acc_mean": 0.6648000478744507,
         "test_acc_std": 0.013513784855604172,
         "aurc_mean": 0.66349,
@@ -712,7 +712,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter3_pat96_a0.3_lay3_dr0.3_lr0.005_wd0.0100_s10_20260126_044740.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter3_pat96_a0.3_lay3_dr0.3_lr0.005_wd0.0100_s10_20260126_044740.json",
         "test_acc_mean": 0.68340003490448,
         "test_acc_std": 0.011057429015636444,
         "aurc_mean": 0.6822700000000002,
@@ -724,7 +724,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter4_pat96_a0.7_lay4_dr0.5_lr0.005_wd0.0100_s10_20260126_031721.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter4_pat96_a0.7_lay4_dr0.5_lr0.005_wd0.0100_s10_20260126_031721.json",
         "test_acc_mean": 0.6804999709129333,
         "test_acc_std": 0.021282482892274857,
         "aurc_mean": 0.67916,
@@ -736,7 +736,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter2_pat32_a0.5_lay3_dr0.7_lr0.005_wd0.0100_s10_20260126_093557.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter2_pat32_a0.5_lay3_dr0.7_lr0.005_wd0.0100_s10_20260126_093557.json",
         "test_acc_mean": 0.6332000494003296,
         "test_acc_std": 0.07977718859910965,
         "aurc_mean": 0.63255,
@@ -748,7 +748,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter2_pat96_a0.3_lay4_dr0.5_lr0.005_wd0.0100_s10_20260126_064015.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter2_pat96_a0.3_lay4_dr0.5_lr0.005_wd0.0100_s10_20260126_064015.json",
         "test_acc_mean": 0.6359999775886536,
         "test_acc_std": 0.031822435557842255,
         "aurc_mean": 0.63503,
@@ -760,7 +760,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter4_pat96_a0.7_lay1_dr0.7_lr0.010_wd0.0010_s10_20260126_085744.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter4_pat96_a0.7_lay1_dr0.7_lr0.010_wd0.0010_s10_20260126_085744.json",
         "test_acc_mean": 0.6613999605178833,
         "test_acc_std": 0.040601588785648346,
         "aurc_mean": 0.6599299999999999,
@@ -772,7 +772,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter1_pat96_a0.3_lay3_dr0.5_lr0.020_wd0.0010_s10_20260126_021336.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter1_pat96_a0.3_lay3_dr0.5_lr0.020_wd0.0010_s10_20260126_021336.json",
         "test_acc_mean": 0.6381999850273132,
         "test_acc_std": 0.045701444149017334,
         "aurc_mean": 0.6363099999999999,
@@ -784,7 +784,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter5_pat64_a0.7_lay4_dr0.3_lr0.020_wd0.0005_s10_20260126_081055.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter5_pat64_a0.7_lay4_dr0.3_lr0.020_wd0.0005_s10_20260126_081055.json",
         "test_acc_mean": 0.16510000824928284,
         "test_acc_std": 0.02944844774901867,
         "aurc_mean": 0.16509,
@@ -796,7 +796,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter1_pat128_a0.7_lay1_dr0.3_lr0.010_wd0.0005_s10_20260126_051831.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter1_pat128_a0.7_lay1_dr0.3_lr0.010_wd0.0005_s10_20260126_051831.json",
         "test_acc_mean": 0.5733000040054321,
         "test_acc_std": 0.05867244303226471,
         "aurc_mean": 0.5719099999999999,
@@ -808,7 +808,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter4_pat64_a0.3_lay2_dr0.3_lr0.010_wd0.0010_s10_20260126_082824.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter4_pat64_a0.3_lay2_dr0.3_lr0.010_wd0.0010_s10_20260126_082824.json",
         "test_acc_mean": 0.6121000051498413,
         "test_acc_std": 0.04302053898572922,
         "aurc_mean": 0.60946,
@@ -820,7 +820,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter5_pat64_a0.5_lay1_dr0.5_lr0.010_wd0.0100_s10_20260126_064116.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter5_pat64_a0.5_lay1_dr0.5_lr0.010_wd0.0100_s10_20260126_064116.json",
         "test_acc_mean": 0.661300003528595,
         "test_acc_std": 0.027088547125458717,
         "aurc_mean": 0.65923,
@@ -832,7 +832,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter2_pat64_a0.5_lay4_dr0.3_lr0.005_wd0.0005_s10_20260126_055741.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter2_pat64_a0.5_lay4_dr0.3_lr0.005_wd0.0005_s10_20260126_055741.json",
         "test_acc_mean": 0.672700047492981,
         "test_acc_std": 0.01187012530863285,
         "aurc_mean": 0.6713800000000001,
@@ -844,7 +844,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter5_pat64_a0.5_lay2_dr0.3_lr0.010_wd0.0100_s10_20260126_040400.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter5_pat64_a0.5_lay2_dr0.3_lr0.010_wd0.0100_s10_20260126_040400.json",
         "test_acc_mean": 0.659000039100647,
         "test_acc_std": 0.029230879619717598,
         "aurc_mean": 0.65854,
@@ -856,7 +856,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter2_pat32_a0.5_lay4_dr0.5_lr0.020_wd0.0005_s10_20260126_042534.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter2_pat32_a0.5_lay4_dr0.5_lr0.020_wd0.0005_s10_20260126_042534.json",
         "test_acc_mean": 0.6530999541282654,
         "test_acc_std": 0.010671350173652172,
         "aurc_mean": 0.65098,
@@ -868,7 +868,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter3_pat64_a0.7_lay3_dr0.3_lr0.005_wd0.0100_s10_20260126_081709.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter3_pat64_a0.7_lay3_dr0.3_lr0.005_wd0.0100_s10_20260126_081709.json",
         "test_acc_mean": 0.6782000064849854,
         "test_acc_std": 0.017325641587376595,
         "aurc_mean": 0.67768,
@@ -880,7 +880,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter2_pat64_a0.5_lay1_dr0.7_lr0.020_wd0.0010_s10_20260126_030118.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter2_pat64_a0.5_lay1_dr0.7_lr0.020_wd0.0010_s10_20260126_030118.json",
         "test_acc_mean": 0.6341999769210815,
         "test_acc_std": 0.0454038642346859,
         "aurc_mean": 0.63346,
@@ -892,7 +892,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter2_pat128_a0.5_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_093419.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter2_pat128_a0.5_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_093419.json",
         "test_acc_mean": 0.6717999577522278,
         "test_acc_std": 0.04249914735555649,
         "aurc_mean": 0.66974,
@@ -904,7 +904,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter4_pat32_a0.3_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_072122.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter4_pat32_a0.3_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_072122.json",
         "test_acc_mean": 0.6727999448776245,
         "test_acc_std": 0.020004434511065483,
         "aurc_mean": 0.6696199999999999,
@@ -916,7 +916,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter3_pat128_a0.7_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_052117.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter3_pat128_a0.7_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_052117.json",
         "test_acc_mean": 0.5376999974250793,
         "test_acc_std": 0.22850093245506287,
         "aurc_mean": 0.5380100000000001,
@@ -928,7 +928,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter5_pat128_a0.5_lay2_dr0.7_lr0.010_wd0.0005_s10_20260126_035217.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter5_pat128_a0.5_lay2_dr0.7_lr0.010_wd0.0005_s10_20260126_035217.json",
         "test_acc_mean": 0.6636999845504761,
         "test_acc_std": 0.018690763041377068,
         "aurc_mean": 0.6630800000000001,
@@ -940,7 +940,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter3_pat96_a0.3_lay4_dr0.5_lr0.010_wd0.0005_s10_20260126_021847.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter3_pat96_a0.3_lay4_dr0.5_lr0.010_wd0.0005_s10_20260126_021847.json",
         "test_acc_mean": 0.6388000249862671,
         "test_acc_std": 0.019583435729146004,
         "aurc_mean": 0.6373,
@@ -952,7 +952,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter2_pat64_a0.7_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_091323.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter2_pat64_a0.7_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_091323.json",
         "test_acc_mean": 0.6234999895095825,
         "test_acc_std": 0.0573648177087307,
         "aurc_mean": 0.6214000000000001,
@@ -964,7 +964,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter1_pat128_a0.3_lay2_dr0.7_lr0.005_wd0.0005_s10_20260126_062627.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter1_pat128_a0.3_lay2_dr0.7_lr0.005_wd0.0005_s10_20260126_062627.json",
         "test_acc_mean": 0.633899986743927,
         "test_acc_std": 0.020930830389261246,
         "aurc_mean": 0.6294299999999999,
@@ -976,7 +976,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter4_pat96_a0.5_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_051411.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter4_pat96_a0.5_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_051411.json",
         "test_acc_mean": 0.6708999872207642,
         "test_acc_std": 0.013674380257725716,
         "aurc_mean": 0.66886,
@@ -988,7 +988,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter4_pat96_a0.7_lay1_dr0.3_lr0.010_wd0.0005_s10_20260126_055330.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter4_pat96_a0.7_lay1_dr0.3_lr0.010_wd0.0005_s10_20260126_055330.json",
         "test_acc_mean": 0.6247999668121338,
         "test_acc_std": 0.033259253948926926,
         "aurc_mean": 0.6232900000000001,
@@ -1000,7 +1000,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter3_pat96_a0.5_lay2_dr0.3_lr0.005_wd0.0005_s10_20260126_071025.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter3_pat96_a0.5_lay2_dr0.3_lr0.005_wd0.0005_s10_20260126_071025.json",
         "test_acc_mean": 0.6696000099182129,
         "test_acc_std": 0.012509550899267197,
         "aurc_mean": 0.66666,
@@ -1012,7 +1012,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter3_pat64_a0.7_lay1_dr0.7_lr0.020_wd0.0010_s10_20260126_091917.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter3_pat64_a0.7_lay1_dr0.7_lr0.020_wd0.0010_s10_20260126_091917.json",
         "test_acc_mean": 0.6413000226020813,
         "test_acc_std": 0.034286536276340485,
         "aurc_mean": 0.6399299999999999,
@@ -1024,7 +1024,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter2_pat128_a0.3_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_051754.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter2_pat128_a0.3_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_051754.json",
         "test_acc_mean": 0.6283999681472778,
         "test_acc_std": 0.04064808413386345,
         "aurc_mean": 0.62607,
@@ -1036,7 +1036,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter1_pat32_a0.7_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_075701.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter1_pat32_a0.7_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_075701.json",
         "test_acc_mean": 0.14890000224113464,
         "test_acc_std": 0.05044567957520485,
         "aurc_mean": 0.14887,
@@ -1048,7 +1048,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter5_pat64_a0.3_lay4_dr0.3_lr0.010_wd0.0010_s10_20260126_065220.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter5_pat64_a0.3_lay4_dr0.3_lr0.010_wd0.0010_s10_20260126_065220.json",
         "test_acc_mean": 0.6646999716758728,
         "test_acc_std": 0.010677604004740715,
         "aurc_mean": 0.6614500000000001,
@@ -1060,7 +1060,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter3_pat64_a0.5_lay1_dr0.7_lr0.010_wd0.0100_s10_20260126_030413.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter3_pat64_a0.5_lay1_dr0.7_lr0.010_wd0.0100_s10_20260126_030413.json",
         "test_acc_mean": 0.6562999486923218,
         "test_acc_std": 0.023151911795139313,
         "aurc_mean": 0.65406,
@@ -1072,7 +1072,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter5_pat96_a0.5_lay1_dr0.5_lr0.020_wd0.0010_s10_20260126_060400.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter5_pat96_a0.5_lay1_dr0.5_lr0.020_wd0.0010_s10_20260126_060400.json",
         "test_acc_mean": 0.6613000631332397,
         "test_acc_std": 0.03092661127448082,
         "aurc_mean": 0.6586299999999999,
@@ -1084,7 +1084,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter3_pat128_a0.3_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_083525.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter3_pat128_a0.3_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_083525.json",
         "test_acc_mean": 0.6381000280380249,
         "test_acc_std": 0.014556020498275757,
         "aurc_mean": 0.63414,
@@ -1096,7 +1096,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter5_pat128_a0.3_lay2_dr0.7_lr0.010_wd0.0100_s10_20260126_035528.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter5_pat128_a0.3_lay2_dr0.7_lr0.010_wd0.0100_s10_20260126_035528.json",
         "test_acc_mean": 0.5056999921798706,
         "test_acc_std": 0.15797190368175507,
         "aurc_mean": 0.5034099999999999,
@@ -1108,7 +1108,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter4_pat128_a0.3_lay4_dr0.3_lr0.020_wd0.0005_s10_20260126_050925.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter4_pat128_a0.3_lay4_dr0.3_lr0.020_wd0.0005_s10_20260126_050925.json",
         "test_acc_mean": 0.6574999690055847,
         "test_acc_std": 0.028853069990873337,
         "aurc_mean": 0.65513,
@@ -1120,7 +1120,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter3_pat128_a0.5_lay1_dr0.3_lr0.010_wd0.0010_s10_20260126_074958.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter3_pat128_a0.5_lay1_dr0.3_lr0.010_wd0.0010_s10_20260126_074958.json",
         "test_acc_mean": 0.6490999460220337,
         "test_acc_std": 0.029194556176662445,
         "aurc_mean": 0.6479699999999999,
@@ -1132,7 +1132,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter5_pat96_a0.7_lay4_dr0.5_lr0.005_wd0.0005_s10_20260126_084849.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter5_pat96_a0.7_lay4_dr0.5_lr0.005_wd0.0005_s10_20260126_084849.json",
         "test_acc_mean": 0.6507999897003174,
         "test_acc_std": 0.018966645002365112,
         "aurc_mean": 0.6491100000000001,
@@ -1144,7 +1144,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter1_pat128_a0.3_lay1_dr0.3_lr0.005_wd0.0100_s10_20260126_021940.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter1_pat128_a0.3_lay1_dr0.3_lr0.005_wd0.0100_s10_20260126_021940.json",
         "test_acc_mean": 0.6013000011444092,
         "test_acc_std": 0.009809867478907108,
         "aurc_mean": 0.5972799999999999,
@@ -1156,7 +1156,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter4_pat32_a0.5_lay4_dr0.7_lr0.020_wd0.0005_s10_20260126_053930.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter4_pat32_a0.5_lay4_dr0.7_lr0.020_wd0.0005_s10_20260126_053930.json",
         "test_acc_mean": 0.17479999363422394,
         "test_acc_std": 0.040827009826898575,
         "aurc_mean": 0.17478000000000002,
@@ -1168,7 +1168,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter5_pat128_a0.7_lay2_dr0.5_lr0.010_wd0.0005_s10_20260126_041334.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter5_pat128_a0.7_lay2_dr0.5_lr0.010_wd0.0005_s10_20260126_041334.json",
         "test_acc_mean": 0.6677999496459961,
         "test_acc_std": 0.017319224774837494,
         "aurc_mean": 0.66616,
@@ -1180,7 +1180,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter5_pat128_a0.5_lay3_dr0.3_lr0.020_wd0.0010_s10_20260126_072028.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter5_pat128_a0.5_lay3_dr0.3_lr0.020_wd0.0010_s10_20260126_072028.json",
         "test_acc_mean": 0.6654000282287598,
         "test_acc_std": 0.0230419859290123,
         "aurc_mean": 0.6632399999999999,
@@ -1192,7 +1192,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter2_pat32_a0.3_lay2_dr0.3_lr0.020_wd0.0005_s10_20260126_074607.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter2_pat32_a0.3_lay2_dr0.3_lr0.020_wd0.0005_s10_20260126_074607.json",
         "test_acc_mean": 0.6237000226974487,
         "test_acc_std": 0.02610258013010025,
         "aurc_mean": 0.62081,
@@ -1204,7 +1204,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter5_pat64_a0.3_lay4_dr0.3_lr0.020_wd0.0100_s10_20260126_045420.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter5_pat64_a0.3_lay4_dr0.3_lr0.020_wd0.0100_s10_20260126_045420.json",
         "test_acc_mean": 0.6194000244140625,
         "test_acc_std": 0.03640269115567207,
         "aurc_mean": 0.6198699999999999,
@@ -1216,7 +1216,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter4_pat64_a0.7_lay1_dr0.7_lr0.020_wd0.0010_s10_20260126_090645.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter4_pat64_a0.7_lay1_dr0.7_lr0.020_wd0.0010_s10_20260126_090645.json",
         "test_acc_mean": 0.5580999851226807,
         "test_acc_std": 0.19204191863536835,
         "aurc_mean": 0.5582900000000001,
@@ -1228,7 +1228,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter4_pat32_a0.3_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_050431.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter4_pat32_a0.3_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_050431.json",
         "test_acc_mean": 0.6008000373840332,
         "test_acc_std": 0.014860840514302254,
         "aurc_mean": 0.59701,
@@ -1240,7 +1240,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter3_pat32_a0.3_lay3_dr0.5_lr0.010_wd0.0010_s10_20260126_070926.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter3_pat32_a0.3_lay3_dr0.5_lr0.010_wd0.0010_s10_20260126_070926.json",
         "test_acc_mean": 0.6787999868392944,
         "test_acc_std": 0.02039499022066593,
         "aurc_mean": 0.67677,
@@ -1252,7 +1252,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter3_pat32_a0.3_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_045507.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter3_pat32_a0.3_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_045507.json",
         "test_acc_mean": 0.6237999796867371,
         "test_acc_std": 0.03370724618434906,
         "aurc_mean": 0.6229199999999999,
@@ -1264,7 +1264,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter1_pat96_a0.7_lay1_dr0.7_lr0.010_wd0.0005_s10_20260126_044542.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter1_pat96_a0.7_lay1_dr0.7_lr0.010_wd0.0005_s10_20260126_044542.json",
         "test_acc_mean": 0.6010000109672546,
         "test_acc_std": 0.04076763987541199,
         "aurc_mean": 0.5993299999999999,
@@ -1276,7 +1276,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter1_pat32_a0.7_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_024555.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter1_pat32_a0.7_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_024555.json",
         "test_acc_mean": 0.5860999822616577,
         "test_acc_std": 0.04587288945913315,
         "aurc_mean": 0.58467,
@@ -1288,7 +1288,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter2_pat64_a0.5_lay4_dr0.7_lr0.005_wd0.0005_s10_20260126_045902.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter2_pat64_a0.5_lay4_dr0.7_lr0.005_wd0.0005_s10_20260126_045902.json",
         "test_acc_mean": 0.6933000087738037,
         "test_acc_std": 0.015188072808086872,
         "aurc_mean": 0.69195,
@@ -1300,7 +1300,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter5_pat128_a0.7_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_032952.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter5_pat128_a0.7_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_032952.json",
         "test_acc_mean": 0.17649999260902405,
         "test_acc_std": 0.04183100908994675,
         "aurc_mean": 0.17650000000000005,
@@ -1312,7 +1312,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter5_pat128_a0.7_lay4_dr0.5_lr0.010_wd0.0005_s10_20260126_072941.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter5_pat128_a0.7_lay4_dr0.5_lr0.010_wd0.0005_s10_20260126_072941.json",
         "test_acc_mean": 0.18369999527931213,
         "test_acc_std": 0.04505564272403717,
         "aurc_mean": 0.18331,
@@ -1324,7 +1324,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter2_pat64_a0.5_lay3_dr0.5_lr0.020_wd0.0010_s10_20260126_025047.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter2_pat64_a0.5_lay3_dr0.5_lr0.020_wd0.0010_s10_20260126_025047.json",
         "test_acc_mean": 0.6585000157356262,
         "test_acc_std": 0.03504680469632149,
         "aurc_mean": 0.65676,
@@ -1336,7 +1336,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter4_pat128_a0.3_lay2_dr0.5_lr0.010_wd0.0100_s10_20260126_030900.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter4_pat128_a0.3_lay2_dr0.5_lr0.010_wd0.0100_s10_20260126_030900.json",
         "test_acc_mean": 0.6844999194145203,
         "test_acc_std": 0.020849984139204025,
         "aurc_mean": 0.68247,
@@ -1348,7 +1348,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter1_pat128_a0.7_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_055018.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter1_pat128_a0.7_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_055018.json",
         "test_acc_mean": 0.6787999868392944,
         "test_acc_std": 0.007941453717648983,
         "aurc_mean": 0.6777600000000001,
@@ -1360,7 +1360,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter1_pat96_a0.5_lay2_dr0.3_lr0.020_wd0.0005_s10_20260126_081244.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter1_pat96_a0.5_lay2_dr0.3_lr0.020_wd0.0005_s10_20260126_081244.json",
         "test_acc_mean": 0.6503000259399414,
         "test_acc_std": 0.027133628726005554,
         "aurc_mean": 0.6490600000000001,
@@ -1372,7 +1372,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter5_pat32_a0.5_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_041912.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter5_pat32_a0.5_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_041912.json",
         "test_acc_mean": 0.6435999870300293,
         "test_acc_std": 0.02571726031601429,
         "aurc_mean": 0.64253,
@@ -1384,7 +1384,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter1_pat64_a0.7_lay1_dr0.5_lr0.020_wd0.0005_s10_20260126_080127.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter1_pat64_a0.7_lay1_dr0.5_lr0.020_wd0.0005_s10_20260126_080127.json",
         "test_acc_mean": 0.6522000432014465,
         "test_acc_std": 0.017605552449822426,
         "aurc_mean": 0.6507099999999999,
@@ -1396,7 +1396,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter1_pat128_a0.5_lay4_dr0.7_lr0.005_wd0.0005_s10_20260126_062430.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter1_pat128_a0.5_lay4_dr0.7_lr0.005_wd0.0005_s10_20260126_062430.json",
         "test_acc_mean": 0.2906000018119812,
         "test_acc_std": 0.1563452035188675,
         "aurc_mean": 0.28973,
@@ -1408,7 +1408,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter2_pat96_a0.7_lay3_dr0.5_lr0.005_wd0.0100_s10_20260126_074253.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter2_pat96_a0.7_lay3_dr0.5_lr0.005_wd0.0100_s10_20260126_074253.json",
         "test_acc_mean": 0.6723999977111816,
         "test_acc_std": 0.01956300064921379,
         "aurc_mean": 0.67182,
@@ -1420,7 +1420,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter3_pat32_a0.7_lay4_dr0.7_lr0.010_wd0.0005_s10_20260126_075925.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter3_pat32_a0.7_lay4_dr0.7_lr0.010_wd0.0005_s10_20260126_075925.json",
         "test_acc_mean": 0.17170000076293945,
         "test_acc_std": 0.043045323342084885,
         "aurc_mean": 0.17168999999999998,
@@ -1432,7 +1432,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter3_pat96_a0.7_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_043930.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter3_pat96_a0.7_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_043930.json",
         "test_acc_mean": 0.6590999364852905,
         "test_acc_std": 0.02257062867283821,
         "aurc_mean": 0.65913,
@@ -1444,7 +1444,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter2_pat128_a0.7_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_060723.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter2_pat128_a0.7_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_060723.json",
         "test_acc_mean": 0.6179999709129333,
         "test_acc_std": 0.02733740396797657,
         "aurc_mean": 0.6171300000000001,
@@ -1456,7 +1456,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter2_pat128_a0.5_lay2_dr0.7_lr0.005_wd0.0100_s10_20260126_045044.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter2_pat128_a0.5_lay2_dr0.7_lr0.005_wd0.0100_s10_20260126_045044.json",
         "test_acc_mean": 0.5995000004768372,
         "test_acc_std": 0.03932556137442589,
         "aurc_mean": 0.59946,
@@ -1468,7 +1468,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter5_pat32_a0.3_lay2_dr0.5_lr0.020_wd0.0005_s10_20260126_042222.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter5_pat32_a0.3_lay2_dr0.5_lr0.020_wd0.0005_s10_20260126_042222.json",
         "test_acc_mean": 0.6631000638008118,
         "test_acc_std": 0.019507551565766335,
         "aurc_mean": 0.6606099999999999,
@@ -1480,7 +1480,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter3_pat128_a0.3_lay4_dr0.3_lr0.020_wd0.0100_s10_20260126_070204.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter3_pat128_a0.3_lay4_dr0.3_lr0.020_wd0.0100_s10_20260126_070204.json",
         "test_acc_mean": 0.6732999682426453,
         "test_acc_std": 0.018391119316220284,
         "aurc_mean": 0.67188,
@@ -1492,7 +1492,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter3_pat96_a0.7_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_061439.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter3_pat96_a0.7_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_061439.json",
         "test_acc_mean": 0.6608999967575073,
         "test_acc_std": 0.025008663535118103,
         "aurc_mean": 0.65967,
@@ -1504,7 +1504,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter3_pat64_a0.7_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_044935.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter3_pat64_a0.7_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_044935.json",
         "test_acc_mean": 0.6328999400138855,
         "test_acc_std": 0.02348261885344982,
         "aurc_mean": 0.6323700000000001,
@@ -1516,7 +1516,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter3_pat96_a0.7_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_044008.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter3_pat96_a0.7_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_044008.json",
         "test_acc_mean": 0.6516000628471375,
         "test_acc_std": 0.0059479172341525555,
         "aurc_mean": 0.6503,
@@ -1528,7 +1528,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter1_pat96_a0.5_lay2_dr0.5_lr0.010_wd0.0010_s10_20260126_035658.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter1_pat96_a0.5_lay2_dr0.5_lr0.010_wd0.0010_s10_20260126_035658.json",
         "test_acc_mean": 0.669700026512146,
         "test_acc_std": 0.022080915048718452,
         "aurc_mean": 0.66703,
@@ -1540,7 +1540,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter1_pat32_a0.3_lay4_dr0.5_lr0.020_wd0.0005_s10_20260126_083245.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter1_pat32_a0.3_lay4_dr0.5_lr0.020_wd0.0005_s10_20260126_083245.json",
         "test_acc_mean": 0.4887000024318695,
         "test_acc_std": 0.11113160103559494,
         "aurc_mean": 0.48697,
@@ -1552,7 +1552,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter3_pat32_a0.7_lay1_dr0.7_lr0.010_wd0.0100_s10_20260126_025603.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter3_pat32_a0.7_lay1_dr0.7_lr0.010_wd0.0100_s10_20260126_025603.json",
         "test_acc_mean": 0.6162999868392944,
         "test_acc_std": 0.05319993942975998,
         "aurc_mean": 0.6145400000000001,
@@ -1564,7 +1564,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter3_pat64_a0.5_lay4_dr0.3_lr0.005_wd0.0100_s10_20260126_073611.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter3_pat64_a0.5_lay4_dr0.3_lr0.005_wd0.0100_s10_20260126_073611.json",
         "test_acc_mean": 0.667199969291687,
         "test_acc_std": 0.012691203504800797,
         "aurc_mean": 0.6681900000000001,
@@ -1576,7 +1576,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter5_pat32_a0.3_lay3_dr0.3_lr0.020_wd0.0100_s10_20260126_054719.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter5_pat32_a0.3_lay3_dr0.3_lr0.020_wd0.0100_s10_20260126_054719.json",
         "test_acc_mean": 0.6385999917984009,
         "test_acc_std": 0.031875450164079666,
         "aurc_mean": 0.63705,
@@ -1588,7 +1588,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter4_pat96_a0.3_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_082025.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter4_pat96_a0.3_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_082025.json",
         "test_acc_mean": 0.6749000549316406,
         "test_acc_std": 0.006556586362421513,
         "aurc_mean": 0.67229,
@@ -1600,7 +1600,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter1_pat32_a0.3_lay2_dr0.7_lr0.020_wd0.0010_s10_20260126_064433.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter1_pat32_a0.3_lay2_dr0.7_lr0.020_wd0.0010_s10_20260126_064433.json",
         "test_acc_mean": 0.25690001249313354,
         "test_acc_std": 0.11613636463880539,
         "aurc_mean": 0.25678,
@@ -1612,7 +1612,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter2_pat128_a0.7_lay2_dr0.7_lr0.010_wd0.0100_s10_20260126_050024.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter2_pat128_a0.7_lay2_dr0.7_lr0.010_wd0.0100_s10_20260126_050024.json",
         "test_acc_mean": 0.5284000039100647,
         "test_acc_std": 0.18951059877872467,
         "aurc_mean": 0.5278999999999999,
@@ -1624,7 +1624,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter1_pat96_a0.5_lay1_dr0.3_lr0.010_wd0.0005_s10_20260126_073241.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter1_pat96_a0.5_lay1_dr0.3_lr0.010_wd0.0005_s10_20260126_073241.json",
         "test_acc_mean": 0.5702999830245972,
         "test_acc_std": 0.012605549767613411,
         "aurc_mean": 0.56602,
@@ -1636,7 +1636,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter1_pat128_a0.7_lay1_dr0.5_lr0.005_wd0.0010_s10_20260126_080609.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter1_pat128_a0.7_lay1_dr0.5_lr0.005_wd0.0010_s10_20260126_080609.json",
         "test_acc_mean": 0.6703000068664551,
         "test_acc_std": 0.02057533897459507,
         "aurc_mean": 0.6697900000000001,
@@ -1648,7 +1648,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter5_pat32_a0.3_lay2_dr0.7_lr0.005_wd0.0005_s10_20260126_052921.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter5_pat32_a0.3_lay2_dr0.7_lr0.005_wd0.0005_s10_20260126_052921.json",
         "test_acc_mean": 0.6750999689102173,
         "test_acc_std": 0.017804181203246117,
         "aurc_mean": 0.6731300000000001,
@@ -1660,7 +1660,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter3_pat64_a0.3_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_074147.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter3_pat64_a0.3_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_074147.json",
         "test_acc_mean": 0.5609000325202942,
         "test_acc_std": 0.09022742509841919,
         "aurc_mean": 0.56077,
@@ -1672,7 +1672,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter3_pat32_a0.7_lay3_dr0.7_lr0.005_wd0.0100_s10_20260126_023747.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter3_pat32_a0.7_lay3_dr0.7_lr0.005_wd0.0100_s10_20260126_023747.json",
         "test_acc_mean": 0.280100017786026,
         "test_acc_std": 0.09086308628320694,
         "aurc_mean": 0.28009999999999996,
@@ -1684,7 +1684,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter4_pat32_a0.5_lay2_dr0.3_lr0.010_wd0.0005_s10_20260126_062221.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter4_pat32_a0.5_lay2_dr0.3_lr0.010_wd0.0005_s10_20260126_062221.json",
         "test_acc_mean": 0.669700026512146,
         "test_acc_std": 0.017950868234038353,
         "aurc_mean": 0.66699,
@@ -1696,7 +1696,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter2_pat128_a0.7_lay3_dr0.5_lr0.020_wd0.0100_s10_20260126_082231.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter2_pat128_a0.7_lay3_dr0.5_lr0.020_wd0.0100_s10_20260126_082231.json",
         "test_acc_mean": 0.1760999858379364,
         "test_acc_std": 0.07546956837177277,
         "aurc_mean": 0.1762,
@@ -1708,7 +1708,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter1_pat96_a0.3_lay2_dr0.3_lr0.005_wd0.0010_s10_20260126_065528.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter1_pat96_a0.3_lay2_dr0.3_lr0.005_wd0.0010_s10_20260126_065528.json",
         "test_acc_mean": 0.6223999857902527,
         "test_acc_std": 0.01778389699757099,
         "aurc_mean": 0.61884,
@@ -1720,7 +1720,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter4_pat64_a0.7_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_041748.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter4_pat64_a0.7_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_041748.json",
         "test_acc_mean": 0.15889999270439148,
         "test_acc_std": 0.047633904963731766,
         "aurc_mean": 0.15889999999999999,
@@ -1732,7 +1732,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter3_pat32_a0.3_lay3_dr0.7_lr0.005_wd0.0010_s10_20260126_061009.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter3_pat32_a0.3_lay3_dr0.7_lr0.005_wd0.0010_s10_20260126_061009.json",
         "test_acc_mean": 0.6825000047683716,
         "test_acc_std": 0.026086382567882538,
         "aurc_mean": 0.68047,
@@ -1744,7 +1744,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter4_pat64_a0.7_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_025230.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter4_pat64_a0.7_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_025230.json",
         "test_acc_mean": 0.6540000438690186,
         "test_acc_std": 0.025720713660120964,
         "aurc_mean": 0.6533,
@@ -1756,7 +1756,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter1_pat64_a0.7_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_050611.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter1_pat64_a0.7_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_050611.json",
         "test_acc_mean": 0.1517999917268753,
         "test_acc_std": 0.039600223302841187,
         "aurc_mean": 0.15180000000000002,
@@ -1768,7 +1768,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter3_pat32_a0.7_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_030221.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter3_pat32_a0.7_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_030221.json",
         "test_acc_mean": 0.6408999562263489,
         "test_acc_std": 0.011239314451813698,
         "aurc_mean": 0.63984,
@@ -1780,7 +1780,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter5_pat96_a0.5_lay3_dr0.5_lr0.020_wd0.0100_s10_20260126_082954.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter5_pat96_a0.5_lay3_dr0.5_lr0.020_wd0.0100_s10_20260126_082954.json",
         "test_acc_mean": 0.21449999511241913,
         "test_acc_std": 0.08652456849813461,
         "aurc_mean": 0.21458000000000005,
@@ -1792,7 +1792,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter4_pat128_a0.5_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_082717.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter4_pat128_a0.5_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_082717.json",
         "test_acc_mean": 0.6100000143051147,
         "test_acc_std": 0.04388115927577019,
         "aurc_mean": 0.60842,
@@ -1804,7 +1804,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter5_pat32_a0.5_lay4_dr0.5_lr0.010_wd0.0010_s10_20260126_063140.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter5_pat32_a0.5_lay4_dr0.5_lr0.010_wd0.0010_s10_20260126_063140.json",
         "test_acc_mean": 0.6680999994277954,
         "test_acc_std": 0.013723050244152546,
         "aurc_mean": 0.66788,
@@ -1816,7 +1816,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter1_pat128_a0.3_lay4_dr0.7_lr0.005_wd0.0100_s10_20260126_024715.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter1_pat128_a0.3_lay4_dr0.7_lr0.005_wd0.0100_s10_20260126_024715.json",
         "test_acc_mean": 0.15039999783039093,
         "test_acc_std": 0.0785948783159256,
         "aurc_mean": 0.15047,
@@ -1828,7 +1828,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter1_pat128_a0.7_lay2_dr0.3_lr0.010_wd0.0100_s10_20260126_054803.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter1_pat128_a0.7_lay2_dr0.3_lr0.010_wd0.0100_s10_20260126_054803.json",
         "test_acc_mean": 0.6627000570297241,
         "test_acc_std": 0.032017532736063004,
         "aurc_mean": 0.66157,
@@ -1840,7 +1840,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter4_pat32_a0.3_lay4_dr0.7_lr0.010_wd0.0100_s10_20260126_073104.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter4_pat32_a0.3_lay4_dr0.7_lr0.010_wd0.0100_s10_20260126_073104.json",
         "test_acc_mean": 0.17160001397132874,
         "test_acc_std": 0.05645096302032471,
         "aurc_mean": 0.1716,
@@ -1852,7 +1852,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter5_pat128_a0.5_lay1_dr0.3_lr0.005_wd0.0100_s10_20260126_093224.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter5_pat128_a0.5_lay1_dr0.3_lr0.005_wd0.0100_s10_20260126_093224.json",
         "test_acc_mean": 0.6599000096321106,
         "test_acc_std": 0.018651464954018593,
         "aurc_mean": 0.65981,
@@ -1864,7 +1864,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter2_pat32_a0.5_lay2_dr0.7_lr0.005_wd0.0005_s10_20260126_032725.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter2_pat32_a0.5_lay2_dr0.7_lr0.005_wd0.0005_s10_20260126_032725.json",
         "test_acc_mean": 0.6818000078201294,
         "test_acc_std": 0.013062248937785625,
         "aurc_mean": 0.6793600000000001,
@@ -1876,7 +1876,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter2_pat32_a0.5_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_062724.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter2_pat32_a0.5_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_062724.json",
         "test_acc_mean": 0.1632000058889389,
         "test_acc_std": 0.03684140369296074,
         "aurc_mean": 0.1632,
@@ -1888,7 +1888,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter3_pat32_a0.3_lay1_dr0.5_lr0.005_wd0.0010_s10_20260126_033256.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter3_pat32_a0.3_lay1_dr0.5_lr0.005_wd0.0010_s10_20260126_033256.json",
         "test_acc_mean": 0.5941000580787659,
         "test_acc_std": 0.013939952477812767,
         "aurc_mean": 0.58965,
@@ -1900,7 +1900,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter4_pat32_a0.3_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_064656.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter4_pat32_a0.3_lay4_dr0.7_lr0.020_wd0.0010_s10_20260126_064656.json",
         "test_acc_mean": 0.18860000371932983,
         "test_acc_std": 0.030533047392964363,
         "aurc_mean": 0.18860000000000002,
@@ -1912,7 +1912,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter3_pat64_a0.3_lay4_dr0.7_lr0.020_wd0.0005_s10_20260126_081203.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter3_pat64_a0.3_lay4_dr0.7_lr0.020_wd0.0005_s10_20260126_081203.json",
         "test_acc_mean": 0.15760000050067902,
         "test_acc_std": 0.047107916325330734,
         "aurc_mean": 0.15760000000000002,
@@ -1924,7 +1924,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter1_pat64_a0.7_lay3_dr0.5_lr0.020_wd0.0010_s10_20260126_065440.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter1_pat64_a0.7_lay3_dr0.5_lr0.020_wd0.0010_s10_20260126_065440.json",
         "test_acc_mean": 0.6643000841140747,
         "test_acc_std": 0.031368959695100784,
         "aurc_mean": 0.6627699999999999,
@@ -1936,7 +1936,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter3_pat32_a0.3_lay3_dr0.5_lr0.020_wd0.0005_s10_20260126_091459.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter3_pat32_a0.3_lay3_dr0.5_lr0.020_wd0.0005_s10_20260126_091459.json",
         "test_acc_mean": 0.6116999983787537,
         "test_acc_std": 0.04414886236190796,
         "aurc_mean": 0.61011,
@@ -1948,7 +1948,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter1_pat32_a0.3_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_022737.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter1_pat32_a0.3_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_022737.json",
         "test_acc_mean": 0.45820003747940063,
         "test_acc_std": 0.12515217065811157,
         "aurc_mean": 0.45787999999999995,
@@ -1960,7 +1960,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter2_pat64_a0.5_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_052749.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter2_pat64_a0.5_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_052749.json",
         "test_acc_mean": 0.6757000088691711,
         "test_acc_std": 0.011086024343967438,
         "aurc_mean": 0.6734,
@@ -1972,7 +1972,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter1_pat128_a0.3_lay4_dr0.7_lr0.010_wd0.0100_s10_20260126_041635.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter1_pat128_a0.3_lay4_dr0.7_lr0.010_wd0.0100_s10_20260126_041635.json",
         "test_acc_mean": 0.1777999997138977,
         "test_acc_std": 0.04658040031790733,
         "aurc_mean": 0.1778,
@@ -1984,7 +1984,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter2_pat32_a0.3_lay4_dr0.3_lr0.020_wd0.0005_s10_20260126_085855.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter2_pat32_a0.3_lay4_dr0.3_lr0.020_wd0.0005_s10_20260126_085855.json",
         "test_acc_mean": 0.6660000085830688,
         "test_acc_std": 0.02031419612467289,
         "aurc_mean": 0.6644399999999999,
@@ -1996,7 +1996,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter3_pat96_a0.7_lay3_dr0.3_lr0.020_wd0.0005_s10_20260126_084533.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter3_pat96_a0.7_lay3_dr0.3_lr0.020_wd0.0005_s10_20260126_084533.json",
         "test_acc_mean": 0.5526999831199646,
         "test_acc_std": 0.15785439312458038,
         "aurc_mean": 0.55244,
@@ -2008,7 +2008,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter4_pat96_a0.5_lay4_dr0.3_lr0.010_wd0.0100_s10_20260126_092651.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter4_pat96_a0.5_lay4_dr0.3_lr0.010_wd0.0100_s10_20260126_092651.json",
         "test_acc_mean": 0.6503999829292297,
         "test_acc_std": 0.031216807663440704,
         "aurc_mean": 0.64922,
@@ -2020,7 +2020,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter1_pat32_a0.3_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_082101.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter1_pat32_a0.3_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_082101.json",
         "test_acc_mean": 0.5333000421524048,
         "test_acc_std": 0.06992702186107635,
         "aurc_mean": 0.5323,
@@ -2032,7 +2032,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter3_pat32_a0.7_lay2_dr0.5_lr0.020_wd0.0100_s10_20260126_074520.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter3_pat32_a0.7_lay2_dr0.5_lr0.020_wd0.0100_s10_20260126_074520.json",
         "test_acc_mean": 0.16910000145435333,
         "test_acc_std": 0.04949624091386795,
         "aurc_mean": 0.16902999999999999,
@@ -2044,7 +2044,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter1_pat64_a0.5_lay3_dr0.5_lr0.020_wd0.0005_s10_20260126_051554.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter1_pat64_a0.5_lay3_dr0.5_lr0.020_wd0.0005_s10_20260126_051554.json",
         "test_acc_mean": 0.6673000454902649,
         "test_acc_std": 0.03554043173789978,
         "aurc_mean": 0.6663,
@@ -2056,7 +2056,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter5_pat64_a0.3_lay2_dr0.3_lr0.010_wd0.0005_s10_20260126_080046.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter5_pat64_a0.3_lay2_dr0.3_lr0.010_wd0.0005_s10_20260126_080046.json",
         "test_acc_mean": 0.6601999998092651,
         "test_acc_std": 0.02016487717628479,
         "aurc_mean": 0.65832,
@@ -2068,7 +2068,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter1_pat32_a0.7_lay4_dr0.3_lr0.010_wd0.0010_s10_20260126_030034.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter1_pat32_a0.7_lay4_dr0.3_lr0.010_wd0.0010_s10_20260126_030034.json",
         "test_acc_mean": 0.6514999866485596,
         "test_acc_std": 0.017877675592899323,
         "aurc_mean": 0.65051,
@@ -2080,7 +2080,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter1_pat64_a0.7_lay4_dr0.7_lr0.010_wd0.0010_s10_20260126_052251.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter1_pat64_a0.7_lay4_dr0.7_lr0.010_wd0.0010_s10_20260126_052251.json",
         "test_acc_mean": 0.1517999917268753,
         "test_acc_std": 0.039600223302841187,
         "aurc_mean": 0.15180000000000002,
@@ -2092,7 +2092,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter3_pat128_a0.5_lay3_dr0.5_lr0.010_wd0.0010_s10_20260126_072518.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter3_pat128_a0.5_lay3_dr0.5_lr0.010_wd0.0010_s10_20260126_072518.json",
         "test_acc_mean": 0.6772999167442322,
         "test_acc_std": 0.01710132509469986,
         "aurc_mean": 0.67519,
@@ -2104,7 +2104,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter4_pat32_a0.5_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_022941.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter4_pat32_a0.5_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_022941.json",
         "test_acc_mean": 0.6571999788284302,
         "test_acc_std": 0.02789982222020626,
         "aurc_mean": 0.65478,
@@ -2116,7 +2116,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter5_pat32_a0.3_lay3_dr0.5_lr0.005_wd0.0005_s10_20260126_053738.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter5_pat32_a0.3_lay3_dr0.5_lr0.005_wd0.0005_s10_20260126_053738.json",
         "test_acc_mean": 0.6674000024795532,
         "test_acc_std": 0.009500864893198013,
         "aurc_mean": 0.6627400000000001,
@@ -2128,7 +2128,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter2_pat96_a0.5_lay1_dr0.3_lr0.010_wd0.0010_s10_20260126_022821.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter2_pat96_a0.5_lay1_dr0.3_lr0.010_wd0.0010_s10_20260126_022821.json",
         "test_acc_mean": 0.6431000232696533,
         "test_acc_std": 0.033026743680238724,
         "aurc_mean": 0.64094,
@@ -2140,7 +2140,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter5_pat128_a0.7_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_031321.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter5_pat128_a0.7_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_031321.json",
         "test_acc_mean": 0.6391000151634216,
         "test_acc_std": 0.015322092920541763,
         "aurc_mean": 0.63849,
@@ -2152,7 +2152,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter3_pat64_a0.5_lay3_dr0.3_lr0.020_wd0.0010_s10_20260126_040107.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter3_pat64_a0.5_lay3_dr0.3_lr0.020_wd0.0010_s10_20260126_040107.json",
         "test_acc_mean": 0.640999972820282,
         "test_acc_std": 0.0381954051554203,
         "aurc_mean": 0.63673,
@@ -2164,7 +2164,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter1_pat128_a0.5_lay2_dr0.5_lr0.020_wd0.0100_s10_20260126_080458.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter1_pat128_a0.5_lay2_dr0.5_lr0.020_wd0.0100_s10_20260126_080458.json",
         "test_acc_mean": 0.5860000252723694,
         "test_acc_std": 0.05092259868979454,
         "aurc_mean": 0.5847299999999999,
@@ -2176,7 +2176,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter5_pat96_a0.5_lay4_dr0.3_lr0.010_wd0.0100_s10_20260126_093943.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter5_pat96_a0.5_lay4_dr0.3_lr0.010_wd0.0100_s10_20260126_093943.json",
         "test_acc_mean": 0.6576999425888062,
         "test_acc_std": 0.025888871401548386,
         "aurc_mean": 0.65744,
@@ -2188,7 +2188,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter5_pat96_a0.3_lay1_dr0.5_lr0.010_wd0.0005_s10_20260126_073853.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter5_pat96_a0.3_lay1_dr0.5_lr0.010_wd0.0005_s10_20260126_073853.json",
         "test_acc_mean": 0.59579998254776,
         "test_acc_std": 0.021487979218363762,
         "aurc_mean": 0.59287,
@@ -2200,7 +2200,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter4_pat96_a0.5_lay4_dr0.3_lr0.005_wd0.0100_s10_20260126_051216.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter4_pat96_a0.5_lay4_dr0.3_lr0.005_wd0.0100_s10_20260126_051216.json",
         "test_acc_mean": 0.6604000329971313,
         "test_acc_std": 0.015262151136994362,
         "aurc_mean": 0.6594,
@@ -2212,7 +2212,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter3_pat64_a0.5_lay1_dr0.3_lr0.005_wd0.0010_s10_20260126_045543.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter3_pat64_a0.5_lay1_dr0.3_lr0.005_wd0.0010_s10_20260126_045543.json",
         "test_acc_mean": 0.618399977684021,
         "test_acc_std": 0.007366584613919258,
         "aurc_mean": 0.61564,
@@ -2224,7 +2224,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter1_pat96_a0.5_lay4_dr0.7_lr0.010_wd0.0010_s10_20260126_092432.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter1_pat96_a0.5_lay4_dr0.7_lr0.010_wd0.0010_s10_20260126_092432.json",
         "test_acc_mean": 0.3342999815940857,
         "test_acc_std": 0.14890789985656738,
         "aurc_mean": 0.33422999999999997,
@@ -2236,7 +2236,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter3_pat128_a0.7_lay2_dr0.5_lr0.005_wd0.0100_s10_20260126_062530.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter3_pat128_a0.7_lay2_dr0.5_lr0.005_wd0.0100_s10_20260126_062530.json",
         "test_acc_mean": 0.6685999631881714,
         "test_acc_std": 0.019727017730474472,
         "aurc_mean": 0.66719,
@@ -2248,7 +2248,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter4_pat64_a0.7_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_081900.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter4_pat64_a0.7_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_081900.json",
         "test_acc_mean": 0.639799952507019,
         "test_acc_std": 0.03177281469106674,
         "aurc_mean": 0.63704,
@@ -2260,7 +2260,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter5_pat128_a0.5_lay3_dr0.5_lr0.020_wd0.0100_s10_20260126_044225.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter5_pat128_a0.5_lay3_dr0.5_lr0.020_wd0.0100_s10_20260126_044225.json",
         "test_acc_mean": 0.18969997763633728,
         "test_acc_std": 0.04223492369055748,
         "aurc_mean": 0.18961999999999998,
@@ -2272,7 +2272,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter4_pat128_a0.7_lay2_dr0.5_lr0.010_wd0.0010_s10_20260126_044356.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter4_pat128_a0.7_lay2_dr0.5_lr0.010_wd0.0010_s10_20260126_044356.json",
         "test_acc_mean": 0.6652000546455383,
         "test_acc_std": 0.01576775312423706,
         "aurc_mean": 0.6637700000000001,
@@ -2284,7 +2284,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter5_pat96_a0.7_lay3_dr0.3_lr0.005_wd0.0010_s10_20260126_035042.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter5_pat96_a0.7_lay3_dr0.3_lr0.005_wd0.0010_s10_20260126_035042.json",
         "test_acc_mean": 0.6495000123977661,
         "test_acc_std": 0.028937671333551407,
         "aurc_mean": 0.6483,
@@ -2296,7 +2296,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter4_pat32_a0.7_lay3_dr0.7_lr0.020_wd0.0010_s10_20260126_043757.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter4_pat32_a0.7_lay3_dr0.7_lr0.020_wd0.0010_s10_20260126_043757.json",
         "test_acc_mean": 0.163100004196167,
         "test_acc_std": 0.04867454245686531,
         "aurc_mean": 0.1631,
@@ -2308,7 +2308,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter2_pat96_a0.5_lay3_dr0.5_lr0.005_wd0.0005_s10_20260126_060625.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter2_pat96_a0.5_lay3_dr0.5_lr0.005_wd0.0005_s10_20260126_060625.json",
         "test_acc_mean": 0.6680999994277954,
         "test_acc_std": 0.012818817980587482,
         "aurc_mean": 0.6641000000000001,
@@ -2320,7 +2320,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter3_pat32_a0.3_lay3_dr0.5_lr0.010_wd0.0005_s10_20260126_051035.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter3_pat32_a0.3_lay3_dr0.5_lr0.010_wd0.0005_s10_20260126_051035.json",
         "test_acc_mean": 0.6782000660896301,
         "test_acc_std": 0.014883249998092651,
         "aurc_mean": 0.67584,
@@ -2332,7 +2332,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter5_pat96_a0.7_lay1_dr0.3_lr0.005_wd0.0100_s10_20260126_023928.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter5_pat96_a0.7_lay1_dr0.3_lr0.005_wd0.0100_s10_20260126_023928.json",
         "test_acc_mean": 0.6406000256538391,
         "test_acc_std": 0.04629422724246979,
         "aurc_mean": 0.64046,
@@ -2344,7 +2344,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter4_pat64_a0.5_lay2_dr0.3_lr0.010_wd0.0005_s10_20260126_080227.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter4_pat64_a0.5_lay2_dr0.3_lr0.010_wd0.0005_s10_20260126_080227.json",
         "test_acc_mean": 0.6547999382019043,
         "test_acc_std": 0.03217936307191849,
         "aurc_mean": 0.65219,
@@ -2356,7 +2356,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter5_pat64_a0.3_lay4_dr0.5_lr0.010_wd0.0100_s10_20260126_090319.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter5_pat64_a0.3_lay4_dr0.5_lr0.010_wd0.0100_s10_20260126_090319.json",
         "test_acc_mean": 0.36820000410079956,
         "test_acc_std": 0.10691720992326736,
         "aurc_mean": 0.36658999999999997,
@@ -2368,7 +2368,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter2_pat64_a0.7_lay4_dr0.3_lr0.020_wd0.0005_s10_20260126_052506.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter2_pat64_a0.7_lay4_dr0.3_lr0.020_wd0.0005_s10_20260126_052506.json",
         "test_acc_mean": 0.6330000162124634,
         "test_acc_std": 0.037982456386089325,
         "aurc_mean": 0.6312800000000001,
@@ -2380,7 +2380,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter1_pat64_a0.7_lay1_dr0.3_lr0.005_wd0.0100_s10_20260126_090916.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter1_pat64_a0.7_lay1_dr0.3_lr0.005_wd0.0100_s10_20260126_090916.json",
         "test_acc_mean": 0.6411999464035034,
         "test_acc_std": 0.02981722354888916,
         "aurc_mean": 0.6377700000000001,
@@ -2392,7 +2392,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter2_pat32_a0.7_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_090419.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter2_pat32_a0.7_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_090419.json",
         "test_acc_mean": 0.6397000551223755,
         "test_acc_std": 0.021002914756536484,
         "aurc_mean": 0.63759,
@@ -2404,7 +2404,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter4_pat128_a0.3_lay4_dr0.7_lr0.020_wd0.0100_s10_20260126_053051.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter4_pat128_a0.3_lay4_dr0.7_lr0.020_wd0.0100_s10_20260126_053051.json",
         "test_acc_mean": 0.17329999804496765,
         "test_acc_std": 0.04306597262620926,
         "aurc_mean": 0.1733,
@@ -2416,7 +2416,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter5_pat32_a0.5_lay4_dr0.3_lr0.010_wd0.0005_s10_20260126_022404.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter5_pat32_a0.5_lay4_dr0.3_lr0.010_wd0.0005_s10_20260126_022404.json",
         "test_acc_mean": 0.6571000218391418,
         "test_acc_std": 0.012260591611266136,
         "aurc_mean": 0.65539,
@@ -2428,7 +2428,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter1_pat32_a0.7_lay3_dr0.7_lr0.010_wd0.0100_s10_20260126_085648.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter1_pat32_a0.7_lay3_dr0.7_lr0.010_wd0.0100_s10_20260126_085648.json",
         "test_acc_mean": 0.17020000517368317,
         "test_acc_std": 0.026199234649538994,
         "aurc_mean": 0.1702,
@@ -2440,7 +2440,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter3_pat128_a0.3_lay3_dr0.3_lr0.020_wd0.0010_s10_20260126_070700.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter3_pat128_a0.3_lay3_dr0.3_lr0.020_wd0.0010_s10_20260126_070700.json",
         "test_acc_mean": 0.6633000373840332,
         "test_acc_std": 0.015463585965335369,
         "aurc_mean": 0.66089,
@@ -2452,7 +2452,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter4_pat64_a0.3_lay2_dr0.3_lr0.020_wd0.0005_s10_20260126_025847.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter4_pat64_a0.3_lay2_dr0.3_lr0.020_wd0.0005_s10_20260126_025847.json",
         "test_acc_mean": 0.6362000703811646,
         "test_acc_std": 0.025112193077802658,
         "aurc_mean": 0.6354799999999999,
@@ -2464,7 +2464,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter5_pat32_a0.5_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_030645.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter5_pat32_a0.5_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_030645.json",
         "test_acc_mean": 0.6565999984741211,
         "test_acc_std": 0.015819817781448364,
         "aurc_mean": 0.65524,
@@ -2476,7 +2476,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter2_pat128_a0.7_lay1_dr0.3_lr0.020_wd0.0100_s10_20260126_030324.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter2_pat128_a0.7_lay1_dr0.3_lr0.020_wd0.0100_s10_20260126_030324.json",
         "test_acc_mean": 0.6523000001907349,
         "test_acc_std": 0.02871720679104328,
         "aurc_mean": 0.6499900000000001,
@@ -2488,7 +2488,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter2_pat32_a0.5_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_033630.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter2_pat32_a0.5_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_033630.json",
         "test_acc_mean": 0.6253000497817993,
         "test_acc_std": 0.028554242104291916,
         "aurc_mean": 0.62418,
@@ -2500,7 +2500,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter3_pat128_a0.3_lay2_dr0.5_lr0.020_wd0.0100_s10_20260126_042423.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter3_pat128_a0.3_lay2_dr0.5_lr0.020_wd0.0100_s10_20260126_042423.json",
         "test_acc_mean": 0.6552000045776367,
         "test_acc_std": 0.02030216157436371,
         "aurc_mean": 0.6530900000000001,
@@ -2512,7 +2512,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter1_pat96_a0.7_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_040609.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter1_pat96_a0.7_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_040609.json",
         "test_acc_mean": 0.47440004348754883,
         "test_acc_std": 0.11817802488803864,
         "aurc_mean": 0.47300000000000003,
@@ -2524,7 +2524,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter5_pat64_a0.3_lay4_dr0.3_lr0.010_wd0.0010_s10_20260126_063320.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter5_pat64_a0.3_lay4_dr0.3_lr0.010_wd0.0010_s10_20260126_063320.json",
         "test_acc_mean": 0.6575000286102295,
         "test_acc_std": 0.015218784101307392,
         "aurc_mean": 0.65669,
@@ -2536,7 +2536,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter2_pat64_a0.5_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_022544.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter2_pat64_a0.5_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_022544.json",
         "test_acc_mean": 0.6783000230789185,
         "test_acc_std": 0.018997380509972572,
         "aurc_mean": 0.67601,
@@ -2548,7 +2548,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter3_pat32_a0.3_lay4_dr0.5_lr0.010_wd0.0010_s10_20260126_033545.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter3_pat32_a0.3_lay4_dr0.5_lr0.010_wd0.0010_s10_20260126_033545.json",
         "test_acc_mean": 0.6738001108169556,
         "test_acc_std": 0.025990599766373634,
         "aurc_mean": 0.6735099999999999,
@@ -2560,7 +2560,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter2_pat32_a0.7_lay2_dr0.5_lr0.010_wd0.0010_s10_20260126_060151.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter2_pat32_a0.7_lay2_dr0.5_lr0.010_wd0.0010_s10_20260126_060151.json",
         "test_acc_mean": 0.6705999970436096,
         "test_acc_std": 0.020758936181664467,
         "aurc_mean": 0.6695500000000001,
@@ -2572,7 +2572,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter4_pat64_a0.7_lay3_dr0.7_lr0.010_wd0.0010_s10_20260126_044456.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter4_pat64_a0.7_lay3_dr0.7_lr0.010_wd0.0010_s10_20260126_044456.json",
         "test_acc_mean": 0.16040000319480896,
         "test_acc_std": 0.04915327578783035,
         "aurc_mean": 0.16031,
@@ -2584,7 +2584,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter3_pat128_a0.5_lay1_dr0.7_lr0.020_wd0.0005_s10_20260126_080811.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter3_pat128_a0.5_lay1_dr0.7_lr0.020_wd0.0005_s10_20260126_080811.json",
         "test_acc_mean": 0.6686999201774597,
         "test_acc_std": 0.019224124029278755,
         "aurc_mean": 0.66657,
@@ -2596,7 +2596,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter1_pat64_a0.3_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_092918.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter1_pat64_a0.3_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_092918.json",
         "test_acc_mean": 0.5288000106811523,
         "test_acc_std": 0.06260599941015244,
         "aurc_mean": 0.5266399999999999,
@@ -2608,7 +2608,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter1_pat96_a0.5_lay2_dr0.5_lr0.010_wd0.0005_s10_20260126_031038.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter1_pat96_a0.5_lay2_dr0.5_lr0.010_wd0.0005_s10_20260126_031038.json",
         "test_acc_mean": 0.6323000192642212,
         "test_acc_std": 0.019669776782393456,
         "aurc_mean": 0.62953,
@@ -2620,7 +2620,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter3_pat64_a0.3_lay3_dr0.5_lr0.020_wd0.0010_s10_20260126_085003.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter3_pat64_a0.3_lay3_dr0.5_lr0.020_wd0.0010_s10_20260126_085003.json",
         "test_acc_mean": 0.66839998960495,
         "test_acc_std": 0.010543035343289375,
         "aurc_mean": 0.66791,
@@ -2632,7 +2632,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter2_pat96_a0.5_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_043434.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter2_pat96_a0.5_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_043434.json",
         "test_acc_mean": 0.5649999380111694,
         "test_acc_std": 0.03587322682142258,
         "aurc_mean": 0.56303,
@@ -2644,7 +2644,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter3_pat96_a0.7_lay2_dr0.3_lr0.005_wd0.0005_s10_20260126_074703.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter3_pat96_a0.7_lay2_dr0.3_lr0.005_wd0.0005_s10_20260126_074703.json",
         "test_acc_mean": 0.6590999364852905,
         "test_acc_std": 0.01566631905734539,
         "aurc_mean": 0.65675,
@@ -2656,7 +2656,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter5_pat64_a0.5_lay4_dr0.3_lr0.020_wd0.0100_s10_20260126_080406.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter5_pat64_a0.5_lay4_dr0.3_lr0.020_wd0.0100_s10_20260126_080406.json",
         "test_acc_mean": 0.25279998779296875,
         "test_acc_std": 0.16681113839149475,
         "aurc_mean": 0.25222,
@@ -2668,7 +2668,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter4_pat64_a0.7_lay3_dr0.7_lr0.005_wd0.0100_s10_20260126_042945.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter4_pat64_a0.7_lay3_dr0.7_lr0.005_wd0.0100_s10_20260126_042945.json",
         "test_acc_mean": 0.18439999222755432,
         "test_acc_std": 0.046655237674713135,
         "aurc_mean": 0.18434,
@@ -2680,7 +2680,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter3_pat96_a0.3_lay1_dr0.3_lr0.010_wd0.0100_s10_20260126_064220.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter3_pat96_a0.3_lay1_dr0.3_lr0.010_wd0.0100_s10_20260126_064220.json",
         "test_acc_mean": 0.6405000686645508,
         "test_acc_std": 0.027019543573260307,
         "aurc_mean": 0.6396,
@@ -2692,7 +2692,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter4_pat32_a0.7_lay4_dr0.3_lr0.010_wd0.0005_s10_20260126_053406.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter4_pat32_a0.7_lay4_dr0.3_lr0.010_wd0.0005_s10_20260126_053406.json",
         "test_acc_mean": 0.6341000199317932,
         "test_acc_std": 0.024591997265815735,
         "aurc_mean": 0.63245,
@@ -2704,7 +2704,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter4_pat64_a0.7_lay1_dr0.5_lr0.020_wd0.0010_s10_20260126_042011.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter4_pat64_a0.7_lay1_dr0.5_lr0.020_wd0.0010_s10_20260126_042011.json",
         "test_acc_mean": 0.652999997138977,
         "test_acc_std": 0.02741451933979988,
         "aurc_mean": 0.65221,
@@ -2716,7 +2716,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter4_pat64_a0.5_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_060523.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter4_pat64_a0.5_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_060523.json",
         "test_acc_mean": 0.6592000126838684,
         "test_acc_std": 0.019959961995482445,
         "aurc_mean": 0.65794,
@@ -2728,7 +2728,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter1_pat96_a0.3_lay3_dr0.3_lr0.005_wd0.0100_s10_20260126_024836.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter1_pat96_a0.3_lay3_dr0.3_lr0.005_wd0.0100_s10_20260126_024836.json",
         "test_acc_mean": 0.650600016117096,
         "test_acc_std": 0.015486192889511585,
         "aurc_mean": 0.64968,
@@ -2740,7 +2740,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter1_pat96_a0.5_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_090947.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter1_pat96_a0.5_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_090947.json",
         "test_acc_mean": 0.6062999963760376,
         "test_acc_std": 0.00938141904771328,
         "aurc_mean": 0.6012799999999999,
@@ -2752,7 +2752,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter5_pat32_a0.3_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_075101.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter5_pat32_a0.3_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_075101.json",
         "test_acc_mean": 0.5717999935150146,
         "test_acc_std": 0.04728824645280838,
         "aurc_mean": 0.57179,
@@ -2764,7 +2764,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter3_pat96_a0.3_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_071626.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter3_pat96_a0.3_lay4_dr0.5_lr0.020_wd0.0010_s10_20260126_071626.json",
         "test_acc_mean": 0.6690999865531921,
         "test_acc_std": 0.02868390828371048,
         "aurc_mean": 0.6683999999999999,
@@ -2776,7 +2776,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter2_pat128_a0.7_lay1_dr0.7_lr0.010_wd0.0010_s10_20260126_083046.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter2_pat128_a0.7_lay1_dr0.7_lr0.010_wd0.0010_s10_20260126_083046.json",
         "test_acc_mean": 0.6742000579833984,
         "test_acc_std": 0.023479532450437546,
         "aurc_mean": 0.67199,
@@ -2788,7 +2788,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter5_pat32_a0.3_lay2_dr0.7_lr0.020_wd0.0005_s10_20260126_085056.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter5_pat32_a0.3_lay2_dr0.7_lr0.020_wd0.0005_s10_20260126_085056.json",
         "test_acc_mean": 0.1720000058412552,
         "test_acc_std": 0.05667451024055481,
         "aurc_mean": 0.172,
@@ -2800,7 +2800,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter3_pat96_a0.7_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_061921.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter3_pat96_a0.7_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_061921.json",
         "test_acc_mean": 0.6574999094009399,
         "test_acc_std": 0.01805086061358452,
         "aurc_mean": 0.65642,
@@ -2812,7 +2812,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter5_pat128_a0.5_lay1_dr0.7_lr0.020_wd0.0005_s10_20260126_032514.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter5_pat128_a0.5_lay1_dr0.7_lr0.020_wd0.0005_s10_20260126_032514.json",
         "test_acc_mean": 0.6492999792098999,
         "test_acc_std": 0.024390559643507004,
         "aurc_mean": 0.64814,
@@ -2824,7 +2824,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter5_pat64_a0.5_lay4_dr0.5_lr0.005_wd0.0005_s10_20260126_065706.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter5_pat64_a0.5_lay4_dr0.5_lr0.005_wd0.0005_s10_20260126_065706.json",
         "test_acc_mean": 0.6571999788284302,
         "test_acc_std": 0.006941020954400301,
         "aurc_mean": 0.65469,
@@ -2836,7 +2836,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter2_pat32_a0.7_lay1_dr0.7_lr0.005_wd0.0100_s10_20260126_033339.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter2_pat32_a0.7_lay1_dr0.7_lr0.005_wd0.0100_s10_20260126_033339.json",
         "test_acc_mean": 0.676300048828125,
         "test_acc_std": 0.035112667828798294,
         "aurc_mean": 0.67554,
@@ -2848,7 +2848,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter5_pat32_a0.3_lay4_dr0.3_lr0.010_wd0.0100_s10_20260126_054529.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter5_pat32_a0.3_lay4_dr0.3_lr0.010_wd0.0100_s10_20260126_054529.json",
         "test_acc_mean": 0.667199969291687,
         "test_acc_std": 0.020186904817819595,
         "aurc_mean": 0.6650500000000001,
@@ -2860,7 +2860,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter1_pat96_a0.5_lay3_dr0.5_lr0.020_wd0.0010_s10_20260126_081346.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter1_pat96_a0.5_lay3_dr0.5_lr0.020_wd0.0010_s10_20260126_081346.json",
         "test_acc_mean": 0.6685999631881714,
         "test_acc_std": 0.02066774293780327,
         "aurc_mean": 0.6663,
@@ -2872,7 +2872,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter4_pat64_a0.5_lay3_dr0.3_lr0.020_wd0.0005_s10_20260126_063531.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter4_pat64_a0.5_lay3_dr0.3_lr0.020_wd0.0005_s10_20260126_063531.json",
         "test_acc_mean": 0.6362999677658081,
         "test_acc_std": 0.025634396821260452,
         "aurc_mean": 0.6358600000000001,
@@ -2884,7 +2884,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter3_pat96_a0.3_lay3_dr0.5_lr0.005_wd0.0010_s10_20260126_084143.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter3_pat96_a0.3_lay3_dr0.5_lr0.005_wd0.0010_s10_20260126_084143.json",
         "test_acc_mean": 0.6748000383377075,
         "test_acc_std": 0.009908472187817097,
         "aurc_mean": 0.6725300000000001,
@@ -2896,7 +2896,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter1_pat128_a0.7_lay2_dr0.5_lr0.005_wd0.0005_s10_20260126_040754.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter1_pat128_a0.7_lay2_dr0.5_lr0.005_wd0.0005_s10_20260126_040754.json",
         "test_acc_mean": 0.6586999893188477,
         "test_acc_std": 0.008957304991781712,
         "aurc_mean": 0.6571200000000001,
@@ -2908,7 +2908,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter1_pat32_a0.5_lay2_dr0.7_lr0.010_wd0.0010_s10_20260126_092759.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter1_pat32_a0.5_lay2_dr0.7_lr0.010_wd0.0010_s10_20260126_092759.json",
         "test_acc_mean": 0.6197999715805054,
         "test_acc_std": 0.03337929770350456,
         "aurc_mean": 0.6189,
@@ -2920,7 +2920,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter4_pat64_a0.3_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_070821.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter4_pat64_a0.3_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_070821.json",
         "test_acc_mean": 0.6647000312805176,
         "test_acc_std": 0.022390732541680336,
         "aurc_mean": 0.6634,
@@ -2932,7 +2932,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter1_pat128_a0.3_lay2_dr0.5_lr0.020_wd0.0005_s10_20260126_025452.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter1_pat128_a0.3_lay2_dr0.5_lr0.020_wd0.0005_s10_20260126_025452.json",
         "test_acc_mean": 0.615399956703186,
         "test_acc_std": 0.03338729590177536,
         "aurc_mean": 0.6117100000000001,
@@ -2944,7 +2944,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter5_pat96_a0.7_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_092152.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter5_pat96_a0.7_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_092152.json",
         "test_acc_mean": 0.5780999660491943,
         "test_acc_std": 0.10783160477876663,
         "aurc_mean": 0.5764900000000001,
@@ -2956,7 +2956,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter5_pat128_a0.7_lay1_dr0.7_lr0.005_wd0.0005_s10_20260126_062017.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter5_pat128_a0.7_lay1_dr0.7_lr0.005_wd0.0005_s10_20260126_062017.json",
         "test_acc_mean": 0.664400041103363,
         "test_acc_std": 0.016015270724892616,
         "aurc_mean": 0.66268,
@@ -2968,7 +2968,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter5_pat96_a0.5_lay3_dr0.7_lr0.020_wd0.0010_s10_20260126_074016.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter5_pat96_a0.5_lay3_dr0.7_lr0.020_wd0.0010_s10_20260126_074016.json",
         "test_acc_mean": 0.17630000412464142,
         "test_acc_std": 0.04259121045470238,
         "aurc_mean": 0.1763,
@@ -2980,7 +2980,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter2_pat96_a0.5_lay2_dr0.3_lr0.010_wd0.0010_s10_20260126_035616.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter2_pat96_a0.5_lay2_dr0.3_lr0.010_wd0.0010_s10_20260126_035616.json",
         "test_acc_mean": 0.6642999649047852,
         "test_acc_std": 0.024476975202560425,
         "aurc_mean": 0.66296,
@@ -2992,7 +2992,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter2_pat128_a0.5_lay3_dr0.3_lr0.005_wd0.0010_s10_20260126_061349.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter2_pat128_a0.5_lay3_dr0.3_lr0.005_wd0.0010_s10_20260126_061349.json",
         "test_acc_mean": 0.6444000005722046,
         "test_acc_std": 0.026132984086871147,
         "aurc_mean": 0.64178,
@@ -3004,7 +3004,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter5_pat128_a0.5_lay3_dr0.7_lr0.020_wd0.0005_s10_20260126_074429.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter5_pat128_a0.5_lay3_dr0.7_lr0.020_wd0.0005_s10_20260126_074429.json",
         "test_acc_mean": 0.16910000145435333,
         "test_acc_std": 0.038109347224235535,
         "aurc_mean": 0.1691,
@@ -3016,7 +3016,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter5_pat32_a0.5_lay3_dr0.5_lr0.020_wd0.0100_s10_20260126_040521.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter5_pat32_a0.5_lay3_dr0.5_lr0.020_wd0.0100_s10_20260126_040521.json",
         "test_acc_mean": 0.18150000274181366,
         "test_acc_std": 0.046183813363313675,
         "aurc_mean": 0.1815,
@@ -3028,7 +3028,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter2_pat32_a0.5_lay1_dr0.3_lr0.010_wd0.0100_s10_20260126_021240.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter2_pat32_a0.5_lay1_dr0.3_lr0.010_wd0.0100_s10_20260126_021240.json",
         "test_acc_mean": 0.6598000526428223,
         "test_acc_std": 0.024471301585435867,
         "aurc_mean": 0.65776,
@@ -3040,7 +3040,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter3_pat32_a0.7_lay2_dr0.3_lr0.005_wd0.0100_s10_20260126_062119.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter3_pat32_a0.7_lay2_dr0.3_lr0.005_wd0.0100_s10_20260126_062119.json",
         "test_acc_mean": 0.6703000068664551,
         "test_acc_std": 0.017682697623968124,
         "aurc_mean": 0.66862,
@@ -3052,7 +3052,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter2_pat128_a0.7_lay4_dr0.5_lr0.005_wd0.0100_s10_20260126_021142.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter2_pat128_a0.7_lay4_dr0.5_lr0.005_wd0.0100_s10_20260126_021142.json",
         "test_acc_mean": 0.680400013923645,
         "test_acc_std": 0.014167253859341145,
         "aurc_mean": 0.67978,
@@ -3064,7 +3064,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter4_pat32_a0.5_lay1_dr0.7_lr0.020_wd0.0005_s10_20260126_083434.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter4_pat32_a0.5_lay1_dr0.7_lr0.020_wd0.0005_s10_20260126_083434.json",
         "test_acc_mean": 0.590999960899353,
         "test_acc_std": 0.057511355727910995,
         "aurc_mean": 0.59063,
@@ -3076,7 +3076,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter4_pat128_a0.3_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_032256.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter4_pat128_a0.3_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_032256.json",
         "test_acc_mean": 0.5098000168800354,
         "test_acc_std": 0.1998920887708664,
         "aurc_mean": 0.5084299999999999,
@@ -3088,7 +3088,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter1_pat128_a0.7_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_042625.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter1_pat128_a0.7_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_042625.json",
         "test_acc_mean": 0.4244999885559082,
         "test_acc_std": 0.09072088450193405,
         "aurc_mean": 0.42538,
@@ -3100,7 +3100,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter1_pat128_a0.3_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_045630.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter1_pat128_a0.3_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_045630.json",
         "test_acc_mean": 0.6074000000953674,
         "test_acc_std": 0.021051252260804176,
         "aurc_mean": 0.6036199999999999,
@@ -3112,7 +3112,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter3_pat128_a0.3_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_034134.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter3_pat128_a0.3_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_034134.json",
         "test_acc_mean": 0.5892000198364258,
         "test_acc_std": 0.02940445765852928,
         "aurc_mean": 0.5865500000000001,
@@ -3124,7 +3124,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter5_pat64_a0.5_lay3_dr0.3_lr0.010_wd0.0100_s10_20260126_043653.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter5_pat64_a0.5_lay3_dr0.3_lr0.010_wd0.0100_s10_20260126_043653.json",
         "test_acc_mean": 0.6534000039100647,
         "test_acc_std": 0.02483813278377056,
         "aurc_mean": 0.65298,
@@ -3136,7 +3136,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter5_pat32_a0.3_lay1_dr0.5_lr0.005_wd0.0005_s10_20260126_032554.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter5_pat32_a0.3_lay1_dr0.5_lr0.005_wd0.0005_s10_20260126_032554.json",
         "test_acc_mean": 0.6687999963760376,
         "test_acc_std": 0.013281574472784996,
         "aurc_mean": 0.66591,
@@ -3148,7 +3148,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter2_pat64_a0.5_lay1_dr0.7_lr0.010_wd0.0010_s10_20260126_053820.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter2_pat64_a0.5_lay1_dr0.7_lr0.010_wd0.0010_s10_20260126_053820.json",
         "test_acc_mean": 0.6609999537467957,
         "test_acc_std": 0.016633298248052597,
         "aurc_mean": 0.65959,
@@ -3160,7 +3160,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter2_pat96_a0.3_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_024441.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter2_pat96_a0.3_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_024441.json",
         "test_acc_mean": 0.11560000479221344,
         "test_acc_std": 0.049381058663129807,
         "aurc_mean": 0.11555000000000001,
@@ -3172,7 +3172,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter1_pat32_a0.5_lay4_dr0.5_lr0.005_wd0.0100_s10_20260126_044053.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter1_pat32_a0.5_lay4_dr0.5_lr0.005_wd0.0100_s10_20260126_044053.json",
         "test_acc_mean": 0.6870999932289124,
         "test_acc_std": 0.029384251683950424,
         "aurc_mean": 0.6851799999999999,
@@ -3184,7 +3184,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter5_pat96_a0.7_lay4_dr0.7_lr0.010_wd0.0005_s10_20260126_053604.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter5_pat96_a0.7_lay4_dr0.7_lr0.010_wd0.0005_s10_20260126_053604.json",
         "test_acc_mean": 0.14319999516010284,
         "test_acc_std": 0.05868522450327873,
         "aurc_mean": 0.1432,
@@ -3196,7 +3196,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter4_pat128_a0.5_lay4_dr0.5_lr0.010_wd0.0005_s10_20260126_032006.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter4_pat128_a0.5_lay4_dr0.5_lr0.010_wd0.0005_s10_20260126_032006.json",
         "test_acc_mean": 0.6770000457763672,
         "test_acc_std": 0.013029875233769417,
         "aurc_mean": 0.67567,
@@ -3208,7 +3208,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter5_pat96_a0.3_lay4_dr0.3_lr0.020_wd0.0100_s10_20260126_050305.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter5_pat96_a0.3_lay4_dr0.3_lr0.020_wd0.0100_s10_20260126_050305.json",
         "test_acc_mean": 0.6397000551223755,
         "test_acc_std": 0.03616950660943985,
         "aurc_mean": 0.6367799999999999,
@@ -3220,7 +3220,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter4_pat32_a0.7_lay3_dr0.5_lr0.005_wd0.0010_s10_20260126_055248.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter4_pat32_a0.7_lay3_dr0.5_lr0.005_wd0.0010_s10_20260126_055248.json",
         "test_acc_mean": 0.6613999605178833,
         "test_acc_std": 0.02191498689353466,
         "aurc_mean": 0.6599600000000001,
@@ -3232,7 +3232,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter5_pat96_a0.5_lay3_dr0.5_lr0.005_wd0.0005_s10_20260126_073502.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter5_pat96_a0.5_lay3_dr0.5_lr0.005_wd0.0005_s10_20260126_073502.json",
         "test_acc_mean": 0.6510000228881836,
         "test_acc_std": 0.017146432772278786,
         "aurc_mean": 0.64846,
@@ -3244,7 +3244,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter5_pat64_a0.3_lay2_dr0.5_lr0.005_wd0.0005_s10_20260126_063831.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter5_pat64_a0.3_lay2_dr0.5_lr0.005_wd0.0005_s10_20260126_063831.json",
         "test_acc_mean": 0.6741000413894653,
         "test_acc_std": 0.006244106683880091,
         "aurc_mean": 0.67221,
@@ -3256,7 +3256,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter3_pat128_a0.7_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_090520.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter3_pat128_a0.7_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_090520.json",
         "test_acc_mean": 0.6585999727249146,
         "test_acc_std": 0.01921343244612217,
         "aurc_mean": 0.6554900000000001,
@@ -3268,7 +3268,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter4_pat128_a0.3_lay1_dr0.5_lr0.010_wd0.0005_s10_20260126_035311.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter4_pat128_a0.3_lay1_dr0.5_lr0.010_wd0.0005_s10_20260126_035311.json",
         "test_acc_mean": 0.6324999928474426,
         "test_acc_std": 0.012076150625944138,
         "aurc_mean": 0.62958,
@@ -3280,7 +3280,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter2_pat64_a0.5_lay1_dr0.5_lr0.010_wd0.0005_s10_20260126_025725.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter2_pat64_a0.5_lay1_dr0.5_lr0.010_wd0.0005_s10_20260126_025725.json",
         "test_acc_mean": 0.6299000382423401,
         "test_acc_std": 0.022673768922686577,
         "aurc_mean": 0.62713,
@@ -3292,7 +3292,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter2_pat64_a0.7_lay4_dr0.7_lr0.020_wd0.0100_s10_20260126_082518.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter2_pat64_a0.7_lay4_dr0.7_lr0.020_wd0.0100_s10_20260126_082518.json",
         "test_acc_mean": 0.1559000015258789,
         "test_acc_std": 0.045911628752946854,
         "aurc_mean": 0.15589999999999998,
@@ -3304,7 +3304,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter5_pat32_a0.7_lay3_dr0.3_lr0.005_wd0.0100_s10_20260126_054938.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter5_pat32_a0.7_lay3_dr0.3_lr0.005_wd0.0100_s10_20260126_054938.json",
         "test_acc_mean": 0.6474000215530396,
         "test_acc_std": 0.02111450396478176,
         "aurc_mean": 0.6474500000000001,
@@ -3316,7 +3316,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter4_pat96_a0.5_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_070527.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter4_pat96_a0.5_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_070527.json",
         "test_acc_mean": 0.6636000871658325,
         "test_acc_std": 0.019138088449835777,
         "aurc_mean": 0.6624400000000001,
@@ -3328,7 +3328,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter2_pat32_a0.5_lay3_dr0.3_lr0.020_wd0.0010_s10_20260126_025947.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter2_pat32_a0.5_lay3_dr0.3_lr0.020_wd0.0010_s10_20260126_025947.json",
         "test_acc_mean": 0.6546000242233276,
         "test_acc_std": 0.024400368332862854,
         "aurc_mean": 0.6532899999999999,
@@ -3340,7 +3340,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter2_pat64_a0.7_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_033759.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter2_pat64_a0.7_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_033759.json",
         "test_acc_mean": 0.6448000073432922,
         "test_acc_std": 0.02397129312157631,
         "aurc_mean": 0.64444,
@@ -3352,7 +3352,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter5_pat64_a0.5_lay1_dr0.5_lr0.010_wd0.0100_s10_20260126_065041.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter5_pat64_a0.5_lay1_dr0.5_lr0.010_wd0.0100_s10_20260126_065041.json",
         "test_acc_mean": 0.6473000049591064,
         "test_acc_std": 0.049817558377981186,
         "aurc_mean": 0.64585,
@@ -3364,7 +3364,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter2_pat32_a0.5_lay4_dr0.7_lr0.005_wd0.0100_s10_20260126_032355.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter2_pat32_a0.5_lay4_dr0.7_lr0.005_wd0.0100_s10_20260126_032355.json",
         "test_acc_mean": 0.16670000553131104,
         "test_acc_std": 0.03994732350111008,
         "aurc_mean": 0.16654,
@@ -3376,7 +3376,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter2_pat128_a0.7_lay4_dr0.7_lr0.010_wd0.0005_s10_20260126_091243.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter2_pat128_a0.7_lay4_dr0.7_lr0.010_wd0.0005_s10_20260126_091243.json",
         "test_acc_mean": 0.36980000138282776,
         "test_acc_std": 0.22265459597110748,
         "aurc_mean": 0.36971000000000004,
@@ -3388,7 +3388,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter4_pat128_a0.5_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_024234.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter4_pat128_a0.5_lay3_dr0.3_lr0.010_wd0.0010_s10_20260126_024234.json",
         "test_acc_mean": 0.6550999879837036,
         "test_acc_std": 0.01757807470858097,
         "aurc_mean": 0.65357,
@@ -3400,7 +3400,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter2_pat128_a0.7_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_060805.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter2_pat128_a0.7_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_060805.json",
         "test_acc_mean": 0.6609999537467957,
         "test_acc_std": 0.02384672500193119,
         "aurc_mean": 0.65848,
@@ -3412,7 +3412,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter2_pat32_a0.3_lay3_dr0.5_lr0.010_wd0.0005_s10_20260126_031418.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter2_pat32_a0.3_lay3_dr0.5_lr0.010_wd0.0005_s10_20260126_031418.json",
         "test_acc_mean": 0.6662999987602234,
         "test_acc_std": 0.013968609273433685,
         "aurc_mean": 0.6635500000000001,
@@ -3424,7 +3424,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter4_pat32_a0.5_lay2_dr0.7_lr0.005_wd0.0100_s10_20260126_072401.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter4_pat32_a0.5_lay2_dr0.7_lr0.005_wd0.0100_s10_20260126_072401.json",
         "test_acc_mean": 0.695400059223175,
         "test_acc_std": 0.01984494738280773,
         "aurc_mean": 0.6935399999999999,
@@ -3436,7 +3436,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter3_pat64_a0.5_lay1_dr0.7_lr0.005_wd0.0005_s10_20260126_023101.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter3_pat64_a0.5_lay1_dr0.7_lr0.005_wd0.0005_s10_20260126_023101.json",
         "test_acc_mean": 0.6805000305175781,
         "test_acc_std": 0.016064105555415154,
         "aurc_mean": 0.6768500000000001,
@@ -3448,7 +3448,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter4_pat96_a0.7_lay1_dr0.3_lr0.020_wd0.0100_s10_20260126_023600.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter4_pat96_a0.7_lay1_dr0.3_lr0.020_wd0.0100_s10_20260126_023600.json",
         "test_acc_mean": 0.6162000298500061,
         "test_acc_std": 0.05647183209657669,
         "aurc_mean": 0.6150399999999999,
@@ -3460,7 +3460,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter3_pat128_a0.5_lay3_dr0.7_lr0.010_wd0.0005_s10_20260126_081459.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter3_pat128_a0.5_lay3_dr0.7_lr0.010_wd0.0005_s10_20260126_081459.json",
         "test_acc_mean": 0.1881999969482422,
         "test_acc_std": 0.07530795782804489,
         "aurc_mean": 0.18792,
@@ -3472,7 +3472,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter2_pat128_a0.7_lay3_dr0.7_lr0.010_wd0.0005_s10_20260126_052652.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter2_pat128_a0.7_lay3_dr0.7_lr0.010_wd0.0005_s10_20260126_052652.json",
         "test_acc_mean": 0.6198000311851501,
         "test_acc_std": 0.11641096323728561,
         "aurc_mean": 0.6199899999999999,
@@ -3484,7 +3484,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter3_pat96_a0.7_lay3_dr0.3_lr0.005_wd0.0010_s10_20260126_034908.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter3_pat96_a0.7_lay3_dr0.3_lr0.005_wd0.0010_s10_20260126_034908.json",
         "test_acc_mean": 0.6662999987602234,
         "test_acc_std": 0.021530600264668465,
         "aurc_mean": 0.66501,
@@ -3496,7 +3496,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter4_pat32_a0.5_lay2_dr0.7_lr0.010_wd0.0005_s10_20260126_062330.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter4_pat32_a0.5_lay2_dr0.7_lr0.010_wd0.0005_s10_20260126_062330.json",
         "test_acc_mean": 0.676800012588501,
         "test_acc_std": 0.016943031921982765,
         "aurc_mean": 0.67534,
@@ -3508,7 +3508,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter3_pat96_a0.7_lay3_dr0.7_lr0.005_wd0.0005_s10_20260126_063736.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter3_pat96_a0.7_lay3_dr0.7_lr0.005_wd0.0005_s10_20260126_063736.json",
         "test_acc_mean": 0.6022000312805176,
         "test_acc_std": 0.18670880794525146,
         "aurc_mean": 0.60147,
@@ -3520,7 +3520,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter2_pat64_a0.7_lay4_dr0.3_lr0.005_wd0.0005_s10_20260126_033852.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter2_pat64_a0.7_lay4_dr0.3_lr0.005_wd0.0005_s10_20260126_033852.json",
         "test_acc_mean": 0.6568999886512756,
         "test_acc_std": 0.020824406296014786,
         "aurc_mean": 0.6560900000000001,
@@ -3532,7 +3532,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter1_pat32_a0.3_lay2_dr0.3_lr0.005_wd0.0010_s10_20260126_092233.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter1_pat32_a0.3_lay2_dr0.3_lr0.005_wd0.0010_s10_20260126_092233.json",
         "test_acc_mean": 0.6388999819755554,
         "test_acc_std": 0.01470034010708332,
         "aurc_mean": 0.63501,
@@ -3544,7 +3544,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter5_pat128_a0.5_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_073204.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter5_pat128_a0.5_lay1_dr0.7_lr0.005_wd0.0010_s10_20260126_073204.json",
         "test_acc_mean": 0.6341000199317932,
         "test_acc_std": 0.04007895663380623,
         "aurc_mean": 0.63176,
@@ -3556,7 +3556,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter4_pat128_a0.3_lay3_dr0.7_lr0.020_wd0.0100_s10_20260126_090827.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter4_pat128_a0.3_lay3_dr0.7_lr0.020_wd0.0100_s10_20260126_090827.json",
         "test_acc_mean": 0.13109999895095825,
         "test_acc_std": 0.05811569094657898,
         "aurc_mean": 0.13132000000000002,
@@ -3568,7 +3568,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter5_pat96_a0.3_lay2_dr0.5_lr0.020_wd0.0100_s10_20260126_082418.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter5_pat96_a0.3_lay2_dr0.5_lr0.020_wd0.0100_s10_20260126_082418.json",
         "test_acc_mean": 0.6563000082969666,
         "test_acc_std": 0.030485142022371292,
         "aurc_mean": 0.65423,
@@ -3580,7 +3580,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter1_pat128_a0.3_lay1_dr0.7_lr0.005_wd0.0100_s10_20260126_050653.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter1_pat128_a0.3_lay1_dr0.7_lr0.005_wd0.0100_s10_20260126_050653.json",
         "test_acc_mean": 0.6302000284194946,
         "test_acc_std": 0.030788889154791832,
         "aurc_mean": 0.6274899999999999,
@@ -3592,7 +3592,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter1_pat32_a0.7_lay3_dr0.7_lr0.010_wd0.0100_s10_20260126_022224.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter1_pat32_a0.7_lay3_dr0.7_lr0.010_wd0.0100_s10_20260126_022224.json",
         "test_acc_mean": 0.1551000028848648,
         "test_acc_std": 0.04169851914048195,
         "aurc_mean": 0.15524,
@@ -3604,7 +3604,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter4_pat96_a0.3_lay1_dr0.3_lr0.010_wd0.0005_s10_20260126_075252.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter4_pat96_a0.3_lay1_dr0.3_lr0.010_wd0.0005_s10_20260126_075252.json",
         "test_acc_mean": 0.6177999377250671,
         "test_acc_std": 0.016591841354966164,
         "aurc_mean": 0.6138899999999999,
@@ -3616,7 +3616,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter3_pat64_a0.5_lay3_dr0.7_lr0.020_wd0.0100_s10_20260126_045723.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter3_pat64_a0.5_lay3_dr0.7_lr0.020_wd0.0100_s10_20260126_045723.json",
         "test_acc_mean": 0.15290001034736633,
         "test_acc_std": 0.05527195334434509,
         "aurc_mean": 0.15294999999999997,
@@ -3628,7 +3628,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter5_pat96_a0.5_lay4_dr0.5_lr0.020_wd0.0005_s10_20260126_064949.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter5_pat96_a0.5_lay4_dr0.5_lr0.020_wd0.0005_s10_20260126_064949.json",
         "test_acc_mean": 0.3774999976158142,
         "test_acc_std": 0.2050686925649643,
         "aurc_mean": 0.37677000000000005,
@@ -3640,7 +3640,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter1_pat64_a0.3_lay2_dr0.3_lr0.020_wd0.0005_s10_20260126_042308.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter1_pat64_a0.3_lay2_dr0.3_lr0.020_wd0.0005_s10_20260126_042308.json",
         "test_acc_mean": 0.558899998664856,
         "test_acc_std": 0.02738795056939125,
         "aurc_mean": 0.5576800000000001,
@@ -3652,7 +3652,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter4_pat96_a0.5_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_072700.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter4_pat96_a0.5_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_072700.json",
         "test_acc_mean": 0.5988000631332397,
         "test_acc_std": 0.03449251130223274,
         "aurc_mean": 0.59744,
@@ -3664,7 +3664,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter3_pat64_a0.5_lay4_dr0.5_lr0.010_wd0.0100_s10_20260126_035854.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter3_pat64_a0.5_lay4_dr0.5_lr0.010_wd0.0100_s10_20260126_035854.json",
         "test_acc_mean": 0.6655000448226929,
         "test_acc_std": 0.02239171788096428,
         "aurc_mean": 0.6646400000000001,
@@ -3676,7 +3676,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter2_pat128_a0.7_lay2_dr0.5_lr0.005_wd0.0100_s10_20260126_033430.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter2_pat128_a0.7_lay2_dr0.5_lr0.005_wd0.0100_s10_20260126_033430.json",
         "test_acc_mean": 0.689799964427948,
         "test_acc_std": 0.015597711317241192,
         "aurc_mean": 0.6889900000000001,
@@ -3688,7 +3688,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter1_pat32_a0.3_lay3_dr0.7_lr0.005_wd0.0100_s10_20260126_075336.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter1_pat32_a0.3_lay3_dr0.7_lr0.005_wd0.0100_s10_20260126_075336.json",
         "test_acc_mean": 0.19060000777244568,
         "test_acc_std": 0.08913186192512512,
         "aurc_mean": 0.18994,
@@ -3700,7 +3700,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter4_pat96_a0.5_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_030953.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter4_pat96_a0.5_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_030953.json",
         "test_acc_mean": 0.6797999143600464,
         "test_acc_std": 0.008966614492237568,
         "aurc_mean": 0.67642,
@@ -3712,7 +3712,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter5_pat96_a0.7_lay2_dr0.7_lr0.010_wd0.0005_s10_20260126_054314.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter5_pat96_a0.7_lay2_dr0.7_lr0.010_wd0.0005_s10_20260126_054314.json",
         "test_acc_mean": 0.332099974155426,
         "test_acc_std": 0.2129034399986267,
         "aurc_mean": 0.3322,
@@ -3724,7 +3724,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter3_pat128_a0.3_lay2_dr0.5_lr0.020_wd0.0005_s10_20260126_040245.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter3_pat128_a0.3_lay2_dr0.5_lr0.020_wd0.0005_s10_20260126_040245.json",
         "test_acc_mean": 0.6622999906539917,
         "test_acc_std": 0.025351092219352722,
         "aurc_mean": 0.6601700000000001,
@@ -3736,7 +3736,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter3_pat32_a0.5_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_042841.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter3_pat32_a0.5_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_042841.json",
         "test_acc_mean": 0.6854000091552734,
         "test_acc_std": 0.016767684370279312,
         "aurc_mean": 0.68334,
@@ -3748,7 +3748,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter3_pat96_a0.5_lay4_dr0.3_lr0.010_wd0.0010_s10_20260126_023343.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter3_pat96_a0.5_lay4_dr0.3_lr0.010_wd0.0010_s10_20260126_023343.json",
         "test_acc_mean": 0.6611999869346619,
         "test_acc_std": 0.018341204151511192,
         "aurc_mean": 0.65876,
@@ -3760,7 +3760,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter2_pat64_a0.3_lay1_dr0.5_lr0.010_wd0.0100_s10_20260126_085349.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter2_pat64_a0.3_lay1_dr0.5_lr0.010_wd0.0100_s10_20260126_085349.json",
         "test_acc_mean": 0.6158999800682068,
         "test_acc_std": 0.02916789799928665,
         "aurc_mean": 0.6132,
@@ -3772,7 +3772,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter2_pat96_a0.5_lay3_dr0.5_lr0.010_wd0.0010_s10_20260126_060249.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter2_pat96_a0.5_lay3_dr0.5_lr0.010_wd0.0010_s10_20260126_060249.json",
         "test_acc_mean": 0.6780999898910522,
         "test_acc_std": 0.015095612965524197,
         "aurc_mean": 0.67572,
@@ -3784,7 +3784,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter3_pat32_a0.5_lay2_dr0.7_lr0.005_wd0.0100_s10_20260126_070344.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter3_pat32_a0.5_lay2_dr0.7_lr0.005_wd0.0100_s10_20260126_070344.json",
         "test_acc_mean": 0.6294000148773193,
         "test_acc_std": 0.04734085127711296,
         "aurc_mean": 0.62861,
@@ -3796,7 +3796,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter2_pat96_a0.7_lay2_dr0.3_lr0.005_wd0.0010_s10_20260126_074100.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter2_pat96_a0.7_lay2_dr0.3_lr0.005_wd0.0010_s10_20260126_074100.json",
         "test_acc_mean": 0.6450999975204468,
         "test_acc_std": 0.02452867291867733,
         "aurc_mean": 0.6436499999999998,
@@ -3808,7 +3808,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter5_pat128_a0.7_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_055420.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter5_pat128_a0.7_lay1_dr0.3_lr0.005_wd0.0005_s10_20260126_055420.json",
         "test_acc_mean": 0.6649999618530273,
         "test_acc_std": 0.009672407060861588,
         "aurc_mean": 0.66259,
@@ -3820,7 +3820,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter5_pat128_a0.5_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_065907.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter5_pat128_a0.5_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_065907.json",
         "test_acc_mean": 0.6525000333786011,
         "test_acc_std": 0.016774645075201988,
         "aurc_mean": 0.65083,
@@ -3832,7 +3832,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter1_pat64_a0.3_lay4_dr0.7_lr0.010_wd0.0100_s10_20260126_025641.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter1_pat64_a0.3_lay4_dr0.7_lr0.010_wd0.0100_s10_20260126_025641.json",
         "test_acc_mean": 0.1379999965429306,
         "test_acc_std": 0.05588281527161598,
         "aurc_mean": 0.13798000000000002,
@@ -3844,7 +3844,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter2_pat64_a0.7_lay4_dr0.3_lr0.010_wd0.0100_s10_20260126_041147.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter2_pat64_a0.7_lay4_dr0.3_lr0.010_wd0.0100_s10_20260126_041147.json",
         "test_acc_mean": 0.6592999696731567,
         "test_acc_std": 0.03384950011968613,
         "aurc_mean": 0.65819,
@@ -3856,7 +3856,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter1_pat64_a0.3_lay3_dr0.5_lr0.005_wd0.0100_s10_20260126_074907.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter1_pat64_a0.3_lay3_dr0.5_lr0.005_wd0.0100_s10_20260126_074907.json",
         "test_acc_mean": 0.6776000261306763,
         "test_acc_std": 0.016971873119473457,
         "aurc_mean": 0.67596,
@@ -3868,7 +3868,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter1_pat64_a0.3_lay3_dr0.3_lr0.005_wd0.0100_s10_20260126_051457.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter1_pat64_a0.3_lay3_dr0.3_lr0.005_wd0.0100_s10_20260126_051457.json",
         "test_acc_mean": 0.6687999963760376,
         "test_acc_std": 0.021714303642511368,
         "aurc_mean": 0.66759,
@@ -3880,7 +3880,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter3_pat64_a0.5_lay1_dr0.7_lr0.020_wd0.0005_s10_20260126_073331.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter3_pat64_a0.5_lay1_dr0.7_lr0.020_wd0.0005_s10_20260126_073331.json",
         "test_acc_mean": 0.6531000137329102,
         "test_acc_std": 0.016914479434490204,
         "aurc_mean": 0.6516299999999999,
@@ -3892,7 +3892,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter4_pat128_a0.5_lay2_dr0.5_lr0.020_wd0.0010_s10_20260126_033119.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter4_pat128_a0.5_lay2_dr0.5_lr0.020_wd0.0010_s10_20260126_033119.json",
         "test_acc_mean": 0.6719000339508057,
         "test_acc_std": 0.018705017864704132,
         "aurc_mean": 0.67027,
@@ -3904,7 +3904,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter1_pat64_a0.5_lay3_dr0.7_lr0.010_wd0.0010_s10_20260126_065300.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter1_pat64_a0.5_lay3_dr0.7_lr0.010_wd0.0010_s10_20260126_065300.json",
         "test_acc_mean": 0.17960000038146973,
         "test_acc_std": 0.07347894459962845,
         "aurc_mean": 0.17978,
@@ -3916,7 +3916,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter3_pat128_a0.7_lay1_dr0.7_lr0.010_wd0.0005_s10_20260126_042759.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter3_pat128_a0.7_lay1_dr0.7_lr0.010_wd0.0005_s10_20260126_042759.json",
         "test_acc_mean": 0.6748999357223511,
         "test_acc_std": 0.017077915370464325,
         "aurc_mean": 0.6731300000000001,
@@ -3928,7 +3928,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter4_pat32_a0.5_lay2_dr0.7_lr0.010_wd0.0100_s10_20260126_034443.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter4_pat32_a0.5_lay2_dr0.7_lr0.010_wd0.0100_s10_20260126_034443.json",
         "test_acc_mean": 0.23510000109672546,
         "test_acc_std": 0.07386692613363266,
         "aurc_mean": 0.23532999999999998,
@@ -3940,7 +3940,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter4_pat32_a0.3_lay2_dr0.7_lr0.010_wd0.0100_s10_20260126_074819.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter4_pat32_a0.3_lay2_dr0.7_lr0.010_wd0.0100_s10_20260126_074819.json",
         "test_acc_mean": 0.24990001320838928,
         "test_acc_std": 0.08397016674280167,
         "aurc_mean": 0.24977999999999997,
@@ -3952,7 +3952,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.15_iter1_pat32_a0.7_lay2_dr0.7_lr0.010_wd0.0010_s10_20260126_054025.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.15_iter1_pat32_a0.7_lay2_dr0.7_lr0.010_wd0.0010_s10_20260126_054025.json",
         "test_acc_mean": 0.6710999608039856,
         "test_acc_std": 0.019295664504170418,
         "aurc_mean": 0.67096,
@@ -3964,7 +3964,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter1_pat64_a0.3_lay3_dr0.7_lr0.010_wd0.0100_s10_20260126_032631.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter1_pat64_a0.3_lay3_dr0.7_lr0.010_wd0.0100_s10_20260126_032631.json",
         "test_acc_mean": 0.15160000324249268,
         "test_acc_std": 0.06912661343812943,
         "aurc_mean": 0.15164,
@@ -3976,7 +3976,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter3_pat64_a0.7_lay2_dr0.5_lr0.005_wd0.0100_s10_20260126_084332.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter3_pat64_a0.7_lay2_dr0.5_lr0.005_wd0.0100_s10_20260126_084332.json",
         "test_acc_mean": 0.6747000217437744,
         "test_acc_std": 0.019310614094138145,
         "aurc_mean": 0.67365,
@@ -3988,7 +3988,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter5_pat32_a0.7_lay4_dr0.7_lr0.010_wd0.0005_s10_20260126_072242.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter5_pat32_a0.7_lay4_dr0.7_lr0.010_wd0.0005_s10_20260126_072242.json",
         "test_acc_mean": 0.16409999132156372,
         "test_acc_std": 0.04944233223795891,
         "aurc_mean": 0.1641,
@@ -4000,7 +4000,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter2_pat32_a0.7_lay4_dr0.5_lr0.005_wd0.0005_s10_20260126_050532.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter2_pat32_a0.7_lay4_dr0.5_lr0.005_wd0.0005_s10_20260126_050532.json",
         "test_acc_mean": 0.6608999967575073,
         "test_acc_std": 0.009397999383509159,
         "aurc_mean": 0.65868,
@@ -4012,7 +4012,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.15_iter5_pat96_a0.3_lay3_dr0.3_lr0.020_wd0.0005_s10_20260126_043152.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.15_iter5_pat96_a0.3_lay3_dr0.3_lr0.020_wd0.0005_s10_20260126_043152.json",
         "test_acc_mean": 0.6586999893188477,
         "test_acc_std": 0.013004707172513008,
         "aurc_mean": 0.65829,
@@ -4024,7 +4024,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter3_pat32_a0.5_lay2_dr0.5_lr0.010_wd0.0005_s10_20260126_062825.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter3_pat32_a0.5_lay2_dr0.5_lr0.010_wd0.0005_s10_20260126_062825.json",
         "test_acc_mean": 0.6592999696731567,
         "test_acc_std": 0.029162572696805,
         "aurc_mean": 0.65815,
@@ -4036,7 +4036,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter1_pat32_a0.3_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_025311.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter1_pat32_a0.3_lay4_dr0.3_lr0.005_wd0.0010_s10_20260126_025311.json",
         "test_acc_mean": 0.6664999723434448,
         "test_acc_std": 0.016867125406861305,
         "aurc_mean": 0.6621699999999999,
@@ -4048,7 +4048,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter2_pat32_a0.7_lay1_dr0.5_lr0.020_wd0.0100_s10_20260126_061537.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter2_pat32_a0.7_lay1_dr0.5_lr0.020_wd0.0100_s10_20260126_061537.json",
         "test_acc_mean": 0.5010000467300415,
         "test_acc_std": 0.18432821333408356,
         "aurc_mean": 0.5009399999999999,
@@ -4060,7 +4060,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.05_iter3_pat128_a0.3_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_034009.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.05_iter3_pat128_a0.3_lay3_dr0.3_lr0.010_wd0.0005_s10_20260126_034009.json",
         "test_acc_mean": 0.6297000050544739,
         "test_acc_std": 0.016398174688220024,
         "aurc_mean": 0.6273,
@@ -4072,7 +4072,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter4_pat64_a0.7_lay3_dr0.5_lr0.005_wd0.0100_s10_20260126_083817.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter4_pat64_a0.7_lay3_dr0.5_lr0.005_wd0.0100_s10_20260126_083817.json",
         "test_acc_mean": 0.6713999509811401,
         "test_acc_std": 0.029056277126073837,
         "aurc_mean": 0.6706300000000001,
@@ -4084,7 +4084,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter3_pat64_a0.3_lay4_dr0.3_lr0.010_wd0.0005_s10_20260126_075613.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter3_pat64_a0.3_lay4_dr0.3_lr0.010_wd0.0005_s10_20260126_075613.json",
         "test_acc_mean": 0.6365000009536743,
         "test_acc_std": 0.01448562741279602,
         "aurc_mean": 0.63502,
@@ -4096,7 +4096,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter4_pat96_a0.3_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_052208.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter4_pat96_a0.3_lay1_dr0.5_lr0.005_wd0.0100_s10_20260126_052208.json",
         "test_acc_mean": 0.6225999593734741,
         "test_acc_std": 0.014751272276043892,
         "aurc_mean": 0.61864,
@@ -4108,7 +4108,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter1_pat96_a0.3_lay4_dr0.7_lr0.020_wd0.0100_s10_20260126_022628.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter1_pat96_a0.3_lay4_dr0.7_lr0.020_wd0.0100_s10_20260126_022628.json",
         "test_acc_mean": 0.11089999973773956,
         "test_acc_std": 0.0572139248251915,
         "aurc_mean": 0.1109,
@@ -4120,7 +4120,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter5_pat64_a0.7_lay1_dr0.7_lr0.010_wd0.0100_s10_20260126_043255.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter5_pat64_a0.7_lay1_dr0.7_lr0.010_wd0.0100_s10_20260126_043255.json",
         "test_acc_mean": 0.42480000853538513,
         "test_acc_std": 0.24864110350608826,
         "aurc_mean": 0.42477,
@@ -4132,7 +4132,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter5_pat64_a0.3_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_041553.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter5_pat64_a0.3_lay4_dr0.7_lr0.005_wd0.0010_s10_20260126_041553.json",
         "test_acc_mean": 0.1698000133037567,
         "test_acc_std": 0.05457064509391785,
         "aurc_mean": 0.16982,
@@ -4144,7 +4144,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.05_iter5_pat128_a0.3_lay1_dr0.5_lr0.010_wd0.0010_s10_20260126_030744.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.05_iter5_pat128_a0.3_lay1_dr0.5_lr0.010_wd0.0010_s10_20260126_030744.json",
         "test_acc_mean": 0.6071000099182129,
         "test_acc_std": 0.027147529646754265,
         "aurc_mean": 0.60524,
@@ -4156,7 +4156,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter4_pat96_a0.7_lay3_dr0.5_lr0.010_wd0.0010_s10_20260126_055646.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter4_pat96_a0.7_lay3_dr0.5_lr0.010_wd0.0010_s10_20260126_055646.json",
         "test_acc_mean": 0.661899983882904,
         "test_acc_std": 0.021855324506759644,
         "aurc_mean": 0.65974,
@@ -4168,7 +4168,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter3_pat96_a0.7_lay1_dr0.5_lr0.020_wd0.0005_s10_20260126_071231.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter3_pat96_a0.7_lay1_dr0.5_lr0.020_wd0.0005_s10_20260126_071231.json",
         "test_acc_mean": 0.6317999958992004,
         "test_acc_std": 0.024697277694940567,
         "aurc_mean": 0.63181,
@@ -4180,7 +4180,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.15_iter4_pat32_a0.7_lay1_dr0.5_lr0.010_wd0.0010_s10_20260126_063407.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.15_iter4_pat32_a0.7_lay1_dr0.5_lr0.010_wd0.0010_s10_20260126_063407.json",
         "test_acc_mean": 0.6654999852180481,
         "test_acc_std": 0.016236117109656334,
         "aurc_mean": 0.66408,
@@ -4192,7 +4192,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.20_iter3_pat96_a0.3_lay2_dr0.7_lr0.010_wd0.0005_s10_20260126_083643.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.20_iter3_pat96_a0.3_lay2_dr0.7_lr0.010_wd0.0005_s10_20260126_083643.json",
         "test_acc_mean": 0.6585000157356262,
         "test_acc_std": 0.026567522436380386,
         "aurc_mean": 0.65689,
@@ -4204,7 +4204,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.15_iter5_pat32_a0.3_lay2_dr0.3_lr0.010_wd0.0010_s10_20260126_064551.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.15_iter5_pat32_a0.3_lay2_dr0.3_lr0.010_wd0.0010_s10_20260126_064551.json",
         "test_acc_mean": 0.6756000518798828,
         "test_acc_std": 0.017702477052807808,
         "aurc_mean": 0.674,
@@ -4216,7 +4216,7 @@
         "num_patterns": 32
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.20_iter2_pat96_a0.7_lay2_dr0.3_lr0.020_wd0.0010_s10_20260126_081601.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.20_iter2_pat96_a0.7_lay2_dr0.3_lr0.020_wd0.0010_s10_20260126_081601.json",
         "test_acc_mean": 0.6384000182151794,
         "test_acc_std": 0.030130084604024887,
         "aurc_mean": 0.63785,
@@ -4228,7 +4228,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter4_pat128_a0.3_lay4_dr0.7_lr0.010_wd0.0100_s10_20260126_055919.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter4_pat128_a0.3_lay4_dr0.7_lr0.010_wd0.0100_s10_20260126_055919.json",
         "test_acc_mean": 0.17249999940395355,
         "test_acc_std": 0.03867026045918465,
         "aurc_mean": 0.17279,
@@ -4240,7 +4240,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter2_pat128_a0.5_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_053137.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter2_pat128_a0.5_lay1_dr0.3_lr0.020_wd0.0010_s10_20260126_053137.json",
         "test_acc_mean": 0.5879999399185181,
         "test_acc_std": 0.04326147958636284,
         "aurc_mean": 0.58522,
@@ -4252,7 +4252,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.20_iter2_pat64_a0.3_lay4_dr0.3_lr0.010_wd0.0005_s10_20260126_081809.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.20_iter2_pat64_a0.3_lay4_dr0.3_lr0.010_wd0.0005_s10_20260126_081809.json",
         "test_acc_mean": 0.6660000085830688,
         "test_acc_std": 0.020193498581647873,
         "aurc_mean": 0.66399,
@@ -4264,7 +4264,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter2_pat96_a0.7_lay2_dr0.3_lr0.005_wd0.0005_s10_20260126_061646.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter2_pat96_a0.7_lay2_dr0.3_lr0.005_wd0.0005_s10_20260126_061646.json",
         "test_acc_mean": 0.6589999794960022,
         "test_acc_std": 0.042536258697509766,
         "aurc_mean": 0.65806,
@@ -4276,7 +4276,7 @@
         "num_patterns": 96
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.05_iter1_pat128_a0.7_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_041019.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.05_iter1_pat128_a0.7_lay1_dr0.7_lr0.020_wd0.0100_s10_20260126_041019.json",
         "test_acc_mean": 0.451200008392334,
         "test_acc_std": 0.11867489665746689,
         "aurc_mean": 0.45089000000000007,
@@ -4288,7 +4288,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.20_iter1_pat64_a0.3_lay4_dr0.3_lr0.010_wd0.0005_s10_20260126_061223.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.20_iter1_pat64_a0.3_lay4_dr0.3_lr0.010_wd0.0005_s10_20260126_061223.json",
         "test_acc_mean": 0.6600000262260437,
         "test_acc_std": 0.02268137037754059,
         "aurc_mean": 0.6576700000000001,
@@ -4300,7 +4300,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.10_l0.10_iter1_pat128_a0.7_lay3_dr0.7_lr0.020_wd0.0010_s10_20260126_062911.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.10_l0.10_iter1_pat128_a0.7_lay3_dr0.7_lr0.020_wd0.0010_s10_20260126_062911.json",
         "test_acc_mean": 0.16499999165534973,
         "test_acc_std": 0.059585608541965485,
         "aurc_mean": 0.16491,
@@ -4312,7 +4312,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.10_iter5_pat64_a0.7_lay3_dr0.5_lr0.020_wd0.0100_s10_20260126_033222.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.10_iter5_pat64_a0.7_lay3_dr0.5_lr0.020_wd0.0100_s10_20260126_033222.json",
         "test_acc_mean": 0.17499999701976776,
         "test_acc_std": 0.04229525849223137,
         "aurc_mean": 0.175,
@@ -4324,7 +4324,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.25_l0.10_iter1_pat128_a0.5_lay4_dr0.3_lr0.005_wd0.0005_s10_20260126_034224.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.25_l0.10_iter1_pat128_a0.5_lay4_dr0.3_lr0.005_wd0.0005_s10_20260126_034224.json",
         "test_acc_mean": 0.6703000068664551,
         "test_acc_std": 0.009888829663395882,
         "aurc_mean": 0.6663,
@@ -4336,7 +4336,7 @@
         "num_patterns": 128
       },
       {
-        "file": "results/ghn_citeseer_b0.15_l0.05_iter2_pat64_a0.3_lay1_dr0.5_lr0.020_wd0.0010_s10_20260126_093641.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.15_l0.05_iter2_pat64_a0.3_lay1_dr0.5_lr0.020_wd0.0010_s10_20260126_093641.json",
         "test_acc_mean": 0.5773999691009521,
         "test_acc_std": 0.028265418484807014,
         "aurc_mean": 0.5749099999999999,
@@ -4348,7 +4348,7 @@
         "num_patterns": 64
       },
       {
-        "file": "results/ghn_citeseer_b0.20_l0.10_iter3_pat96_a0.3_lay2_dr0.5_lr0.005_wd0.0005_s10_20260126_084236.json",
+        "file": "results/ghn_citeseer/ghn_citeseer_b0.20_l0.10_iter3_pat96_a0.3_lay2_dr0.5_lr0.005_wd0.0005_s10_20260126_084236.json",
         "test_acc_mean": 0.6567999720573425,
         "test_acc_std": 0.013505545444786549,
         "aurc_mean": 0.65144,

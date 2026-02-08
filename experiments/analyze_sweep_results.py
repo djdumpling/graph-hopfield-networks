@@ -33,8 +33,8 @@ def find_result_files(config: Dict[str, Any], results_dir: str = "results") -> L
     lr = config["lr"]
     weight_decay = config["weight_decay"]
     
-    # Search all result files and match by parsing filenames
-    results_path = Path(results_dir)
+    # Search all result files and match by parsing filenames (ghn_citeseer in subfolder)
+    results_path = Path(results_dir) / "ghn_citeseer"
     all_files = list(results_path.glob("ghn_citeseer_*.json"))
     
     matches = []

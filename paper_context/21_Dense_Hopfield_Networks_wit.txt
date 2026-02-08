@@ -1,0 +1,1698 @@
+
+
+=== PAGE 1 ===
+
+000
+001
+002
+003
+004
+005
+006
+007
+008
+009
+010
+011
+012
+013
+014
+015
+016
+017
+018
+019
+020
+021
+022
+023
+024
+025
+026
+027
+028
+029
+030
+031
+032
+033
+034
+035
+036
+037
+038
+039
+040
+041
+042
+043
+044
+045
+046
+047
+048
+049
+050
+051
+052
+053Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+DENSE HOPFIELD NETWORKS WITH HIERARCHICAL
+MEMORIES
+Anonymous authors
+Paper under double-blind review
+ABSTRACT
+We consider a 3-level hierarchical generative model for memories which are sam-
+pled and stored in a dense Hopfield network with polynomial activation. We ana-
+lytically derive conditions for each level of this hierarchy to be locally stable – that
+is they are local energy maxima. We find that it takes only a polynomial amount of
+information to generalize beyond particular memories and even particular groups
+in the hierarchy. Our theory predicts the qualitative features a phase diagram in
+the number of memories, sharpness of the activation function (polynomial degree)
+for data from Fashion-MNIST.
+1 I NTRODUCTION
+Understanding the structure of Hopfield networks could help us understand when they merely re-
+produce memorized data, and when they can generalize beyond what they have already seen. This
+question is closely related to the notion of capacity in generalized Hopfield models but is more subtle
+as it is insufficient to say that generalization happens precisely when we exceed a capacity threshold.
+In this work we show that intuition is true, under certain assumptions on the data.
+Additionally Ambrogioni (2023) shows that diffusion models at zero temperature have the same
+energy landscape as a modern Hopfield network. This relationship implies that our studies here
+may contextualize the memorization/generalization behavior of models deployed at scale. While
+we study this generalization behavior in modern Hopfield networks, under a particular hierarchical
+model of data, we expect that our qualitative results should transfer with the appropriate modification
+in more general settings.
+Data with latent hierarchical structure is very common. Because modern Hopfield networks have an
+energy function which depends only on the distance to all the memories (on the sphere) we may ex-
+pect that generically only the clustering structure of can be memorized by Hopfield networks. While
+general diffusion models can exhibit much more complicated behavior, clustering is a universal
+property of data.
+This motivates our attempt at understanding the following questions:
+1. With hierarchically correlated memories, do dense Hopfield models memorize and remem-
+ber patterns?
+2. Can these Hopfield models recover generalized patterns from the underlying correlation
+structure?
+While there is a role for understanding how the structure of a diffusion model impacts its memo-
+rization or generalization behavior here we focus primarily on how hierarchical features in the data
+can be learned, and how that is precisely related to memorization/forgetting in an exactly solvable
+model.
+We note that Hopfield networks with correlated patterns have been studied in previous work Dot-
+senko (1986); Engel (1990); Agliari et al. (2013). However, these previous works all considered a
+quadratic activation function and we find that precisely because of the stronger activation function,
+interesting phenomena may occur.
+1
+
+=== PAGE 2 ===
+
+054
+055
+056
+057
+058
+059
+060
+061
+062
+063
+064
+065
+066
+067
+068
+069
+070
+071
+072
+073
+074
+075
+076
+077
+078
+079
+080
+081
+082
+083
+084
+085
+086
+087
+088
+089
+090
+091
+092
+093
+094
+095
+096
+097
+098
+099
+100
+101
+102
+103
+104
+105
+106
+107Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+g0
+gA
+ξAµpp
+gB
+ξBνgCgD
+Figure 1: Schematic of the hierarchical memory structure we consider in this work. Here,
+A, B,··· ∈ { 1, . . . , G }andµ, ν,··· ∈ { 1, . . . , K }. Only the ξare encoded into the network.
+2 M ODEL DESCRIPTION
+We consider a system of binary neurons, each of which is denoted by a variable σiwhich can take
+on values ±1(Hopfield, 1982). The state of the entire system is denoted σ∈ {0,1}N. A pattern
+to be stored, or memory, is denoted as ξ, where the ithindex ξiis the state of the ithneuron in the
+memory. We define the following as the energy function for the system:
+E(σ) =−MX
+µ=1F(ξµ·σ), (1)
+where F(x)is an activation function which here takes in as input the dot product between the
+memory and the current state of the system. Recovery of memories happens by performing local
+hill-climbing starting at a probe point σ0until a fixed point (local maximum) is reached.
+The original work by Hopfield (1982) utilized a quadratic activation function and Amit et al. (1985)
+found that the memories are reliably minima of the system as long as M≤αN, with α≈0.14. For
+a higher density of memories, the “basins of attraction” surround the memory states begin interfering
+with one another and the memories cannot reliably be recovered. More recently, dense Hopfield
+networks Krotov & Hopfield (2016) were introduced as a generalization of the original idea in
+which the quadratic activation function is replaced with a higher order polynomial or an exponential
+function. Such functions induce a much greater energy penalty for a system being evolving away
+from a memory state and this effectively sharpens the energy wells of the memories and “pulls
+apart” closely correlated memories. Here, we will consider polynomial activation functions, i.e.
+F(x) =xn.
+In this work, we consider the ability of these dense Hopfield networks to recover hierarchically
+correlated memories . In particular, we imagine the memories correlated in a tree structure, such
+that groups of memories are derived from prototypes, and the prototypes are further derived from a
+singular root, see Fig. 1. We call the central root prototype g0the level 1 root prototype, and the
+prototypes underneath it are the level 2 prototypes gA. Importantly, we initialize the network with
+only leaf memories ξAµ.
+We minimally model this system by initializing the level 1 root prototype g0as a random binary
+vector. We then generate Glevel 2 prototypes via the following:
+gA
+i=−g0
+i,with probability p
+g0
+i,with probability 1−p. (2)
+In principle, the parameter pwill be different for each of the gAµbut for simplicity, we maintain a
+uniform correlation between all gAµandg0. From these prototypes, the memories are generated via
+ξA,µ
+i=−gA
+i,with probability p
+gA
+i,with probability 1−p. (3)
+2
+
+=== PAGE 3 ===
+
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+forµ= 1, . . . K . With this structure of memories, each memory ξis conditionally independent with
+every other memory within the same group. We again note that the prototypes are notencoded into
+the network as memories.
+Memory Stability
+We investigate the stability of memory retrieval in the dense Hopfield networks by initializing the
+state in a memory state, perturbing the system in an arbitrary direction, and determining whether
+the magnitude of fluctuations about the memory state is greater than the energy gap. Specifically,
+calculate the mean and variance of the following energy gap:
+∆E=E(σ)−E(σ−2σiˆei) (4)
+This measures the gap between the energy at a point σandσwith the ithcoordinate flipped, and the
+variance allows us to upper-bound the probability that ∆E < 0. This analysis yields the familiar
+linear memory capacity of the Hopfield model, and superlinear memory capacities of dense Hopfield
+networks.
+3 M EMORY RETRIEVAL
+We first investigate the ability of the network to retrieve each of the individual encoded memories.
+We find in this case that the ratio of the variance to the squared mean of the energy gap (eq. 4) is
+var∆E
+E[∆E]2
+ξ≈K2·G2q4n(q−2−1) +Gq4n−3
+(1 +Kqn+GKq2n)2. (5)
+Here, q= (1−2p)2, and nis the power of the activation function (i.e. F(x) =xn). The derivation
+of this and the following equations are presented in the Appendix B. From this equation, we observe
+that for any fixed value of n, as the number of memories within a group Kis increased, the fluc-
+tuations become more and more prevalent. However, even a modestly large ncan overwhelm this
+effect.
+We may also calculate the statistics of the energy gap from a prototype state . For a level 2 prototype,
+we find
+var∆E
+E[∆E]2
+gA≈1
+Kqn1 + (Gqn)qn−2
+(1 +Gqn)2
++ 
+(Gqn)qn−2+ (Gqn)2 
+q−1−1
+(Gqn+ 1)2!
+.(6)
+This interesting relation indicates that for very small nand finite Gthe second term will always be
+O(1)and hence prototype states will not be stable when Nis large. Once nbecomes large enough
+so that Gqn≡ϵ≪1is small (remember q∈[0,1]) then the second term becomes small and the
+network might remember the prototype states.
+The first term of eq. (6) becomes approximately (Kqn)−1=G/(Kϵ)for small ϵ. For stability this
+term also needs to be small, so we require that G/(Kϵ) =ϵorK=Gϵ−2(ϵhas only a weak
+dependence on N). The level 2 prototypes become stable minima at K=O(Gϵ−2)despite not
+being encoded into the network as memories . Indeed we only need Kpolynomially large before we
+begin to see this kind of generalization so long as nis tuned carefully.
+Finally, calculate the same quantity for the level 1 root probability:
+var∆E
+E[∆E]2
+g0=1
+G1
+q+1
+Kq2
+. (7)
+In addition to the stability of the level 2 prototypes, the level 1 root prototype also remains stable,
+with stability growing with GandK. We interpret this as the memories within each group ”coa-
+lesce” into the prototype for each group, so that the entire system behaves akin to a single group,
+with the level 2 prototypes now forming the memories based upon the level 1 root prototype. In-
+terestingly, this quantity shows no dependence on n, and only requires that the groups have at least
+some minimal correlation q̸= 0.
+3
+
+=== PAGE 4 ===
+
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+5 10 15 20
+Potential Sharpness ( n)5101520
+(b)P[∆EgA<0]
+5 10 15 20
+Potential Sharpness ( n)5101520Samples per Group ( K)(a)P[∆EξAµ<0]
+5 10 15 20
+Potential Sharpness ( n)5101520
+(c)Relative Diﬀerence in Stability
+0.00.10.20.30.4
+0.000.040.080.12
+RetrieveξAµRetrievegA
+Figure 2: Failure probability for ξAµ(a) and gA(b) calculated from eq. 8, with q= 0.7andG= 10 .
+Relative difference between these two (Eq. 9) is shown in (c).
+With this ratios, we may calculate failure probabilities to remember each of these levels of memories,
+assuming that ∆Eis Gaussian. That is, for ξAµ, gA, g0, we calculate
+P[∆E <0] =1
+2erfcE[∆E]√
+2var∆E
+. (8)
+Here, erfc (x)is the complementary error function. If this value is large, then the state is likely to
+not be stable minima in the energy landscape.
+We plot this failure probability as a function of nandKin fig. 2. In (a) and (b), we observe
+the relationships on the independent variables discussed above. That is, the failure probability in
+remembering ξAµincreases with Kbut decreases rapidly with n. In (b), we observe that the network
+is better able to remember the intermediate level 2 prototypes at small nand larger K, but at larger
+n, the energy minima corresponding to the individual memories become well separated and the
+network ceases to be able to recall the level 2 prototypes. Note that at the chosesn model parameters,
+the failure probability of remembering the root protoype was approximately 0.
+In order to further capture the behavior of the network, in fig. fig. 2(c), we plot the relative difference
+between the failure probability of remembering the level 3 memories and the level 2 prototypes:
+P[∆E(ξAµ)<0]−P[∆E(gA)<0]
+P[∆E(ξAµ)<0] +P[∆E(gA)<0]. (9)
+conditioned on one of them being unstable. We additionally assume that the events are disjoint
+(which is in approximate accord with fig. 2(a,b)) to simplify the denominator into a sum of probabil-
+ities. When this quantity is close to 1, the probability of failing to remember ξAµis much larger than
+that of failing to remember gA. As a result, the system is likely to evolve towards gA. Conversely, if
+this quantity is close to −1, then the probability of failing to remember gAis much larger than that
+of failing to remember ξAµ. Thus, in this regime, the system is likely to remain in a level 3 memory
+state.
+4 E XPERIMENTS
+The model of data we rely on in this manuscript aims to model hierarchy, while assuming that every
+level in the hierarchy is related to the one above it via isotropic, and independent link variables. Real
+data will violate these assumptions so to ensure that our modeling assumptions are not fine-tuned
+with respect to real data we consider a Hopfield model on various subsets of Fashion-MNIST (Xiao
+et al., 2017). This dataset is composed of 10 classes. These classes also have non-trivial overlaps, so
+we might initially model the latent structure of this data as a tree of the type shown fig. 1, composed
+of sixty-thousand leaf nodes, ten nodes above those with gAcorresponding to prototypes of the ten
+classes, and some small amount of structure between these and the root node. For further details
+about the experimental setup see appendix A.
+We chose this dataset in part because all the images are centered, with the same rotation, so our
+results will not be confounded by those symmetries typically present in images. In more complex
+4
+
+=== PAGE 5 ===
+
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+Figure 3: A phase diagram depicting the final location of the flow initialized at an ankle boot image.
+The colors depict Hamming distance from the original image where red (the circle in the legend) is
+exactly zero. We sample the final image at five points and show them on the right with corresponding
+shape and color legend. We see four well-separated phases, and a regime on the left corresponding
+to the root (purple star) fixed point slowly moving as ndecreases. At the lower triple point (teal
+plus) we can see the shoe prototype taking on some features of the bootprototype (e.g. a lift at the
+front of the shoe) but remains largely consistent with the blue triangle shoe prototype.
+settings these symmetries may result in further structure (see for example the analysis by Kamb &
+Ganguli (2024) which takes translation symmetry into account) which we do not aim to describe
+here.
+Additionally these experiments will show to what extent our nearest-neighbor calculations agree
+with global properties of the energy landscape. We expect to see transitions as soon as one direction
+becomes unstable, but our theory only suggests that the memory flows to the basin of attraction
+formed by its parent. We will be able to test this hypothesis as well.
+In fig. 3 we see that the leaf prototype (ankle boot) is stable for large nand small Kas expected
+by our calculation, with a stability frontier which looks qualitatively similar to that shown in fig. 2.
+Additionally we see that for small n, we do not need very large Kto remember higher-order pro-
+totypes (yellow square, blue triangle, green cross from fig. 3), and that for Ktoo large we simply
+remember the root prototype.
+We see an additionally interesting phenomenon that several different prototypes are remembered
+based on the value of n, with more complicated prototypes requiring larger Kto be resolved, and
+are resolved at larger n. The stability criterion for a small second term in eq. (6) implies that
+n= log1/q(Geff), andGeffought to be larger for more fine-grained prototypes as they correspond to
+a larger effective number of groups. Similarly K=Geffϵ−2has to be larger.
+5 C ONCLUSIONS
+In this work, we have examined dense Hopfield networks in the presence of hierarchically correlated
+memories. We find that as a function of the number of correlated patterns and the activation function,
+there are interesting regimes of generalization, where the network remembers states corresponding to
+patterns which are higher up in the correlation structure of the memories, despite not being encoded
+into the network outright. We interpret this as a form of generalization and notice that we only
+require polynomial data to generalize for an appropriate potential F.
+This work may be extended in numerous directions. First, the case of exponential activation func-
+tions is being currently explored by the authors. From a different perspective, the statistical physics
+of these models would be interesting to explore given other recent work Lucibello & M ´ezard (2024).
+The connection to diffusion models as well as the attention mechanism in transformers would be
+worth exploring as well.
+5
+
+=== PAGE 6 ===
+
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+REFERENCES
+Elena Agliari, Adriano Barra, Andrea De Antoni, and Andrea Galluzzi. Parallel retrieval of cor-
+related patterns: from hopfield networks to boltzmann machines. Neural Netw , 38:52–63, Feb
+2013. ISSN 1879-2782 (Electronic); 0893-6080 (Linking). doi: 10.1016/j.neunet.2012.11.010.
+Luca Ambrogioni. In search of dispersed memories: Generative diffusion models are associative
+memory networks. arXiv preprint arXiv:2309.17290 , 2023.
+Daniel J Amit, Hanoch Gutfreund, and Haim Sompolinsky. Storing infinite numbers of patterns in
+a spin-glass model of neural networks. Physical Review Letters , 55(14):1530, 1985.
+Viktor S. Dotsenko. Hierarchical model of memory. Physica A: Statistical Mechanics
+and its Applications , 140(1):410–415, 1986. ISSN 0378-4371. doi: https://doi.org/10.
+1016/0378-4371(86)90248-7. URL https://www.sciencedirect.com/science/
+article/pii/0378437186902487 .
+A Engel. Storage of hierarchically correlated patterns. 23(12):2587, 1990. doi: 10.1088/0305-4470/
+23/12/034. URL https://dx.doi.org/10.1088/0305-4470/23/12/034 .
+J J Hopfield. Neural networks and physical systems with emergent collective computational abilities.
+Proceedings of the National Academy of Sciences , 79(8):2554–2558, 1982. doi: 10.1073/pnas.
+79.8.2554. URL https://www.pnas.org/doi/abs/10.1073/pnas.79.8.2554 .
+Mason Kamb and Surya Ganguli. An analytic theory of creativity in convolutional diffusion models.
+arXiv preprint arXiv:2412.20292 , 2024.
+Dmitry Krotov and John J Hopfield. Dense associative memory for pattern recognition. Advances
+in neural information processing systems , 29, 2016.
+Carlo Lucibello and Marc M ´ezard. Exponential capacity of dense associative memories. Phys. Rev.
+Lett., 132:077301, Feb 2024. doi: 10.1103/PhysRevLett.132.077301. URL https://link.
+aps.org/doi/10.1103/PhysRevLett.132.077301 .
+Han Xiao, Kashif Rasul, and Roland V ollgraf. Fashion-mnist: a novel image dataset for benchmark-
+ing machine learning algorithms, 2017.
+6
+
+=== PAGE 7 ===
+
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+A D ATA AND MODEL PREPARATION
+Fashion-MNIST is an image dataset with pixels taking on values in [0,255]. To match the setting of
+our calculations we first rescale the range to [−1,1]and then dither the images, choosing either ±1
+with probabilities so that the average pixel value matches the original pixel value.
+We then consider two tuneable parameters, the number of elements per group K, and the power for
+the potential nwhere F(x) = sign( x)|x|n. We don’t consider Gas a tuneable parameter because
+of the limited dynamic range (1-10).
+B S TABILITY CRITERION DERIVATIONS
+In this appendix we derive stability criterion for the retrieval of prototypes within the hierarchical
+memory structure. These stability criterion are derived for the dense associative memories with
+polynomial activation.
+B.1 L EVEL 3 M EMORY RETRIEVAL STABILITY CRITERION
+To derive the stability criterion for retrieval of a level 3 memory, we begin again with the gap to an
+excitation from a memory state, ξBν:
+∆E= 2X
+AX
+µ∈AX
+kodd
+n
+k
+(ξAµ
+iξBν
+i)
+NX
+j̸=iξAµ
+jξBν
+j
+n−k
+. (10)
+The expectation value to be evaluated is
+E[∆E] = 2X
+AX
+µ∈AX
+kodd
+n
+k
+Eh
+(ξAµ
+iξBν
+i)i
+E
+
+NX
+j̸=iξAµ
+jξBν
+j
+n−k
+. (11)
+Terms contributing to this expectation value are
+1.A=B, µ =ν.M= 1.
+T1= 2X
+kodd
+n
+k
+E
+
+NX
+j̸=iξBν
+jξBν
+j
+n−k
+
+≈2n(N−1)n−1
+2.A=B, µ̸=ν.M=K−1.
+T2= 2X
+kodd
+n
+k
+Eh
+(ξBµ
+iξBν
+i)i
+E
+
+NX
+j̸=iξBµ
+jξBν
+j
+n−k
+
+≈2n(N−1)n−1qn.
+3.A̸=B.M= (G−1)K.
+T3= 2X
+kodd
+n
+k
+Eh
+(ξAµ
+iξBν
+i)i
+E
+
+NX
+j̸=iξAµ
+jξBν
+j
+n−k
+
+≈2n(N−1)n−1q2n.
+7
+
+=== PAGE 8 ===
+
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+The full mean is then
+E[∆E]≈2n(N−1)n−1× 
+1 + (K−1)qn+G(K−1)q2n
+. (12)
+Next, we calculate the second moment.
+E[(∆E)2] = 4X
+A,A′X
+µ∈A,µ′∈A′X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξA′µ′
+ii
+E
+
+NX
+j̸=iξAµ
+jξBν
+j
+n−k
+NX
+j̸=iξA′µ′
+jξBν
+j
+n−k′
+.
+(13)
+Terms contributing to this are the following:
+1.A=A′=B, µ =µ′=ν.M= 1.
+T1= 4X
+k,k′odd
+n
+k
+n
+k′
+E
+ξBν
+iξBν
+i
+E
+
+NX
+j̸=iξBν
+jξBν
+j
+n−k
+NX
+j̸=iξBν
+jξBν
+j
+n−k′
+
+≈4n2(N−1)2n−2.
+2.A=A′=B, µ =µ′̸=ν.M=K−1.
+T2= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξBµ
+iξBµ
+ii
+E
+
+NX
+j̸=iξBµ
+jξBν
+j
+n−k
+NX
+j̸=iξBµ
+jξBν
+j
+n−k′
+
+≈4n2(N−1)2n−2q2n−2
+3.A=A′=B, µ̸=µ′=ν(orµ′̸=µ=ν).M= 2(K−1).
+T3= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξBµ
+iξBµ′
+ii
+E
+
+NX
+j̸=iξBµ
+jξBν
+j
+n−k
+NX
+j̸=iξBν
+jξBν
+j
+n−k′
+
+≈4n2(N−1)2n−2qn.
+4.A=A′=B,withµ, µ′,andνdistinct. M= (K−1)(K−2).
+T4= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξBµ
+iξBµ′
+ii
+E
+
+NX
+j̸=iξBµ
+jξBν
+j
+n−k
+NX
+j̸=iξBµ′
+jξBν
+j
+n−k′
+
+≈4n2(N−1)2n−2q2n−1.
+5.A=A′̸=B, µ=µ′.M= (G−1)K.
+T5= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξAµ
+ii
+E
+
+NX
+j̸=iξAµ
+jξBν
+j
+n−k
+NX
+j̸=iξAµ
+jξBν
+j
+n−k′
+
+≈4n2(N−1)2n−2q4n−4.
+6.A=A′̸=B, µ̸=µ′.M= (G−1)K(K−1).
+T6= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξAµ′
+ii
+E
+
+NX
+j̸=iξAµ
+jξBν
+j
+n−k
+NX
+j̸=iξAµ′
+jξBν
+j
+n−k′
+
+≈4n2(N−1)2n−2q4n−3.
+8
+
+=== PAGE 9 ===
+
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+7.A̸=A′=B, µ′=ν(orA′̸=A=B).M= 2(G−1)K.
+T7= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξBν
+ii
+E
+
+NX
+j̸=iξAµ
+jξBν
+j
+n−k
+NX
+j̸=iξBν
+jξBν
+j
+n−k′
+
+≈4n2(N−1)2n−2q2n.
+8.A̸=A′=B, µ′̸=ν(orA′̸=A=B).M= 2(K−1)(G−1)K.
+T8= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξBµ′
+ii
+E
+
+NX
+j̸=iξAµ
+jξBν
+j
+n−k
+NX
+j̸=iξBµ′
+jξBν
+j
+n−k′
+
+≈4n2(N−1)2n−2q3n−1
+9.A, A′,andBdistinct. M= (G−1)(G−2)K2
+T9= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξA′µ′
+ii
+E
+
+NX
+j̸=iξAµ
+jξBν
+j
+n−k
+NX
+j̸=iξA′µ′
+jξBν
+j
+n−k′
+
+≈4n2(N−1)2n−2q4n−2
+Putting these all together, the full second moment, taking N, K, G ≫1, is
+E[(∆E)2] = 4n2N2n−2
+1 +Kq2n−2+ 2Kqn
++K2q2n−1+KGq4n−4+GK2q4n−3+ 2KGq2n+ 2K2Gq3n−1+K2G2q4n−2
+(14)
+From this, we obtain the ratio of the variance to the squared mean:
+var∆E
+E[∆E]2=G2K2q4n(q−2−1) + 2 GK2q3n(q−1−1) +GK2q4n−3+GKq4n−4+K2q2n(q−1−1) +Kq2n−2
+(1 +Kqn+GKq2n)2
+(15)
+To simplify this arduous expression, we neglect terms in the numerator which are lower than
+quadratic in K, as since the denominator is quadratic in K, these terms will vanish in the large
+Klimit. Furthermore, terms which contain powers of qsmaller than 4nvanish faster than the oth-
+ers, so we neglect these as well (which results in only small qualitative or visible changes to the
+figures and calculated metrics). This yields
+≈K2·G2q4n(q−2−1) +Gq4n−3
+(1 +Kqn+GKq2n)2(16)
+This is eq. 5 in the main text.
+B.2 P ROTOTYPE RETRIEVAL
+Next, we focus on the ability of the dense Hopfield network to recover the higher level prototypes
+within the tree, that is, the level 2 memories as well as the root level 1 memory. We begin with
+the expression for the change in energy upon perturbing a prototype state. We denote the prototype
+states as follows: g0will refer to the root level 1 prototype. gA, A∈ {1, . . . , G }will refer to one
+of the Glevel 2 prototypes. The energy gap to perturbing a level 2 prototype is
+∆E=X
+AX
+µ∈AF
+ξAµ
+igB
+i+NX
+j̸=iξAµ
+jgB
+j
+−F
+−ξAµ
+igB
+i+NX
+j̸=iξAµ
+jgB
+j
+ (17)
+= 2X
+AX
+µ∈AX
+kodd
+n
+k
+(ξAµ
+igB
+i)k
+NX
+j̸=iξAµ
+jgB
+j
+n−k
+. (18)
+9
+
+=== PAGE 10 ===
+
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+We now evaluate the expectation value of the above. In order to evaluate terms such as
+EPN
+j̸=iξAµ
+jgB
+jn−k
+, we will make use of the fact that at large N, inner products involving
+a random vector concentrate around the their mean. We may therefore neglect fluctuations in such
+quantities and make such approximations as EPN
+j̸=iξAµ
+jgB
+jn−k
+∼EhPN
+j̸=iξAµ
+jgB
+jin−k
+.
+This expectation may be separated into a sum over cases. We enumerate the cases and their mul-
+tiplicity here. In each of these, will we approximate the combinatorial sum with its largest term
+(leading order in N). Finally, we define note that q≡(1−2p)2.
+1.A=B, with multiplicity M=K.
+T1= 2X
+kodd
+n
+k
+Eh
+ξBµ
+igB
+ii
+E
+
+NX
+j̸=iξBµ
+jgB
+j
+n−k
+
+≈2n(N−1)n−1qn/2
+2.A̸=B, with multiplicity M= (G−1)K.
+T2= 2X
+kodd
+n
+k
+Eh
+ξAµ
+igB
+ii
+E
+
+NX
+j̸=iξAµ
+jgB
+j
+n−k
+
+≈2n(N−1)n−1q3n/2.
+With these expressions, we obtain for the expectation value of the energy gap
+E[∆E]≈2n(N−1)n−1qn/2K(1 + ( G−1)qn). (19)
+We will require the squared mean:
+E[∆E]2≈4n2(N−1)2n−2qnK2 
+1 + 2( G−1)qn+ (G−1)2q2n
+(20)
+Now we require the second moment.
+(∆E)2= 4X
+A,AX
+µ∈A,µ′∈A′X
+k,k′oddn
+kn
+k′
+Eh
+ξAµ
+iξA′µ′
+ii
+E
+
+NX
+j̸=iξAµ
+igB
+i
+n−k
+NX
+j̸=iξA′µ′
+igB
+i
+n−k′
+
+(21)
+We enumerate the cases in order to take the expectation value:
+1.A=A′=B, µ =µ′.M=K.
+T1= 4X
+k,k′odd
+n
+k
+n
+k′
+E
+
+NX
+j̸=iξBµ
+igB
+i
+2n−k−k′
+
+≈4n2(N−1)2n−2qn−1
+2.A=A′=B, µ̸=µ′.M=K(K−1).
+T2= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξBµ
+iξBµ′
+ii
+E
+
+NX
+j̸=iξBµ
+igB
+i
+n−k
+NX
+j̸=iξBµ′
+igB
+i
+n−k′
+
+≈4n2(N−1)2n−2qn.
+10
+
+=== PAGE 11 ===
+
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+3.A̸=A′=B(or symmetrically A′̸=A=B).M= 2K2(G−1).
+T3= 4nX
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξBµ′
+ii
+E
+
+NX
+j̸=iξAµ
+igB
+i
+n−k
+NX
+j̸=iξBµ′
+igB
+i
+n−k
+
+≈4n2(N−1)2n−2q2n.
+4.A=A′̸=B, µ =µ′.M= (G−1)K.
+T4= 4X
+k,k′odd
+n
+k
+n
+k′
+E
+
+NX
+j̸=iξAµ
+igB
+i
+2n−k−k′
+
+≈4n2(N−1)2n−2q3n−3
+5.A=A′̸=B, µ̸=µ′.M= (G−1)K(K−1).
+T5= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξAµ′
+ii
+E
+
+NX
+j̸=iξAµ
+igB
+i
+n−k
+NX
+j̸=iξAµ′
+igB
+i
+n−k′
+
+≈4n2(N−1)2n−2q3n−2.
+6.A, A′,andBall distinct. M= (G−1)(G−2)K2.
+T6= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξA′µ′
+ii
+E
+
+NX
+j̸=iξAµ
+igB
+i
+n−k
+NX
+j̸=iξA′µ′
+igB
+i
+n−k′
+
+≈4n2(N−1)2n−2q3n−1.
+With these sub-expressions and approximating N, G, K ≫1, the full second moment is
+E[(∆E)2] = 4n2N2n−2
+Kqn−1+K2qn+ 2K2Gq2n+GKq3n−3+K2Gq3n−2+K2G2q3n−1
+.
+(22)
+From this and the mean we derived above, we obtain the ratio of the variance to the second moment:
+var∆E
+E[∆E]2=K−1qn−1+GK−1q3n−3+Gq3n−2+G2q3n 
+q−1−1
+qn+ 2Gq2n+G2q3n(23)
+=1
+Kqn1 +Gq2n−2
+1 + 2 Gqn+G2q2n
++q2n 
+Gq−2+G2 
+q−1−1
+1 + 2 Gqn+G2q2n!
+(24)
+=1
+Kqn1 + (Gqn)qn−2
+(1 +Gqn)2
++ 
+(Gqn)qn−2+ (Gqn)2 
+q−1−1
+(Gqn+ 1)2!
+. (25)
+This is eq. 6 in the main text.
+Now we derive the case of the level 1 root memory g0. We take the expectation value of Eq. 17 with
+gB→g0. The expectation value of the energy gap above the root prototype is
+E[∆E]≈2n(N−1)n−1·GKqn. (26)
+For the second moment, there are only three types of terms which contribute to the summation.
+Using eq. 21, with gB→g0, we obtain
+1.A=A′, µ=µ′.M=GK.
+T1= 4X
+k,k′odd
+n
+k
+n
+k′
+E
+
+NX
+j̸=iξAµ
+ig0
+i
+2n−k−k′
+
+≈4n2(N−1)2n−2·q2n−2.
+11
+
+=== PAGE 12 ===
+
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647Under review for the New Frontiers in Associative Memory workshop at ICLR 2025
+2.A=A′, µ̸=µ′.M=GK(K−1).
+T2= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξAµ′
+ii
+E
+
+NX
+j̸=iξAµ
+ig0
+i
+n−k
+NX
+j̸=iξAµ′
+ig0
+i
+n−k′
+
+≈4n2(N−1)2n−2·q2n−1
+3.A̸=A′.M=G(G−1)K2.
+T3= 4X
+k,k′odd
+n
+k
+n
+k′
+Eh
+ξAµ
+iξA′µ′
+ii
+E
+
+NX
+j̸=iξAµ
+ig0
+i
+n−k
+NX
+j̸=iξA′µ′
+ig0
+i
+n−k′
+
+≈4n2(N−1)2n−2·q2n.
+With the simplifying assumptions of N, K, G ≫1, we write the second moment:
+E[(∆E)2] = 4n2(N−1)2n−2(GKq2n−2+GK2q2n−1+G2K2q2n). (27)
+Subsequently, we obtain the ratio of the variance to the squared mean which is eq. 7:
+var∆E
+E[∆E]2=1
+G1
+q+1
+Kq2
+. (28)
+12

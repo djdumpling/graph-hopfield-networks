@@ -1,0 +1,371 @@
+
+
+=== PAGE 1 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+HIERARCHICAL HOPFIELD NETWORK
+DECOMPOSITION : A S PIKED COVARIANCE
+FRAMEWORK FOR LATENT PROTOTYPE DISCOVERY
+Saleh Sargolzaei
+School of Computer Science
+University of Windsor
+sargolz@uwindsor.caLuis Rueda
+School of Computer Science
+University of Windsor
+lrueda@uwindsor.ca
+ABSTRACT
+We revisit the classical Hopfield network from a spiked covariance perspective,
+showing how the Hebbian coupling matrix forms a low-rank perturbation of the
+identity. This viewpoint links outlier eigenvalues in the sample covariance ma-
+trix to latent signal vectors, explaining how multiple signals can fuse into a single
+spurious state. We propose a hierarchical algorithm that uses Hopfield updates to
+iteratively partition the data, isolating more granular spiked subspaces until no fur-
+ther mergers remain. Unlike classical approaches focusing on capacity alone, our
+method reveals latent signals even when they are strongly correlated. Experiments
+on MNIST and LFW confirm that these signals serve as interpretable “prototypes”
+and improve clustering initialization.
+1 I NTRODUCTION
+The classical Hopfield network Hopfield (1982) is renowned for its ability to store and retrieve
+binary memory patterns, though it suffers from well-known capacity limitations and the emergence
+of undesired spurious states McEliece et al. (1987). Although recent advances ( e.g., Krotov &
+Hopfield (2016); Demircigil et al. (2017); Ramsauer et al. (2021)) have pushed the network beyond
+these historical bounds, the classical model provides valuable analytic tractability—making it an
+ideal platform for understanding fundamental phenomena such as spurious memory formation.
+In parallel, the theory of spiked covariance models has revealed how outlier eigenvalues in large
+random matrices encode meaningful low-rank signals within high-dimensional noise Bloemendal
+et al. (2016); Ding & Yang (2021). We show that Hebbian learning in classical Hopfield networks
+induces precisely such a spiked structure on the coupling matrix, interpreted as a perturbation from
+the identity. This observation both explains the network’s preference for dominant eigenvector di-
+rections and highlights how multiple signals can become fused into a single spurious state when
+sample-based interactions lead to overlap among outlier eigenvectors.
+Although related work has leveraged spectral properties for improving Hopfield training Benedetti
+et al. (2024); Agliari et al. (2024), to the best of our knowledge, we present the first explicit connec-
+tion to the spiked covariance model. We leverage this viewpoint to propose a hierarchical procedure
+that iteratively extracts latent signal vectors. Whenever multiple signals collapse into a single Hop-
+field memory, it indicates an inconsistency between the number of outlier eigenvalues (spikes) and
+the converged states, suggesting the need for finer decomposition. We then isolate the spiked sub-
+space via Hopfield updates and remove high-entropy (uncertain) samples that can cause the dynam-
+ics to become “stuck” in one merged state. While our ultimate goal is to reduce each sub-dataset to a
+single spike, practical limits (e.g., maximum recursion depth) may result in sub-datasets containing
+more than one. Nevertheless, this hierarchical approach produces a set of interpretable prototypes,
+capturing salient latent signals even under finite-sample noise and correlated data.
+1
+
+=== PAGE 2 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+2 B ACKGROUND
+2.1 C LASSICAL HOPFIELD NETWORK (BRIEF REVIEW )
+Consider Kmemory patterns {ξj}K
+j=1⊂ {− 1,1}M, each of dimension M. A classical Hopfield
+network stores these patterns by constructing a symmetric coupling matrix W∈RM×M, whose
+element Wijmeasures the strength of interaction between neurons iandj. A common choice is
+Hebb’s rule (Hopfield, 1982; Hebb, 2005):
+W=1
+KΞΞT−IM,Ξ= [ξ1, . . . ,ξK]. (1)
+Here,IMis the M×Midentity matrix. The state of the network at time tisa(t)∈ {− 1,1}M,
+updated iteratively:
+a(t+1)= signh
+W a(t)i
+. (2)
+Under ideal conditions, each stored pattern ξj(or small variations around it) is a stable attractor.
+However, in practice, spurious stable states and capacity issues often arise.
+2.2 S PIKED COVARIANCE MODEL
+We next recall the spiked covariance framework (Bloemendal et al., 2016), which describes data
+vectors as a low-rank signal plus noise. Suppose we observe Nsamples {ai}N
+i=1⊂RM, stacked
+intoA∈RM×N. Their empirical (sample) covariance is
+Q=1
+NAAT. (3)
+In the population model, each sample
+a=z+rX
+l=1ylul, (4)
+withz∈RMan i.i.d. noise vector (mean zero, unit variance), scalars yl(mean zero, unit variance),
+andrdeterministic signal vectors {ul}. The population covariance is:
+Σ=IM+U UT,U= [u1,u2, . . . ,ur]∈RM×r. (5)
+When Mis comparable to N, eigenvalues of Σexceeding 1 +p
+M/N produce outlier sample
+eigenvalues of Q, with corresponding eigenvectors aligning to the population latent eigenvector.
+These outlier sample eigenvalues are saparated from bulk of the spectrum with edge boundaries:
+γ±:=r
+M
+N+ (r
+M
+N)−1±2 (6)
+3 H EBB RULE AND SPIKED POPULATION COVARIANCE
+3.1 F ROM HEBBIAN WEIGHTS TO A SPIKED COVARIANCE MATRIX
+Observe that the Hebbian coupling equation 1 is a rank- Kperturbation of the identity:
+W=1
+KΞΞT−IM. (7)
+Meanwhile, a spiked covariance can be written
+Σ=IM+1
+KΞΞT. (8)
+Hence:
+Proposition 3.1 (Hebbian ↔Spiked Covariance) If we drop the {−1,1}constraint on patterns,
+then
+W=Σ−2IM where Σ=IM+1
+KΞΞT.
+2
+
+=== PAGE 3 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+Figure 1: Number of spikes vs. number of converged Hopfield states.
+Proof. SetU=1√
+KΞ. Then UUT=1
+KΞΞT. Clearly, W=Σ−2IM. □
+3.2 D YNAMICS TOWARD PRINCIPAL COMPONENTS
+Proposition 3.2 (Linearized Hopfield Dynamics) Relax the sign function in eq. (2)and consider
+a(t+1)=W a(t),W=Σ−2IM. (9)
+IfΣ=VΛVThas eigenvalues {λi}, then each coordinate along vievolves by a factor (λi−2).
+Hence, components with λi>3grow exponentially.
+Proof. SinceW=V(Λ−2IM)VT, writing a(t)=P
+ic(t)
+ivigives c(t+1)
+i = (λi−2)c(t)
+i.If
+λi>3,vidominates as t→ ∞ . □
+In other words, the top eigenvalues of Σ(spikes) attract the system state.
+3.3 S AMPLE COVARIANCE AND MERGED SPURIOUS STATES
+We do notobserve Σdirectly, but only Q. IfQhasroutlier eigenvalues, we might expect rstable
+Hopfield attractors. In practice, multiple signals can merge into a single attractor, or extra spurious
+attractors may appear.
+Empirical Example on MNIST. Figure 1 shows how many outlier eigenvalues are detected in
+Q(i.e. spikes) vs. the number of unique Hopfield converged states, for subsets of MNIST digits.
+Mergers reduce the final count of stable states. A concrete four-digit illustration (0,4,6,8) in Figure 2
+shows how two separate states each blend two digit classes. Recursively splitting each merged state
+using newly constructed networks eventually recovers distinct directions.
+4 P ROPOSED METHOD
+In this section, we present a hierarchical algorithm that uncovers latent signal vectors in a spiked
+covariance setting by recursively applying Hopfield updates. The procedure alleviates the problem
+of multiple signals merging into a single memory, ultimately extracting one prototype (i.e., one
+spiked direction) per latent subspace.
+4.1 P ROBLEM FORMULATION
+We restate the central problem under the spiked covariance framework. Let {ai}N
+i=1⊂RMbe a
+dataset of Nsamples, each modeled as
+ai=zi+rX
+l=1yilul,
+where zihas i.i.d. zero-mean components (unit variance), and {ul}are underlying latent signals of
+interest. Our goal is to identify these latent vectors despite finite-sample noise and spurious correla-
+tions, ultimately yielding a collection of prototype vectors that capture the data’s salient structures.
+3
+
+=== PAGE 4 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+(a) Initial data points
+and spectrum.
+(b) Unique converged
+states (all samples).
+(c) Spectrum after de-
+composing the first
+state (digits 4,6).
+(d) Converged states
+after decomposing the
+first state.
+(e) Spectrum after de-
+composing the second
+state (digits 0,8).
+(f) Converged states
+after decomposing the
+second state.
+Figure 2: MNIST example with digits 0,4,6,8 . Hopfield merges them into two states, but re-
+building networks on each subset recovers four directions.
+4.2 H IERARCHICAL HOPFIELD DECOMPOSITION (HHD)
+We propose Hierarchical Hopfield Decomposition (HHD) , which recursively splits data whenever
+multiple latent signals remain merged in a single Hopfield memory. Each recursion level checks how
+many outlier (spiked) eigenvalues the current sub-dataset has; if more than one spike is found, we
+apply Hopfield updates to partition the sub-dataset into distinct stable states. The process continues
+until at most one spike per sub-dataset remains or until depth/size constraints are met.
+If the spike count rremains unchanged from the previous recursion, we remove high-entropy sam-
+ples that align nearly equally with all spiked directions. Formally, for a sample ai, define
+pij=exp(a⊤
+ivj)Pr
+k=1exp(a⊤
+ivk), H i=−rX
+j=1pijlogpij,
+where{vj}are the spiked eigenvectors. Samples with Hiabove a threshold are removed, preventing
+near-degenerate “tie” states in the Hopfield update and allowing further subspace splitting.
+Prototype Extraction. Once the recursion terminates in a leaf node, we take the corresponding
+eigenvector(s) as the final prototype(s). A depth-first traversal gathers these leaf prototypes. Samples
+can then be assigned to the nearest prototype via cosine similarity or other distance measures.
+5 E XPERIMENTS ON PROTOTYPE EXTRACTION
+We test HHD on MNIST LeCun et al. (1998) and LFW Huang et al. (2008). Figure 3 contrasts
+HHD prototypes with PCA components on MNIST. Unlike PCA, which enforces orthogonality,
+HHD can isolate both correlated and uncorrelated directions, yielding sharper digit-specific features.
+Figure 4 shows a similar effect on faces: at higher recursion, prototypes split into more specialized
+or individual-specific components, revealing a hierarchy from broad facial angles down to unique
+expressions.
+4
+
+=== PAGE 5 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+(a) HHD
+(b) PCA
+(c) Projection scatter
+Figure 3: (a) Prototypes from HHD at various recursion depths. (b) Top principal components
+from PCA. (c) Scatter plots of data projections onto five HHD prototypes. Certain prototypes share
+correlated features, while others discriminate different digits.
+Figure 4: Example of two prototypes extracted from LFW at different recursion levels. Higher-level
+prototype (top row) captures a broad expression, while deeper recursion (bottom row) yields features
+of a specific individual.
+Clustering. We compare k-means initializations on MNIST subsets: random, k-means++ Arthur
+& Vassilvitskii (2006), PCA-based, and HHD-based (our prototypes). Table 1 reports V-measure
+Rosenberg & Hirschberg (2007), ARI Steinley (2004), and AMI Vinh et al. (2010). HHD-based
+achieves the highest averages, indicating that prototypes aligned with true latent directions help
+cluster formation.
+6 C ONCLUSION
+We showed that classical Hopfield networks, via Hebbian coupling, inherently implement a spiked
+covariance model whose outlier eigenvalues correspond to meaningful latent directions. Under finite
+samples, these directions sometimes merge, yielding spurious states. Proposed Hierarchical Hop-
+field Decomposition splits merged states, moving to finer spiked subspaces. Experiments elucidate
+how this approach can be leveraged to isolate correlated signals in high-dimensional data.
+Table 1: Mean clustering metrics on 25 random MNIST subsets (150 samples each). Standard
+deviations in subscripts. The best mean in each column is bold .
+METHOD V-MEASURE ARI AMI
+K-MEANS ++ 0.518 ±0.028 0.232 ±0.046 0.368 ±0.035
+RANDOM 0.514 ±0.041 0.219 ±0.049 0.354 ±0.051
+PCA- BASED 0.523 ±0.035 0.249 ±0.043 0.368 ±0.046
+HHD- BASED 0.539 ±0.034 0.259 ±0.055 0.386 ±0.044
+5
+
+=== PAGE 6 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+REFERENCES
+E. Agliari, F. Alemanno, M. Aquaro, and A. Fachechi. Regularization, early-stopping and dreaming:
+A hopfield-like setup to address generalization and overfitting. Neural Networks , 177:106389,
+2024. ISSN 0893-6080. URL https://doi.org/10.1016/j.neunet.2024.106389 .
+David Arthur and Sergei Vassilvitskii. k-means++: The advantages of careful seeding. Technical
+Report 2006-13, Stanford InfoLab, June 2006. URL http://ilpubs.stanford.edu:
+8090/778/ .
+Marco Benedetti, Louis Carillo, Enzo Marinari, and Marc M ´ezard. Eigenvector dreaming. Journal
+of Statistical Mechanics: Theory and Experiment , 2024(1):013302, 2024. URL https://doi.
+org/10.1088/1742-5468/ad138e .
+Alex Bloemendal, Antti Knowles, Horng-Tzer Yau, and Jun Yin. On the principal components of
+sample covariance matrices. Probability theory and related fields , 164(1):459–552, 2016. URL
+https://doi.org/10.1007/s00440-015-0616-x .
+Mete Demircigil, Judith Heusel, Matthias L ¨owe, Sven Upgang, and Franck Vermet. On a
+model of associative memory with huge storage capacity. Journal of Statistical Physics ,
+168(2):288–299, May 2017. ISSN 1572-9613. URL http://dx.doi.org/10.1007/
+s10955-017-1806-y .
+Xiucai Ding and Fan Yang. Spiked separable covariance matrices and principal components. The
+Annals of Statistics , 49(2):1113 – 1138, 2021. doi: 10.1214/20-AOS1995. URL https://
+doi.org/10.1214/20-AOS1995 .
+Donald Olding Hebb. The organization of behavior: A neuropsychological theory . Psychology
+press, 2005. URL https://doi.org/10.4324/9781410612403 .
+J J Hopfield. Neural networks and physical systems with emergent collective computational abilities.
+Proceedings of the National Academy of Sciences , 79(8):2554–2558, 1982. URL https://
+doi.org/10.1073/pnas.79.8.2554 .
+Gary B Huang, Marwan Mattar, Tamara Berg, and Eric Learned-Miller. Labeled faces in the wild:
+A database forstudying face recognition in unconstrained environments. In Workshop on faces
+in’Real-Life’Images: detection, alignment, and recognition , 2008.
+Dmitry Krotov and John J Hopfield. Dense associative memory for pattern recognition, 2016. URL
+https://doi.org/10.48550/arXiv.1606.01164 .
+Yann LeCun, L ´eon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to
+document recognition. Proceedings of the IEEE , 86(11):2278–2324, 1998.
+ROBERTJ McEliece, Edwardc Posner, EUGENER Rodemich, and SANTOSHS Venkatesh. The
+capacity of the hopfield associative memory. IEEE transactions on Information Theory , 33(4):
+461–482, 1987. URL https://doi.org/10.1109/TIT.1987.1057328 .
+Hubert Ramsauer, Bernhard Sch ¨afl, Johannes Lehner, Philipp Seidl, Michael Widrich, Thomas
+Adler, Lukas Gruber, Markus Holzleitner, Milena Pavlovi ´c, Geir Kjetil Sandve, Victor Greiff,
+David Kreil, Michael Kopp, G ¨unter Klambauer, Johannes Brandstetter, and Sepp Hochreiter.
+Hopfield networks is all you need, 2021. URL https://doi.org/10.48550/arXiv.
+2008.02217 .
+Andrew Rosenberg and Julia Hirschberg. V-measure: A conditional entropy-based external cluster
+evaluation measure. In Proceedings of the 2007 joint conference on empirical methods in natural
+language processing and computational natural language learning (EMNLP-CoNLL) , pp. 410–
+420, 2007.
+Douglas Steinley. Properties of the hubert-arable adjusted rand index. Psychological methods , 9(3):
+386, 2004.
+Nguyen Xuan Vinh, Julien Epps, and James Bailey. Information theoretic measures for clus-
+terings comparison: Variants, properties, normalization and correction for chance. Journal of
+Machine Learning Research , 11(95):2837–2854, 2010. URL http://jmlr.org/papers/
+v11/vinh10a.html .
+6
+
+=== PAGE 7 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+A A LGORITHM PSEUDOCODE
+We present the pseudocode for Hierarchical Hopfield Decomposition (HHD) here.
+Algorithm 1 Hierarchical Hopfield Decomposition
+1:Input: data matrix A∈RM×N(Nsamples as columns), minimum cluster size Cmin, maxi-
+mum depth Dmax.
+2:Output: hierarchical tree of sub-datasets.
+3:Initialize depth ←0, rprev← ∞ .
+4:function RECURSIVE DECOMPOSE (A,depth , rprev):
+5:Q=q
+M
+N−1
+·AA⊤
+N// scaled sample covariance
+6: Compute eigenvalues λ1≥ ··· ≥ λMofQ, and let spikedIdx ⊂ {1, . . . , M }collect indices
+ofλi> γ+(section 2.2).
+7: r← |spikedIdx |// number of spiked eigenvalues
+8: if(r≤1)or(depth≥Dmax)or(N < C min)then
+9: return leaf node containing {col. indices of A}andr.
+10: if(r≥rprev)then :
+11: Remove the columns of Awith high entropies w.r.t. the spiked eigenvectors
+12: return RECURSIVE DECOMPOSE (A,depth , rprev)
+13: // Construct Hopfield coupling matrix
+14: W=N−1AA⊤−IM.
+15: // Perform Hopfield updates until convergence
+16: S(0)←sign(A⊤)
+17: repeat :
+18: S(new)= sign 
+W S
+19: if(S(new)==S)then break
+20: elseS←S(new)
+21: // Partition data columns by unique stable states:
+22: LetUbe the set of distinct columns of S⊤.
+23: Initialize C ←∅.
+24: for each stateu∈ U do
+25: LetAube the submatrix of Nucolumns of Athat satisfy S⊤[:, i] =u.
+26: if 
+Nu≥Cmin
+then
+27: C ← C ∪ { RECURSIVE DECOMPOSE (Au,depth + 1, r)}
+28: return C
+29:end function
+30:return RECURSIVE DECOMPOSE 
+A,0,∞
+B A BLATION STUDY ON ENTROPY REMOVAL
+We investigated how removing high-entropy samples influences the hierarchical Hopfield decompo-
+sition. We compare two conditions:
+1.No Removal: The algorithm never prunes samples based on entropy.
+2.With Removal: The algorithm discards columns whose entropy is within 0.1 of the maxi-
+mum entropy at each recursion step.
+Both conditions use the same maximum recursion depth Dmax= 50 and minimum cluster size
+Cmin= 1. In Table 2, we report several tree-level metrics (§4.2) that summarize the final decompo-
+sition.
+Discussion: Without removing high-entropy samples, the decomposition quickly settles into a
+small number of leaf nodes at a shallow depth, each leaf containing multiple spikes on average. In
+contrast, enabling entropy removal forces additional splits, yielding a deeper decomposition (average
+7
+
+=== PAGE 8 ===
+
+New Frontiers in Associative Memory workshop at ICLR 2025
+Table 2: Ablation study on entropy removal. We compare a run with no entropy removal to one
+that removes any sample whose entropy is within 0.1 of the maximum. Both experiments used
+Dmax= 50 andCmin= 1.
+#Leaves Avg. Depth Avg. Spikes #Multi-Spike Leaves Avg. Leaf Size
+No Removal 4 1.00 6.50 2 70.00
+With Removal 27 13.41 1.30 7 5.22
+leaf depth of 13.41) and smaller leaf sizes of 5.22. The average number of spikes per leaf is also
+reduced to about 1.30, indicating that most leaves are nearly single-spike subspaces. Although this
+process creates more total leaves and sometimes yields leaves with more than one spike (7 multi-
+spike leaves), the overall decomposition is more fine-grained. Hence, high-entropy sample removal
+helps avoid early entanglements of signals in a single state, allowing the algorithm to proceed further
+toward single-spike sub-datasets.
+C D ISCUSSION AND FUTURE DIRECTIONS
+A central advantage of HHD is its hierarchical splitting of data. At higher recursion levels, broad pat-
+terns may merge multiple classes; at deeper levels, specialized directions emerge. Depending on the
+application, one can stop at intermediate depths for semi-granular prototypes or proceed until each
+sub-dataset is pure. Averaging sub-datasets offers an alternative “mean representative” approach if a
+single spiked factor is too strict. Future extensions include partial supervision, embedding methods,
+or alternate definitions of “entropy” to refine the sample-removal step.
+8

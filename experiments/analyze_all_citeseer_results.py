@@ -43,7 +43,7 @@ def parse_result_filename(filename: str) -> Dict[str, Any]:
 def load_all_citeseer_results(results_dir: str = "results") -> pd.DataFrame:
     """Load all Citeseer result files and extract hyperparameters + metrics."""
     
-    results_path = Path(results_dir)
+    results_path = Path(results_dir) / "ghn_citeseer"
     all_files = list(results_path.glob("ghn_citeseer_*.json"))
     
     print(f"Found {len(all_files)} Citeseer result files")

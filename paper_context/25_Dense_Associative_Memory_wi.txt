@@ -1,0 +1,657 @@
+
+
+=== PAGE 1 ===
+
+New Frontiers in Associative Memoryworkshop at ICLR 2025
+DENSEASSOCIATIVEMEMORY WITHEPANECHNIKOV
+ENERGY
+Benjamin Hoover
+IBM Research
+Georgia TechKrishnakumar Balasubramanian
+UC DavisDmitry Krotov
+IBM ResearchParikshit Ram
+IBM Research
+ABSTRACT
+We propose a novel energy function for Dense Associative Memory (DenseAM)
+networks, the log-sum-ReLU (LSR), inspired by optimal kernel density estima-
+tion. Unlike the common log-sum-exponential (LSE) function, LSR is based on
+the Epanechnikov kernel and enables exact memory retrieval with exponential
+capacity without requiring exponential separation functions. Uniquely, it intro-
+duces abundant additionalemergentlocal minima while preserving perfect pattern
+recovery–a characteristic previously unseen in DenseAM literature. Empirical re-
+sults show LSR generates significantly more local minima and produces samples
+with higher log-likelihood than LSE-based models, making it promising for both
+memory storage and generative tasks.
+1 Associative Memories and Energy Functions
+Energy-based Associative Memory networks or AMs are models parameterized withM“memories”
+inddimensions,Ξ={ξ µ∈Rd, µ∈JMK}. A popular class of models from this family can be
+described by an energy function defined on the state vectorx∈ X ⊆Rd:
+E(x;Ξ) =−Q"MX
+µ=1F(βS(g(x),ξ µ))#
+,(1)
+whereg:Rd→Rdis a vector operation (such as binarization, (layer) normalization),S:Rd×
+Rd→Ris similarity function (e.g., dot-product, negative Euclidean distance),β >0denotes the
+inverse temperature,F:R→Ris a rapidly growing separation function (power, exponential) and
+Qis a monotonic scaling function (logarithm, linear) (Hoover et al., 2024). Withgas the sign-
+function,ξ µ∈ {−1,+1}d,S(x,x′) =⟨x,x′⟩andFas the quadratic function, andQas a linear
+function, we recover the classical Hopfield model (Hopfield, 1982).
+The output of the AM corresponds to one of the local minima of this energy function. A memoryξ µ
+is said to be retrieved ifx≈ξ µcorresponds to one of the local minima, and the memory capacity
+of the AM corresponds to the largest numberM⋆of correctly retrieved memories. For the classical
+AM,M⋆∼O(d). With the introduction of rapidly increasing power separation function – that is,
+F(x) =xp, p >2– the modern Dense Associative Memory (DenseAM) have a memory capacity
+ofM⋆∼O(dp)(Krotov & Hopfield, 2016). An exponential separation function and a logarithmic
+scaling function –F(x) = exp(x), Q(x) = logx– gives us the widely considered log-sum-exp
+or LSE energy function (Demircigil et al., 2017; Ramsauer et al., 2021; Krotov & Hopfield, 2021)
+along with exponential memory capacityM⋆∼exp(d)(Lucibello & M ´ezard, 2024). Additionally,
+hierarchical organizations of memories have been studied in Krotov (2021); Hoover et al. (2022).
+In this work, we consider the following motivating question –can we achieve simultaneous mem-
+orization and generalization?While theexpseparation function leads to large memory capacity
+in DenseAMs, memory capacity is not the only desiderata. The ability to create meaningful new
+patterns and handle complex data distributions is equally important, which has led researchers to
+explore alternative separation functions. Given that the gradient of LSE results in a softmax over
+all the memories, Hu et al. (2023) and dos Santos et al. (2024) consider sparsified versions of the
+softmax, resulting in new gradients for the LSE energy.1Wu et al. (2024) instead learn new repre-
+sentations for the memories to increase memory capacity, but still focus on the LSE energy (now in
+the learned representation space).
+1Sparsified softmax based gradients can be viewed as specific projections of the original gradient.
+1
+
+=== PAGE 2 ===
+
+New Frontiers in Associative Memoryworkshop at ICLR 2025
+LSR memories while cr eating  ones.pr eser v esno v elLSE can do only one or the other .
+β = 0.6β = 0.3
+β = 1.1β = 2.11 no v el  0 pr eser v ed1 no v el  3 pr eser v ed
+4 no v el  3 pr eser v ed0 no v el  3 pr eser v ed
+Low CriticalHighLSR 
+(ours)LSE
+Figure 1: LSR energy can create more memories than there are stored patterns under critical regimes
+ofβ. Left: 1D LSR vs LSE energy landscape. Note that LSE is never capable of having more local
+minima than the number of stored patterns. Right: 2D LSR energy landscape, where increasingβ
+creates novel local minima where basins intersect. Unsupported regions are shaded gray.
+We instead consider the well-established connection between the energy and probability density
+function. An energy functionE:Rd→Rinduces a probability density functionp:Rd→
+R≥0withp(x) = exp(−E(x))/R
+zexp(−E(z))dz. Conversely, given a densityp, we have an
+energyE(x)∝ −logp(x), the negative log-likelihood, and minimizing the energy corresponds to
+maximizing the log-likelihood (with respect to the corresponding density). Based on this connection,
+withQ(·) = log(·), theexp(−E(x;Ξ)) =P
+µF(S(x,ξ µ))in eq. (1) (assuminggis identity) is
+the corresponding (unnormalized) density atx. Assuming that the memoriesξ µ∼pare sampled
+from an unknown ground truth densityp, theexp(−E(x;Ξ))is an unnormalizedkernel density
+estimateor KDE ofpatxwith thekernelFand bandwidth1/β(Wand & Jones, 1994). Thus, the
+LSE energy withF(x) = exp(x)andS(x,x′) =− 1/2∥x−x′∥2corresponds to the KDE ofpwith
+the Gaussian kernel.
+KDE is well studied in nonparametric statistics (Wand & Jones, 1994; Devroye & Lugosi, 2001),
+and various forms of kernels have been explored. The quality of the estimates are well characterized
+in terms of properties on the kernels; we will elaborate on this in the sequel. While the Gaussian
+kernel is extremely popular for KDE (much like LSE in AM literature), there are various other
+kernels which have better estimation abilities than the Gaussian kernel. Among the commonly used
+kernels, the Epanechnikov kernel has the most favorable estimation quality (see section 2). In our
+notation, this corresponds to a kernelF(x) = max(1 +x,0) = ReLU (1 +x), a shifted ReLU
+operation (again withS(x,x′) =− 1/2∥x−x′∥2). This results in a novel energy function we name
+log-sum-ReLU or LSR (see eq. (3)).
+While the Epanechnikov kernel has the most favorable guarantees in KDE, it is not clear what such
+guarantees in KDE mean for DenseAM. This is the main topic of this paper – what does the LSR
+energy bring to the table? To this end, we make the following contributions:
+•Novel ReLU-based energy function with exponential memory capacity.We propose a LSR
+energy function for DenseAM utilizing the popular ReLU activation, built upon the connection
+between energy functions and densities. We demonstrate exact retrieval and exponential memory
+capacity of LSR energy, without the use ofexpas the separation function.
+•Simultaneous storage and emergence.We show that this LSR energy has a unique property
+ofsimultaneouslybeing able to retrieve all original memories (training data points) while also
+creating many additionalemergent2local minima – the total number of local energy minima of
+LSR can exceed the number of stored patterns in the DenseAM, a property absent with LSE.
+•Memory-preserving generation.We explore using these abundant new local minima to sample
+from a distribution, creating a DenseAM that simultaneouslymemorizesoriginal memories and
+generatesnew ones. See fig. 1 for an illustration.
+2AM literature typically refers to unexpected minima as “spurious” local minima. We use the term “emer-
+gent” to emphasize that these minima can be meaningful samples of an underlying distribution (see section 4.2)
+2
+
+=== PAGE 3 ===
+
+New Frontiers in Associative Memoryworkshop at ICLR 2025
+2 Kernel Density Estimation and the Choice of Kernels
+We now provide brief overview of Kernel Density Estimation (KDE) considering the univari-
+ate setting for simplicity; similar conclusion hold also in higher dimensions. Given a sam-
+pleΞ={ξ µ∈R, µ∈JMK}drawn from an unknown densityf, the KDE is defined as
+ˆfh(ξ) = (Mh)−1PM
+µ=1K
+ξ−ξµ
+h
+, whereK(·)is the kernel function andh >0is the band-
+width parameter. The kernel function is assumed to satisfy: (i) symmetry (i.e.,K(−ξ) =K(ξ), for
+allξ∈R), (ii) positivity (i.e.,K(ξ)≥0, for allξ∈R) and (iii) normalization (i.e.,R
+K(ξ)dξ= 1).
+Note immediately that for the purpose of KDE, the scale of the kernel function is not unique. That
+is, for a givenK(·), we can define ˜K(·) =b−1K(·/b), for someb >0. Then, one obtains the same
+KDE by rescaling the choice ofh. Hence, the shape of the kernel function plays a more important in
+determining the choice of the kernel. We now introduce two parameters associated with the kernel,
+µK:=R
+ξ2K(ξ)dξandσ K:=R
+K2(ξ)dξthat correspond to thescaleandregularityof the ker-
+nel. We will discuss below how thegeneralization errorof KDE depends on the aforementioned
+parameters.
+Thegeneralization errorof ˆfh(x)is measured by the Mean Integrated Squared Error (MISE),
+given by MISE(h) =E[R
+(ˆfh(ξ)−f(ξ))2dξ]. Assumingf(ξ)is twice continuously differentiable,
+a second-order Taylor expansion gives the leading terms of the MISE(h), which decomposes into
+squared bias and variance terms:MISE(h)≈µ2
+K
+4h4R
+|f′′(ξ)|2dξ+σK
+nh; see Wand & Jones (1994,
+Section 2.5) for details. This result shows that reducinghdecreases bias but increases variance,
+while increasinghsmooths the estimate but introduces bias, highlighting the bias-variance trade-
+off. The optimal mean-square is obtained by minimizing MISE(h)with respect toh. Doing so, we
+obtain the optimal choice ofhand the optimal generalization accuracy as
+h∗:=σ2
+K
+nµ2
+K4R
+|f′′(ξ)|2dξ1/5
+andMISE(h ∗)≈5
+4√µKσKR
+|f′′(ξ)|2dξ
+n4/5
+,(2)
+respectively. From this, we see that the choice of the kernelKin the KDE, controls the generaliza-
+tion error via the term√µKσK.
+Thus, a natural question is to find the choice of kernelK(·)that results in the minimumMISE(h ∗).
+As discussed above, the scale of the kernel function is non-unique. Hence, the problem boils down
+to minimizingσ K(which is regularity parameter of the kernel, determining the shape), subjected
+toµ K= 1(without loss of generality), over the class of normalized, symmetric, and positive
+kernels. This problem is well-studied (see, for example, Epanechnikov (1969), M ¨uller (1984), Wand
+& Jones (1994, Section 2.7)), and as it turns out, the Epanechnikov kernel achieves the optimal
+generalization error. The quantity,Eff(K) :=σK/σKepanis hence referred to as the efficiency of
+any kernel with respect to the Epanechnikov kernel. A description of choices for kernel functions
+and their efficiency relative to the Epanechnikov kernel is provided in Section A.
+3 A New Energy Function
+4
+ 2
+ 0
+x=S(x,x/prime)0.00.51.0F(x)
+F(x)=exp(x)
+4
+ 2
+ 0
+x=S(x,x/prime)F(x)=ReLU(1+x)
+=1.0
+=0.5
+=0.2
+Figure 2: Visualizing the separation
+functionsF(βx) = exp(βx)(LSE) and
+F(βx) = ReLU (1 +βx)(LSR) with
+x=S(x,x′)for varying values ofβ.
+We focus onS(x,x′) =− 1/2∥x−x′∥2.Given the motivation for using the Epanechnikov kernel
+in KDE, we will explore the use of the corresponding
+shifted-ReLU separation functionReLU (1 +x)in the
+energy function instead of the widely used exponentia-
+tion. Before we state the precise energy functions, we
+compare and contrast the shapes of these separation func-
+tionsF(βx)in fig. 2 for varying values of the inverse
+temperatureβ. Note that, as theβincreases, both these
+separation functions decay faster. However, as expected,
+the shifted-ReLU separation linearly decays and then zeroes out.
+Recall that the energy of the LSE ENERGYis given byE LSE(x) =
+−1
+βlogPM
+µ=1exp(−β
+2∥x−ξ µ∥2). Based on the discussion on separation functions, our
+proposed LSR ENERGY(which we also refer to as Epanechnikov energy) is given by
+ELSR(x) =−1
+βlog 
+ϵ+MX
+µ=1ReLU
+1−β
+2∥x−ξ µ∥2!
+,(3)
+3
+
+=== PAGE 4 ===
+
+New Frontiers in Associative Memoryworkshop at ICLR 2025
+where∥·∥describes the Euclidean norm andβis an inverse temperature. The factorϵ≥0in the
+LSR energy is a small nonnegative constant, andϵ >0ensures that every point in the space has finite
+(albeit extremely largeO(log(1/ϵ))) energy for all values ofβ. Indeed, withϵ= 0, definingS µ≜
+{x∈ X:∥x−ξ µ∥ ≤p
+2/β}, it is easy to see that∀x∈ X\∪M
+µ=1Sµ,ELSR(x) =∞. This is a result
+of the finite-ness of the ReLU based separation function. Regions of infinite energy implies zero
+probability density, which matches the finite support of the density estimate with the Epanechnikov
+kernel. Based on the introduced LSR energy, we next highlight the following favourable properties;
+see section B.3 for the proofs and technical details.
+Theorem 1.Letr= min µ,ν∈JMK,µ̸=ν ∥ξµ−ξν∥be the minimum Euclidean distance between any
+two memories. LetS µ(∆) ={x∈ X:∥x−ξ µ∥ ≤∆}be a basin around theµthmemory for some
+basin radius∆∈(0, r). Then, withβ= 2/(r−∆)2, for anyµ∈JMKand any inputx∈S µ(∆),
+the output of the DenseAM via energy gradient descent is exactlyξ µ, implying that all memories
+ξµ, µ∈JMKare retrievable. Furthermore, if the learning rate of the energy gradient descent is set
+appropriately, then for anyµ∈JMKand anyx∈S µ(∆), the memory is exactly retrieved with a
+single energy gradient descent step (single step retrieval).
+This above result states that, given a set of memories, and an appropriately selectedβ, there is a
+distinct basin of attractionS µ(∆)around each memoryξ µ, and any inputxfrom within that basin
+exactly retrieves the memory as the output of the DenseAM.
+Theorem 2.Consider a DenseAM parameterized withMmemoriesξ 1, . . . ,ξ Msampled uniformly
+from{−1,+1}D. Then, with probability at leastδ∈(0,1), andM∼O(p
+log(1/δ) exp(α2D/2))
+for a positiveα∈(0,1), all memories are retrievable as per theorem 1 with the value of the minimum
+pairwise distancer= min µ,ν∈JMK,µ̸=ν ∥ξµ−ξν∥ ≥p
+2d(1−α)and per-memory basin radius
+∆∈(0,p
+2d(1−α))with aβ≥2/(p
+2d(1−α)−∆)2.
+This result shows that the DenseAM equipped with this novel LSR energy has exponential memory
+capacity similar to that of LSE energy (Ramsauer et al., 2021; Lucibello & M ´ezard, 2024). Finally,
+we show that, for the DenseAM configured as per in Theorem 2 with exponential memory capacity
+can also create potentially many newemergentlocal minima:
+Theorem 3.Consider the configuration of the DenseAM in Theorem 2. For any inputx∈ X, let
+B(x)≜{µ∈JMK:∥x−ξ µ∥ ≤p
+2/β}. For anyxsuch that|B(x)|>1, the energy descent
+with the LSR energy will return a new emergent minima given by1
+|B(x)|P
+µ∈B(x)ξµ.
+Note that, with|B(x)|>1, the output of the DenseAM is not equal to any of the original memories
+{ξµ, µ∈JMK}. The region{x∈ X:|B(x)|>1} ⊂ Xis precisely characterized as 
+∪µ∈JMK Sµ
+\ 
+∪µ∈JMK Sµ(∆)
+whereS µis the region of finite energy around theµthmemory andS µ(∆)(defined
+in Theorem 1) is the distinct attracting basin for theµthmemory. This implies that this DenseAM
+is capable of simultaneously retrieving all (up to exponentially many) memories while also creating
+many emergent local minima. While we have not precisely characterized the total number of these
+emergent local minima, this number is naively bounded from above by2M.
+4 Experiments
+4.1 QUANTIFYING NOVEL MINIMA
+To quantify the number of local minima induced by the LSR energy, we uniformly sampleMpat-
+terns from thed-dimensional unit hypercube to serve as memoriesΞ. We can enumerate all possible
+local minima of LSR energy by computing the centroid ¯ξK:=1
+|K|P
+µ∈Kξµfor all possible subsets
+of memoriesK ⊆JMK(including singleton sets, there are2Mpossible subsets). For each centroid,
+we first check that the centroid is suppported (i.e., thatE LSR(¯ξK)<∞atϵ= 0), and then declare
+that¯ξKis a local minimum of the LSR energy if
+
+∇E LSR(¯ξK)
+
+< δfor smallδ >0. The results for
+this analysis at different choices forM,β, anddare shown in fig. 3 (left), whereβvalues are varied
+across the interesting regime between fully overlapping support regions (a single local minimum in
+the unit hypercube) to fully disjoint support regions around each memory.See also section B.1.
+Under certain ranges ofβ, we observe that LSR can preserve the stored patterns while simultane-
+ously creating orders of magnitude more “novel” memories (i.e., memories that do not appear inΞ).
+4
+
+=== PAGE 5 ===
+
+New Frontiers in Associative Memoryworkshop at ICLR 2025
+LSR Ener gy cr eates  
+while pr eser ving no v el memoriesst or ed patternsA v er age
+Log-Lik elihood
+Num. unique
+gener ationsNum. original 
+memories 
+r eco v er ed
+Figure 3: (Left) Analyzing local minima in LSR energy reveals a number ofnovel memoriesseveral
+orders of magnitude larger thanM, the number of stored patterns, at critical values ofβ(note that
+the y-axes are logscale). The novel memories emerge at overlapping support regions of the stored
+patterns while still ensuring thestored patternslive at local minima. Smaller values ofβhave
+a largerregion of supporton the unit hypercube. (Right) In regimes where LSR samples many
+distinct memories, we also observe a log-likelihood comparable to, and even slightly higher than,
+LSE under the true density function (mixture ofk= 5Gaussians,σ= 0.1andd= 8). Specific
+regions ofβwhere LSR outperforms LSE on particular metrics are specified by the orange regions.
+The peak number of novel memories consistently occurs whenβis tuned such that approximately
+60% of the original stored patterns remain recoverable and 20% of the unit hypercube is supported,
+regardless of the choice ofMandd.
+4.2 QUALITY OFLOG-LIKELIHOOD VS. GAUSSIANKERNEL
+Letp(x)be a mixture ofkGaussians whose meansµ i∼ U([0,1]d)fori∈JkKare uniformly sam-
+pled from thed-dimensional unit hypercube with scalar covariances such thatp(x) =1
+kPk
+i=1N(x|
+µi, σ2Id). We sampleMpointsξ 1, . . . ,ξ M∼p(x)to serve as the stored patternsΞused to pa-
+rameterize both the LSE and LSR energies from eq. (3). Define thesupport boundaryinduced by
+patternξ µto besupp[ξ µ] ={x| ∥x−ξ µ∥2= 2β−1}. Then, forE∈ {E LSE, ELSR}and points
+x(0)
+n,n∈JNKsampled near the support boundary of each stored pattern,3samples can be generated
+using gradient descent
+x(t)
+n=x(t−1)
+n−α∇E(x(t−1)
+n),(4)
+for some small step sizeα >0until convergence to amemoryx⋆
+n. Thus we haveNsamples
+x⋆
+1, . . . ,x⋆
+Non which we evaluate three metrics of interest in fig. 3 (right):
+1.Average Log-Likelihood. Does LSR generate samples with higher log-likelihood underp(x)
+than LSE?
+2.Number of Unique Samples. How many more local minima can we empirically retrieve from
+LSR compared to LSE?
+3.Number of Original Memories Recoverable. Can LSR recover more of the stored patterns in
+regimes where it also generates novel memories?
+The results tell a consistent story. Despite LSE energy being a more natural choice to model the
+underlyingp(x)(given its inherent Gaussian mixture structure), LSR can outperform LSE in log-
+likelihood while simultaneously generating more diverse samples and preserving the recoverability
+of the stored patterns. See section B.2 for experimental details and extended discussion.
+3We use the same initial points to seed the dynamics of bothE LSRandE LSE. See section B.2 for details.
+5
+
+=== PAGE 6 ===
+
+New Frontiers in Associative Memoryworkshop at ICLR 2025
+References
+Mete Demircigil, Judith Heusel, Matthias L ¨owe, Sven Upgang, and Franck Vermet. On a model
+of associative memory with huge storage capacity.Journal of Statistical Physics, 168:288–299,
+2017.
+Luc Devroye and G ´abor Lugosi.Combinatorial methods in density estimation. Springer Science &
+Business Media, 2001.
+Saul Jos ´e Rodrigues dos Santos, Vlad Niculae, Daniel C McNamee, and Andre Martins. Sparse and
+structured hopfield networks. InForty-first International Conference on Machine Learning, 2024.
+URLhttps://openreview.net/forum?id=OdPlFWExX1.
+Vassiliy A Epanechnikov. Non-parametric estimation of a multivariate probability density.Theory
+of Probability & Its Applications, 14(1):153–158, 1969.
+Benjamin Hoover, Duen Horng Chau, Hendrik Strobelt, and Dmitry Krotov. A universal abstraction
+for hierarchical hopfield networks. InThe Symbiosis of Deep Learning and Differential Equations
+II, 2022.
+Benjamin Hoover, Duen Horng Chau, Hendrik Strobelt, Parikshit Ram, and Dmitry Krotov. Dense
+associative memory through the lens of random features. InThe Thirty-eighth Annual Conference
+on Neural Information Processing Systems, 2024.
+John J Hopfield. Neural networks and physical systems with emergent collective computational
+abilities.Proceedings of the national academy of sciences, 79(8):2554–2558, 1982.
+Jerry Yao-Chieh Hu, Donglin Yang, Dennis Wu, Chenwei Xu, Bo-Yu Chen, and Han Liu.
+On sparse modern hopfield model.Advances in Neural Information Processing Systems,
+36, 2023. URLhttps://proceedings.neurips.cc/paper_files/paper/2023/
+file/57bc0a850255e2041341bf74c7e2b9fa-Paper-Conference.pdf.
+Dmitry Krotov. Hierarchical associative memory.arXiv preprint arXiv:2107.06446, 2021.
+Dmitry Krotov and John J Hopfield. Dense associative memory for pattern recognition.Advances
+in Neural Information Processing Systems, 29, 2016.
+Dmitry Krotov and John J Hopfield. Large associative memory problem in neurobiology and ma-
+chine learning. InInternational Conference on Learning Representations, 2021.
+Carlo Lucibello and Marc M ´ezard. Exponential capacity of dense associative memories.Physical
+Review Letters, 132(7):077301, 2024.
+Hans-Georg M ¨uller. Smooth optimum kernel estimators of densities, regression curves and modes.
+The Annals of Statistics, pp. 766–774, 1984.
+Hubert Ramsauer, Bernhard Sch ¨afl, Johannes Lehner, Philipp Seidl, Michael Widrich, Lukas Gru-
+ber, Markus Holzleitner, Thomas Adler, David Kreil, Michael K Kopp, G ¨unter Klambauer, Jo-
+hannes Brandstetter, and Sepp Hochreiter. Hopfield networks is all you need. InInternational
+Conference on Learning Representations, 2021. URLhttps://openreview.net/forum?
+id=tL89RnzIiCd.
+Matt P Wand and M Chris Jones.Kernel smoothing. CRC press, 1994.
+Dennis Wu, Jerry Yao-Chieh Hu, Teng-Yun Hsiao, and Han Liu. Uniform memory retrieval
+with larger capacity for modern hopfield models. InProceedings of the 41st International
+Conference on Machine Learning, volume 235 ofProceedings of Machine Learning Research,
+pp. 53471–53514. PMLR, 21–27 Jul 2024. URLhttps://proceedings.mlr.press/
+v235/wu24i.html.
+6
+
+=== PAGE 7 ===
+
+New Frontiers in Associative Memoryworkshop at ICLR 2025
+A On Kernels
+We show different kernels that are typically used for KDE and their efficiency relative to the
+Epanechnikov kernel in fig. 4. See the explanation on optimal kernel density estimation in section 2
+for more details.
+B Experimental Details
+B.1 DETAILS: QUANTIFYINGNOVELMINIMA
+In this experiment we tested across a geometrically spaced range ofβ∈[2d−1,2r−2
+min], wherer min:=
+minµ̸=ν∥ξµ−ξν∥is the minimum pairwise distance between any two stored patterns in the current
+subsetK ⊆JMK. At the largestβ, the support regions of the stored patterns are disjoint and the
+only memories are theMstored patterns themselves; this configuration has a very small support
+region (shown as the shaded green curve in fig. 3, which is computed by monte carlo sampling 1e6
+points on the unit hypercube and computing the fraction of energies that are finite atϵ= 0) as a
+fraction of the unit hypercube. At the smallest testedβ, only a single energy minimum is induced
+at the centroid of all stored patterns with a region of support covering the whole unit hypercube. At
+the largest testedβ, all original memories are recoverable and there are no spurious memories.
+B.2 DETAILS: QUALITY OFLOG-LIKELIHOOD
+B.2.1 DETERMINING THE UNIQUENESS OF MINIMA
+500initial points are uniformly sampled from the support boundary around each memory before the
+gradient descent process in eq. (4) is performed for 13000 steps at a cosine-decayed learning rateα
+from0.01→0.0001. However, even after this descent process, special care must be taken to ensure
+that unique minima are correctly computed. When sampling from the energy function via discrete
+gradient descent, there is necessarily some error introduced by the discrete step sizeαand floating
+point precision. Generally, memory retrieval is said to converge when∥∇ xE(x)∥< ϵfor some
+smallϵ >0, or when the number of iterationsTexceeds some threshold at smallα. When counting
+the number of unique samples from the LSE energy, we perform spectral clustering on the graph
+created by the generated samples, where two samplesx⋆
+Aandx⋆
+Bareadjacentif∥x⋆
+A−x⋆
+B∥ ≤2
+β.
+We choose a threshold of1e−5on the eigenvalues of the Laplacian.
+When counting the uniqueness of the samples from the LSR energy, we perform the following trick
+to exactly compute the fixed points of the dynamics. We first compute our “best guess” for the
+fixed point by performing standard gradient descent according to eq. (4) forTsteps, at which point
+z:=x(T)is close (but not exactly equal) to the fixed pointx⋆. We then passzto algorithm 1 to
+compute the fixed point exactly. With a good initial guessz, algorithm 1 converges after a single
+iteration.
+Finally, we choose to sample points near the support boundary of each stored pattern because this
+maximizes the probability that we will end up in a spurious minimum. The size of spurious basins
+in high dimension can be very small, and the probability of landing in them decreases rapidly with
+increasingβ(see the region of support plot in fig. 3). This, in addition to being computationally
+limited to a small number of total samples on which we perform the memory retrieval in eq. (4)
+3
+ 2
+ 1
+0 1 2 3
+x0.00.51.0K(x)Gaussian
+exp(x2)
+Efficiency: 95.1%
+3
+ 2
+ 1
+0 1 2 3
+xTriangle
+ReLU(1x)
+Efficiency: 98.6%
+3
+ 2
+ 1
+0 1 2 3
+xUniform
+I(1x2)
+Efficiency: 92.9%
+3
+ 2
+ 1
+0 1 2 3
+xEpanechnikov
+ReLU(1x2)
+Efficiency: 100.0%
+3
+ 2
+ 1
+0 1 2 3
+xCosine
+cos(2min(x,1))
+Efficiency: 99.9%
+3
+ 2
+ 1
+0 1 2 3
+xQuartic
+ReLU(1x2)2
+Efficiency: 99.4%
+3
+ 2
+ 1
+0 1 2 3
+xTriweight
+ReLU(1x2)3
+Efficiency: 98.7%
+3
+ 2
+ 1
+0 1 2 3
+xTricube
+ReLU(1x3)3
+Efficiency: 99.8%
+Figure 4: Different kernels used in KDE with their expression and KDE efficiency relative to the
+Epanechnikov kernel (higher is better, see text for details). The center of each kernel is marked with
+a red⋆. To highlight the shape of the kernel, we have removed any scaling in the kernel expression.
+Note that all above kernels except Gaussian have finite support. The Epanechnikov kernel has the
+highest efficiency (100%). While the Gaussian kernel is extremely popular, and it is more efficient
+(95.1%) than the Uniform kernel (92.9%), there are various other kernels with better efficiency.
+7
+
+=== PAGE 8 ===
+
+New Frontiers in Associative Memoryworkshop at ICLR 2025
+Algorithm 1:Fixed Point Computation for the LSR Memory
+Input:Initial guessz, stored patterns{ξ m}M
+m=1, inverse temperatureβ
+Output:Fixed pointz⋆
+zprev←z+∞// Initialize previous point
+whilez prev̸=zdo
+zprev←z
+S(z)← {ξ m;∥z−ξ m∥2≤2
+β}// Compute support centroids
+z←1
+|S(z)|P
+ξm∈S(z) ξm // Update to mean of support centroids
+end
+returnz
+B.3 THEORETICALRESULTS
+B.3.1 PROOF OFTHEOREM1
+For anyx∈ X, letB(x) ={µ∈JMK:∥x−ξ µ∥2≤2/β}. Then the gradient of the LSR energy
+in equation 3 is given by
+∇xELSR(x) =MX
+µ=1(x−ξ µ)1h
+∥x−ξ µ∥2≤2
+βi
+ϵ+hPM
+ν=1ReLU
+1−β
+2∥x−ξ ν∥2i (5)
+=P
+µ∈B(x)(x−ξ µ)
+ϵ+hP
+ν∈B(x)ReLU
+1−β
+2∥x−ξ ν∥2i (6)
+Withβ= 2/(r−∆)2,B(x) ={µ∈JMK:∥x−ξ µ∥ ≤(r−∆)}. For anyx∈S µ(∆),
+B(x) ={µ}. Thus the LSR energy gradient simplifies to
+∀x∈S µ(∆),∇ xELSR(x) =(x−ξ µ)
+ϵ+ ReLU
+1−β
+2∥x−ξ µ∥2,(7)
+which is exactly zero atx=ξ µ, thus giving us the retrieval of theµthmemory via energy gradient
+descent.
+Furthermore, again forx∈S µ(∆)with a energy gradient descent learning rate set toη←ϵ+
+ReLU
+1−β/2∥x−ξ µ∥2
+, the update is exactlyη∇ xELSR(x) = (x−ξ µ). Thus a single step
+gradient descent update toxwithx−η∇ xELSR(x) =x−(x−ξ µ) =ξ µresults in the retrieval of
+theµthmemory.
+B.3.2 PROOF OF THEOREM2
+Lemma 1(See Corollary 10 here).Ifx,x′are chosen randomly from{−1,+1}D, then
+Pr"⟨x,x′⟩
+∥x∥∥x′∥>r
+logc
+D#
+<1
+c.(8)
+Lemma 2.For anyx >−1, we have
+x
+1 +x≤log(1 +x)≤x.(9)
+Proof.(Theorem 2.)
+Given memoriesξ 1, . . . ,ξ Msampled randomly fromX={−1,+1}D, Lemma 1 states that for any
+pair of memoriesξ µ,ξν, with a scalarc >1, their cosine similarity is bounded from above as:
+8
+
+=== PAGE 9 ===
+
+New Frontiers in Associative Memoryworkshop at ICLR 2025
+Pr"
+⟨ξµ,ξν⟩
+∥ξµ∥∥ξν∥≤r
+logc
+D#
+≥Pr"⟨ξµ,ξν⟩
+∥ξµ∥∥ξν∥≤r
+logc
+D#
+(10)
+= 1−Pr"⟨ξµ,ξν⟩
+∥ξµ∥∥ξν∥>r
+logc
+D#
+(11)
+≥
+1−1
+c
+.(12)
+Thus, the maximum cosine similarity between any pairs of memories can be bounded as:
+Pr"
+max
+µ,ν∈JMK,µ̸=ν⟨ξµ,ξν⟩
+∥ξµ∥∥ξν∥
+≤r
+logc
+D#
+= Pr
+^
+µ,ν∈JMK,µ̸=ν 
+⟨ξµ,ξν⟩
+∥ξµ∥∥ξν∥≤r
+logc
+D!
+
+(13)
+≥Y
+µ,ν∈JMK,µ̸=νPr"
+⟨ξµ,ξν⟩
+∥ξµ∥∥ξν∥≤r
+logc
+D#
+(14)
+≥
+1−1
+cM2
+.(15)
+If we setlogc=α2Dfor someα∈(0,1), then the maximum cosine similarity between any
+pair of memories is at mostα, and the thus, the minimum pairwise Euclidean distancer=
+minµ,ν∈JMK,µ̸=ν ∥ξµ−ξν∥ ≥p
+2d(1−α). Then withβ= 2/(r−∆)≥2/(p
+2d(1−α)−∆),
+we are able to retrieve any memoryξ µwith anx∈S µ(∆)with∆<p
+2d(1−α)≤r.
+Now what remains to be seen is the relationship between the selected value oflogc=α2Dand
+the success probabilityδ= (1− 1/c)1/M2. Plugging in the value ofc= exp(α2D)in the success
+probability, we have
+exp(α2D) =1
+1−δ1/M2⇒1−δ1/M2= exp(−α2D)(16)
+⇒M=vuutlog(1/δ)
+log
+1
+1−exp(−α2D).(17)
+Using Lemma 2, and noting that1
+1−exp(−α2D)= 1 +exp(−α2D)
+1−exp(−α2D), we see that
+exp(−α2D)≤log1
+1−exp(−α2D)
+≤exp(−α2D)
+1−exp(−α2D)=1
+exp(α2D)−1.(18)
+Plugging this in eq. (17), we have
+p
+log(1/δ)(exp(α2D)−1)≤M≤p
+log(1/δ)(exp(α2D)),(19)
+giving usM∼O(p
+log(1/δ) exp(α2D/2)).
+B.3.3 PROOF OFTHEOREM3
+Proof.(Theorem 3.)
+9
+
+=== PAGE 10 ===
+
+New Frontiers in Associative Memoryworkshop at ICLR 2025
+For anyx∈ X, given the definition ofB(x), recall that the gradient of the LSR energy is given in
+eq. 5. When|B(x)|>1, this gradient is zero when
+x=1
+|B(x)|X
+µ∈B(x)ξµ,
+the geometric mean of the memories corresponding to the setB(x).
+10
