@@ -53,7 +53,61 @@ Affiliation \\
 
 \section{Introduction}
 
+\noindent Associative memories retrieve complete patterns from partial or noisy cues, with
+classical Hopfield networks providing the canonical energy-based formulation \cite{Hopfield1982}.
+Modern dense associative memories generalize the energy to boost storage capacity, and modern
+continuous Hopfield networks connect their update rule to transformer attention, enabling
+fast, content-addressable retrieval at scale \cite{KrotovHopfield2016,Demircigil2017,Ramsauer2021,Vaswani2017}.
+At the same time, many real-world domains are graph-structured, and graph neural networks (GNNs)
+encode relational inductive bias through message passing or Laplacian smoothing \cite{KipfWelling2017}.
+This motivates a simple question: can we endow graph representations with associative retrieval
+while respecting graph structure?
+
+\noindent We propose \emph{Graph Hopfield Networks} (GHN), an energy-based layer that combines
+modern Hopfield retrieval with graph Laplacian coupling. Each node feature vector is treated as a
+query into a shared memory bank, retrieved via a softmax-weighted sum, while a Laplacian term
+encourages smoothness over edges. This yields an explicit energy function, interpretable updates,
+and a clean separation between \emph{memory} (global prototypes) and \emph{structure} (graph
+regularization). The resulting dynamics can be implemented as fixed-point iterations or gradient
+descent steps, and admit convergence guarantees under standard smoothness assumptions.
+
+\noindent Our contributions are:
+\begin{itemize}
+\item A graph-structured Hopfield energy that integrates associative retrieval with Laplacian
+regularization, yielding a principled \emph{memory + structure} layer.
+\item Closed-form update dynamics and a clear attention-based interpretation of the retrieval term.
+\item A theoretical analysis of smoothness and convergence, with sufficient conditions for
+strong convexity and global convergence to stationary points.
+\end{itemize}
+
 \section{Related Work}
+
+\noindent \textbf{Associative memory and modern Hopfield networks.}
+Classical Hopfield networks implement content-addressable memory via energy minimization
+\cite{Hopfield1982}. Dense associative memories extend this framework with higher-order
+interactions, yielding super-linear capacity \cite{KrotovHopfield2016}. Demircigil et al.\ show that
+exponential interaction functions lead to exponential storage capacity in the number of neurons
+\cite{Demircigil2017}. Modern continuous Hopfield networks further connect the update rule to
+transformer attention and motivate Hopfield layers as memory-augmented building blocks in deep
+learning \cite{Ramsauer2021,Vaswani2017}.
+
+\noindent \textbf{Recent NFAM directions.}
+Current NFAM workshop work studies capacity under structured data and energy functions,
+including hierarchical Hopfield decompositions for latent prototype discovery, capacity under
+manifold structure, and hierarchical memory organizations \cite{SargolzaeiRueda2025,AchilliEtAl2025,Anonymous2025DenseHierarchical}.
+Other lines explore alternative energies (e.g., log-sum-ReLU) and the effects of feature
+correlations on capacity \cite{HooverEtAl2025LSR,BielmeierFriedland2025}.
+There is also growing interest in how associative memory limitations impact reasoning and
+test-time scaling in subquadratic sequence models \cite{ChaudhryKulkarniPehlevan2025}.
+GHN complements these efforts by focusing on \emph{graph-structured} associative retrieval and
+by providing an explicit energy-based coupling between memory and relational structure.
+
+\noindent \textbf{Graph representation learning.}
+GNNs such as GCNs incorporate graph structure through message passing or Laplacian smoothing
+\cite{KipfWelling2017}. GHN differs by introducing a global associative memory bank that each
+node queries, while still enforcing graph coherence through a Laplacian term.
+This positions GHN as a bridge between associative memory models and graph learning, with a
+transparent energy formulation and convergence analysis.
 
 \section{Method}
 
